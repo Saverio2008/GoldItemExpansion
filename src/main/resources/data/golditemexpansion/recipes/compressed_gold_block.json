@@ -14,5 +14,13 @@
   "result": {
     "item": "golditemexpansion:compressed_gold_block",
     "count": 1
-  }
+  },
+  "conditions": [
+    {
+      "type": "minecraft:inventory_changed",
+      "items": [
+        "minecraft:gold_block"
+      ]
+    }
+  ]
 }
