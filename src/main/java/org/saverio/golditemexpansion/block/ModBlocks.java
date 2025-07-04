@@ -17,6 +17,7 @@ public class ModBlocks {
             AbstractBlock.Settings.copy(Blocks.SKELETON_SKULL)
                     .strength(1.0f)
                     .nonOpaque()
+                    .ticksRandomly()
     );
     public static void registerBlocks() {
         Registry.register(Registries.BLOCK,

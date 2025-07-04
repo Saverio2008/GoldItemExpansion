@@ -2,6 +2,7 @@ package org.saverio.golditemexpansion.block;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -10,13 +11,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 
 import java.util.List;
 
 public class GoldenHeadBlock extends Block {
 
-    private static final int TICKS_BEFORE_REMOVE = 40; // 2秒 (20 ticks = 1秒)
+    private static final int TICKS_BEFORE_REMOVE = 40;
 
     public GoldenHeadBlock(Settings settings) {
         super(settings);
@@ -28,11 +30,14 @@ public class GoldenHeadBlock extends Block {
 
         if (!world.isClient) {
             ServerWorld serverWorld = (ServerWorld) world;
-
             applyEffectsToNearbyPlayers(serverWorld, pos);
-
             serverWorld.scheduleBlockTick(pos, this, TICKS_BEFORE_REMOVE);
         }
+    }
+
+    @Override
+    public void tick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+        world.setBlockState(pos, Blocks.AIR.getDefaultState());
     }
 
     private void applyEffectsToNearbyPlayers(ServerWorld world, BlockPos pos) {
@@ -43,7 +48,7 @@ public class GoldenHeadBlock extends Block {
 
         List<PlayerEntity> players = world.getEntitiesByClass(PlayerEntity.class, area, player -> true);
 
-        int durationTicks = 6000; // 5分钟
+        int durationTicks = 6000;
 
         for (PlayerEntity player : players) {
             player.addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, durationTicks, 6));
