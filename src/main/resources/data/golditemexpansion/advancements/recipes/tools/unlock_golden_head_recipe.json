@@ -1,0 +1,30 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "golditemexpansion:golden_head"
+    ]
+  },
+  "criteria": {
+    "has_compressed_gold_block": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          { "item": "golditemexpansion:compressed_gold_block" }
+        ]
+      }
+    },
+    "has_skull": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          { "tag": "golditemexpansion:skulls" }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    ["has_compressed_gold_block"],
+    ["has_skull"]
+  ]
+}

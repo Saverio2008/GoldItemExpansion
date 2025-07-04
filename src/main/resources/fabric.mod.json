@@ -4,15 +4,12 @@
   "version": "${version}",
   "name": "Gold Item Expansion",
   "description": "",
-  "authors": [],
+  "authors": ["Saverio08", "zhaozhenxiang"],
   "contact": {},
   "license": "AGPL-3.0",
-  "icon": "assets/golditemexpansion/icon.png",
+  "icon": "assets/golditemexpansion/icon/icon.png",
   "environment": "*",
   "entrypoints": {
-    "fabric-datagen": [
-      "org.saverio.golditemexpansion.client.GolditemexpansionDataGenerator"
-    ],
     "client": [
       "org.saverio.golditemexpansion.client.GolditemexpansionClient"
     ],
@@ -20,6 +17,13 @@
       "org.saverio.golditemexpansion.Golditemexpansion"
     ]
   },
+  "mixins": [
+    "golditemexpansion.mixins.json",
+    {
+      "config": "golditemexpansion.client.mixins.json",
+      "environment": "client"
+    }
+  ],
   "depends": {
     "fabricloader": ">=${loader_version}",
     "fabric": "*",
