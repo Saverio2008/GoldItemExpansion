@@ -25,6 +25,7 @@ public class ModItems {
                 new Identifier(Golditemexpansion.MOD_ID, "golden_head"),
                 GOLDEN_HEAD_ITEM);
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.BUILDING_BLOCKS).register(content ->
-                content.addAfter(net.minecraft.block.Blocks.GOLD_BLOCK.asItem(), ModItems.COMPRESSED_GOLD_BLOCK_ITEM));
+                content.addAfter(net.minecraft.block.Blocks.GOLD_BLOCK.asItem(),
+                        ModItems.COMPRESSED_GOLD_BLOCK_ITEM));
     }
 }
