@@ -35,8 +35,9 @@ public class GoldenHeadBlock extends Block {
         }
     }
 
+    @SuppressWarnings("deprecation")
     @Override
-    public void tick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+    public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         world.setBlockState(pos, Blocks.AIR.getDefaultState());
     }
 
