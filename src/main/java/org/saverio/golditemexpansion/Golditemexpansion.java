@@ -13,6 +13,6 @@ public class Golditemexpansion implements ModInitializer {
         ModItems.registerItems();
         ModBlocks.registerBlocks();
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.BUILDING_BLOCKS).register(content ->
-                content.add(ModItems.COMPRESSED_GOLD_BLOCK_ITEM));
+                content.addAfter(net.minecraft.block.Blocks.GOLD_BLOCK.asItem(), ModItems.COMPRESSED_GOLD_BLOCK_ITEM));
     }
 }
