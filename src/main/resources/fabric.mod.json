@@ -10,9 +10,6 @@
   "icon": "assets/golditemexpansion/icon.png",
   "environment": "*",
   "entrypoints": {
-    "fabric-datagen": [
-      "org.saverio.golditemexpansion.client.GolditemexpansionDataGenerator"
-    ],
     "client": [
       "org.saverio.golditemexpansion.client.GolditemexpansionClient"
     ],
