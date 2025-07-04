@@ -10,5 +10,8 @@
         ]
       }
     }
-  }
+  },
+  "requirements": [
+    ["has_gold_block"]
+  ]
 }
