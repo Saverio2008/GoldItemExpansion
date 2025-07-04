@@ -16,9 +16,13 @@
   },
   "criteria": {
     "crafted_compressed_gold_block": {
-      "trigger": "minecraft:recipe_crafted",
+      "trigger": "minecraft:crafted_item",
       "conditions": {
-        "recipe": "golditemexpansion:compressed_gold_block"
+        "items": [
+          {
+            "item": "golditemexpansion:compressed_gold_block"
+          }
+        ]
       }
     }
   },
