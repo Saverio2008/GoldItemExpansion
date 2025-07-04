@@ -8,11 +8,10 @@ import net.minecraft.util.Identifier;
 import org.saverio.golditemexpansion.Golditemexpansion;
 
 public class ModItems {
-    public static final Item GOLD_STAFF = new Item(new FabricItemSettings());
-
+    public static final Item COMPRESSED_GOLD_BLOCK = new Item(new FabricItemSettings());
     public static void registerItems() {
         Registry.register(Registries.ITEM,
-                new Identifier(Golditemexpansion.MOD_ID, "gold_staff"),
-                GOLD_STAFF);
+                new Identifier(Golditemexpansion.MOD_ID, "compressed_gold_block"),
+                COMPRESSED_GOLD_BLOCK);
     }
 }

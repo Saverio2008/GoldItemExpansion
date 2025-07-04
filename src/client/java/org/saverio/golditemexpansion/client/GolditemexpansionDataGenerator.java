@@ -12,53 +12,54 @@ import org.saverio.golditemexpansion.item.ModItems;
 import java.util.function.Consumer;
 
 public class GolditemexpansionDataGenerator implements DataGeneratorEntrypoint {
+
     @Override
     public void onInitializeDataGenerator(FabricDataGenerator fabricDataGenerator) {
-        fabricDataGenerator.getModContainer(new LanguageProvider(fabricDataGenerator));
-        fabricDataGenerator.addProvider(new RecipeProvider(fabricDataGenerator));
-        fabricDataGenerator.addProvider(new ModelProvider(fabricDataGenerator));
+        FabricDataGenerator.Pack pack = fabricDataGenerator.createPack();
+        pack.addProvider(new LanguageProvider(pack));
+        pack.addProvider(new RecipeProvider(pack));
+        pack.addProvider(new ModelProvider(pack));
     }
 
     private static class LanguageProvider extends FabricLanguageProvider {
-        public LanguageProvider(FabricDataGenerator generator) {
-            super(generator);
+        public LanguageProvider(FabricDataGenerator.Pack pack) {
+            super(pack);
         }
 
         @Override
         public void generateTranslations(TranslationBuilder translationBuilder) {
-            translationBuilder.add(ModItems.GOLD_STAFF, "Gold Staff");
+            translationBuilder.add(ModItems.COMPRESSED_GOLD_BLOCK, "压缩金块");
         }
     }
 
     private static class RecipeProvider extends FabricRecipeProvider {
-        public RecipeProvider(FabricDataGenerator generator) {
-            super(generator);
+        public RecipeProvider(FabricDataGenerator.Pack pack) {
+            super(pack);
         }
 
         @Override
-        public void generateRecipes() {
-            offerShapedRecipe(ModItems.GOLD_STAFF,
-                    " G ",
-                    " S ",
-                    " S ",
-                    'G', Items.GOLD_INGOT,
-                    'S', Items.STICK);
+        public void generate(Consumer<RecipeJsonProvider> exporter) {
+            offerShapedRecipe(exporter, ModItems.COMPRESSED_GOLD_BLOCK,
+                    "GGG",
+                    "GGG",
+                    "GGG",
+                    'G', Items.GOLD_BLOCK);
         }
     }
 
     private static class ModelProvider extends FabricModelProvider {
-        public ModelProvider(FabricDataGenerator generator) {
-            super(generator);
+        public ModelProvider(FabricDataGenerator.Pack pack) {
+            super(pack);
         }
 
         @Override
         public void generateBlockStateModels() {
-            // 空实现
+            // 此处不需要方块模型（非方块物品）
         }
 
         @Override
         public void generateItemModels() {
-            itemModelGenerated(ModItems.GOLD_STAFF);
+            itemModelGenerated(ModItems.COMPRESSED_GOLD_BLOCK);
         }
     }
 }
