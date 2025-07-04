@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "GGG",
+    "GSG",
+    "GGG"
+  ],
+  "key": {
+    "G": { "item": "golditemexpansion:compressed_gold_block" },
+    "S": { "tag": "minecraft:skull_heads" }
+  },
+  "result": {
+    "item": "golditemexpansion:golden_head",
+    "count": 1
+  }
+}

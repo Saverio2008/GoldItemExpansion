@@ -13,9 +13,17 @@ public class ModBlocks {
             AbstractBlock.Settings.copy(Blocks.GOLD_BLOCK)
                     .strength(8.0f, 1200.0f)
     );
+    public static final Block GOLDEN_HEAD_BLOCK = new GoldenHeadBlock(
+            AbstractBlock.Settings.copy(Blocks.SKELETON_SKULL)
+                    .strength(1.0f)
+                    .nonOpaque()
+    );
     public static void registerBlocks() {
         Registry.register(Registries.BLOCK,
                 new Identifier(Golditemexpansion.MOD_ID, "compressed_gold_block"),
                 COMPRESSED_GOLD_BLOCK);
+        Registry.register(Registries.BLOCK,
+                new Identifier(Golditemexpansion.MOD_ID, "golden_head"),
+                GOLDEN_HEAD_BLOCK);
     }
 }

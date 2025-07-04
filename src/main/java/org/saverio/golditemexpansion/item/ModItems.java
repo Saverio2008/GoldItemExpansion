@@ -10,12 +10,17 @@ import org.saverio.golditemexpansion.Golditemexpansion;
 import org.saverio.golditemexpansion.block.ModBlocks;
 
 public class ModItems {
-    public static final Item COMPRESSED_GOLD_BLOCK_ITEM = new BlockItem(ModBlocks.COMPRESSED_GOLD_BLOCK, new FabricItemSettings());
-
+    public static final Item COMPRESSED_GOLD_BLOCK_ITEM =
+            new BlockItem(ModBlocks.COMPRESSED_GOLD_BLOCK, new FabricItemSettings());
+    public static final Item GOLDEN_HEAD_ITEM =
+            new BlockItem(ModBlocks.GOLDEN_HEAD_BLOCK, new FabricItemSettings());
     public static void registerItems() {
         Registry.register(Registries.ITEM,
                 new Identifier(Golditemexpansion.MOD_ID, "compressed_gold_block"),
                 COMPRESSED_GOLD_BLOCK_ITEM
         );
+        Registry.register(Registries.ITEM,
+                new Identifier(Golditemexpansion.MOD_ID, "golden_head"),
+                GOLDEN_HEAD_ITEM);
     }
 }
