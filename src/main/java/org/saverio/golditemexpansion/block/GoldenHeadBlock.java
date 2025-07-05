@@ -1,8 +1,6 @@
 package org.saverio.golditemexpansion.block;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.WallMountedBlock;
+import net.minecraft.block.*;
 import net.minecraft.block.enums.WallMountLocation;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -18,6 +16,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
+import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.util.shape.VoxelShapes;
+import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -92,5 +93,35 @@ public class GoldenHeadBlock extends WallMountedBlock {
         } else {
             player.addStatusEffect(newEffect);
         }
+    }
+    @SuppressWarnings("deprecation")
+    @Override
+    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+        WallMountLocation face = state.get(FACE);
+        Direction facing = state.get(FACING);
+
+        switch (face) {
+            case FLOOR:
+                return Block.createCuboidShape(4, 0, 4, 12, 8, 12);
+            case CEILING:
+                return Block.createCuboidShape(4, 8, 4, 12, 16, 12);
+            case WALL:
+                switch (facing) {
+                    case NORTH:
+                        return Block.createCuboidShape(4, 4, 8, 12, 12, 16);
+                    case SOUTH:
+                        return Block.createCuboidShape(4, 4, 0, 12, 12, 8);
+                    case WEST:
+                        return Block.createCuboidShape(8, 4, 4, 16, 12, 12);
+                    case EAST:
+                        return Block.createCuboidShape(0, 4, 4, 8, 12, 12);
+                }
+        }
+        return VoxelShapes.fullCube();
+    }
+    @SuppressWarnings("deprecation")
+    @Override
+    public VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+        return this.getOutlineShape(state, world, pos, context);
     }
 }
