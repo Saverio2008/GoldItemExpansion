@@ -1,6 +1,12 @@
 {
-  "parent": "minecraft:block/cube_all",
+  "parent": "block/block",
   "textures": {
-    "all": "minecraft:block/gold_block"
+    "particle": "golditemexpansion:block/golden_head",
+    "down": "golditemexpansion:block/golden_head",
+    "up": "golditemexpansion:block/golden_head",
+    "north": "golditemexpansion:block/golden_head",
+    "south": "golditemexpansion:block/golden_head",
+    "west": "golditemexpansion:block/golden_head",
+    "east": "golditemexpansion:block/golden_head"
   }
 }
