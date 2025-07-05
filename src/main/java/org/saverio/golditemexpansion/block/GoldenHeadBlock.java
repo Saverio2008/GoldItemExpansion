@@ -33,7 +33,6 @@ public class GoldenHeadBlock extends Block {
     public BlockState getPlacementState(ItemPlacementContext ctx) {
         return this.getDefaultState().with(FACING, ctx.getHorizontalPlayerFacing().getOpposite());
     }
-    // 注册 FACING 属性
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
         builder.add(FACING);
@@ -59,11 +58,30 @@ public class GoldenHeadBlock extends Block {
         );
         List<PlayerEntity> players = world.getEntitiesByClass(PlayerEntity.class, area, player -> true);
         int durationTicks = 6000;
+
         for (PlayerEntity player : players) {
-            player.addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, durationTicks, 6));
-            player.addStatusEffect(new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, durationTicks, 0));
-            player.addStatusEffect(new StatusEffectInstance(StatusEffects.ABSORPTION, durationTicks, 9));
-            player.addStatusEffect(new StatusEffectInstance(StatusEffects.HEALTH_BOOST, durationTicks, 9));
+            applyOrExtendEffect(player, new StatusEffectInstance(StatusEffects.RESISTANCE, durationTicks, 6));
+            applyOrExtendEffect(player, new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, durationTicks, 0));
+            applyOrExtendEffect(player, new StatusEffectInstance(StatusEffects.ABSORPTION, durationTicks, 9));
+            applyOrExtendEffect(player, new StatusEffectInstance(StatusEffects.HEALTH_BOOST, durationTicks, 9));
+        }
+    }
+    private void applyOrExtendEffect(PlayerEntity player, StatusEffectInstance newEffect) {
+        StatusEffectInstance current = player.getStatusEffect(newEffect.getEffectType());
+
+        if (current != null) {
+            int extendedDuration = Math.min(current.getDuration() + newEffect.getDuration(), 32767); // 最大值限制
+            int amplifier = Math.max(current.getAmplifier(), newEffect.getAmplifier());
+            player.addStatusEffect(new StatusEffectInstance(
+                    newEffect.getEffectType(),
+                    extendedDuration,
+                    amplifier,
+                    newEffect.isAmbient(),
+                    newEffect.shouldShowParticles(),
+                    newEffect.shouldShowIcon()
+            ));
+        } else {
+            player.addStatusEffect(newEffect);
         }
     }
 }
