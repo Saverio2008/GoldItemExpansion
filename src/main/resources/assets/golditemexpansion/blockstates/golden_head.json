@@ -1,5 +1,8 @@
 {
   "variants": {
-    "": { "model": "golditemexpansion:block/golden_head" }
+    "facing=north": { "model": "golditemexpansion:block/golden_head" },
+    "facing=east":  { "model": "golditemexpansion:block/golden_head", "y": 90 },
+    "facing=south": { "model": "golditemexpansion:block/golden_head", "y": 180 },
+    "facing=west":  { "model": "golditemexpansion:block/golden_head", "y": 270 }
   }
 }
