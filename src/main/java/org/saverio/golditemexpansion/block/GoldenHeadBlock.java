@@ -17,13 +17,10 @@ import net.minecraft.world.World;
 import java.util.List;
 
 public class GoldenHeadBlock extends Block {
-
     private static final int TICKS_BEFORE_REMOVE = 40;
-
     public GoldenHeadBlock(Settings settings) {
         super(settings);
     }
-
     @Override
     public void onPlaced(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack) {
         super.onPlaced(world, pos, state, placer, itemStack);
@@ -34,23 +31,18 @@ public class GoldenHeadBlock extends Block {
             serverWorld.scheduleBlockTick(pos, this, TICKS_BEFORE_REMOVE);
         }
     }
-
     @SuppressWarnings("deprecation")
     @Override
     public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         world.setBlockState(pos, Blocks.AIR.getDefaultState());
     }
-
     private void applyEffectsToNearbyPlayers(ServerWorld world, BlockPos pos) {
         Box area = new Box(
                 pos.getX() - 10, pos.getY() - 1, pos.getZ() - 10,
                 pos.getX() + 10, pos.getY() + 1, pos.getZ() + 10
         );
-
         List<PlayerEntity> players = world.getEntitiesByClass(PlayerEntity.class, area, player -> true);
-
         int durationTicks = 6000;
-
         for (PlayerEntity player : players) {
             player.addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, durationTicks, 6));
             player.addStatusEffect(new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, durationTicks, 0));
