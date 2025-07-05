@@ -3,6 +3,7 @@ package org.saverio.golditemexpansion.block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.WallMountedBlock;
+import net.minecraft.block.enums.WallMountLocation;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -11,6 +12,8 @@ import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
+import net.minecraft.state.property.DirectionProperty;
+import net.minecraft.state.property.EnumProperty;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
@@ -20,19 +23,29 @@ import net.minecraft.world.World;
 import java.util.List;
 
 public class GoldenHeadBlock extends WallMountedBlock {
+    public static final EnumProperty<WallMountLocation> FACE = WallMountedBlock.FACE;
+    public static final DirectionProperty FACING = WallMountedBlock.FACING;
     private static final int TICKS_BEFORE_REMOVE = 40;
-
     public GoldenHeadBlock(Settings settings) {
         super(settings);
-        setDefaultState(this.getStateManager().getDefaultState().with(FACING, Direction.NORTH));
+        setDefaultState(this.getStateManager().getDefaultState()
+                .with(FACE, WallMountLocation.WALL)
+                .with(FACING, Direction.NORTH));
     }
     @Override
     public BlockState getPlacementState(ItemPlacementContext ctx) {
-        return this.getDefaultState().with(FACING, ctx.getHorizontalPlayerFacing().getOpposite());
+        Direction direction = ctx.getPlacementDirections()[0];
+        WallMountLocation face = direction == Direction.UP ? WallMountLocation.CEILING
+                : direction == Direction.DOWN ? WallMountLocation.FLOOR
+                : WallMountLocation.WALL;
+        Direction facing = face == WallMountLocation.WALL
+                ? ctx.getHorizontalPlayerFacing().getOpposite()
+                : ctx.getHorizontalPlayerFacing();
+        return this.getDefaultState().with(FACE, face).with(FACING, facing);
     }
     @Override
     protected void appendProperties(StateManager.Builder<net.minecraft.block.Block, BlockState> builder) {
-        builder.add(FACING);
+        builder.add(FACE, FACING);
     }
     @Override
     public void onPlaced(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack) {
