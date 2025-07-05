@@ -1,5 +1,6 @@
 {
   "block.golditemexpansion.compressed_gold_block": "Compressed Gold Block",
   "advancement.golditemexpansion.compressed_gold_block.title": "Harder and Harder!",
-  "advancement.golditemexpansion.compressed_gold_block.description": "Unlock this advancement by crafting the compressed gold block"
+  "advancement.golditemexpansion.compressed_gold_block.description": "Unlock this advancement by crafting the compressed gold block",
+  "block.golditemexpansion.golden_head": "Golden Head"
 }
