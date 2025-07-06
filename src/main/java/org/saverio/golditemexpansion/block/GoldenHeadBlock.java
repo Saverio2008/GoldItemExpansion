@@ -52,7 +52,7 @@ public class GoldenHeadBlock extends SkullBlock {
     private void applyOrExtendEffect(PlayerEntity player, StatusEffectInstance newEffect) {
         StatusEffectInstance current = player.getStatusEffect(newEffect.getEffectType());
         if (current != null) {
-            int extendedDuration = Math.min(current.getDuration() + newEffect.getDuration(), 32767);
+            int extendedDuration = current.getDuration() + newEffect.getDuration();
             int amplifier = Math.max(current.getAmplifier(), newEffect.getAmplifier());
             player.addStatusEffect(new StatusEffectInstance(
                     newEffect.getEffectType(),
