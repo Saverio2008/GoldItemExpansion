@@ -15,6 +15,7 @@ import java.util.List;
 
 public class GoldenHeadBlock extends SkullBlock {
     private static final int TICKS_BEFORE_REMOVE = 40;
+    private static final int EFFECT_RADIUS = 10;
 
     public GoldenHeadBlock(Settings settings) {
         // 用一个自定义的 SkullType，贴图绑定时会用它的注册名
@@ -30,6 +31,7 @@ public class GoldenHeadBlock extends SkullBlock {
             serverWorld.scheduleBlockTick(pos, this, TICKS_BEFORE_REMOVE);
         }
     }
+
     @SuppressWarnings("deprecation")
     @Override
     public void scheduledTick(net.minecraft.block.BlockState state, ServerWorld world, BlockPos pos, Random random) {
@@ -37,7 +39,11 @@ public class GoldenHeadBlock extends SkullBlock {
     }
 
     private void applyEffectsToNearbyPlayers(ServerWorld world, BlockPos pos) {
-        Box area = new Box(pos).expand(10, 1, 10);
+        Box area = new Box(
+                pos.getX() - EFFECT_RADIUS, pos.getY() - EFFECT_RADIUS, pos.getZ() - EFFECT_RADIUS,
+                pos.getX() + EFFECT_RADIUS, pos.getY() + EFFECT_RADIUS, pos.getZ() + EFFECT_RADIUS
+        );
+
         List<PlayerEntity> players = world.getEntitiesByClass(PlayerEntity.class, area, player -> true);
         int durationTicks = 6000;
 
