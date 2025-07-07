@@ -1,4 +1,4 @@
-package org.saverio.golditemexpansion.mixin;
+package org.saverio.golditemexpansion.block;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -16,11 +16,11 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class GoldenHead extends SkullBlock {
+public class GoldenHeadBlock extends SkullBlock {
     private static final int TICKS_BEFORE_REMOVE = 40;
     private static final int EFFECT_RADIUS = 10;
 
-    public GoldenHead(Settings settings) {
+    public GoldenHeadBlock(Settings settings) {
         super(Type.SKELETON, settings); // 保持动态渲染
     }
 

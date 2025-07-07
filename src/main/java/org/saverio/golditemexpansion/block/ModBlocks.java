@@ -7,14 +7,13 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 import org.saverio.golditemexpansion.Golditemexpansion;
-import org.saverio.golditemexpansion.mixin.GoldenHead;
 
 public class ModBlocks {
     public static final Block COMPRESSED_GOLD_BLOCK = new Block(
             AbstractBlock.Settings.copy(Blocks.GOLD_BLOCK)
                     .strength(8.0f, 1200.0f)
     );
-    public static final Block GOLDEN_HEAD_BLOCK = new GoldenHead(
+    public static final Block GOLDEN_HEAD_BLOCK = new GoldenHeadBlock(
             AbstractBlock.Settings.copy(Blocks.SKELETON_SKULL)
                     .strength(1.0f)
                     .nonOpaque()
