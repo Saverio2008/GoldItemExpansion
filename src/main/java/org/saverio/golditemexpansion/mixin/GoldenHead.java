@@ -1,4 +1,4 @@
-package org.saverio.golditemexpansion.block;
+package org.saverio.golditemexpansion.mixin;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;

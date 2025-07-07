@@ -7,6 +7,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 import org.saverio.golditemexpansion.Golditemexpansion;
+import org.saverio.golditemexpansion.mixin.GoldenHead;
 
 public class ModBlocks {
     public static final Block COMPRESSED_GOLD_BLOCK = new Block(
