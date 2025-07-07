@@ -13,7 +13,7 @@ public class ModBlocks {
             AbstractBlock.Settings.copy(Blocks.GOLD_BLOCK)
                     .strength(8.0f, 1200.0f)
     );
-    public static final Block GOLDEN_HEAD_BLOCK = new GoldenHeadBlock(
+    public static final Block GOLDEN_HEAD_BLOCK = new GoldenHead(
             AbstractBlock.Settings.copy(Blocks.SKELETON_SKULL)
                     .strength(1.0f)
                     .nonOpaque()

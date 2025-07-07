@@ -16,11 +16,11 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class GoldenHeadBlock extends SkullBlock {
+public class GoldenHead extends SkullBlock {
     private static final int TICKS_BEFORE_REMOVE = 40;
     private static final int EFFECT_RADIUS = 10;
 
-    public GoldenHeadBlock(Settings settings) {
+    public GoldenHead(Settings settings) {
         super(Type.SKELETON, settings); // 保持动态渲染
     }
 
