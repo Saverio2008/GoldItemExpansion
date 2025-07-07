@@ -17,6 +17,13 @@
       "org.saverio.golditemexpansion.Golditemexpansion"
     ]
   },
+  "mixins": [
+    "golditemexpansion.mixins.json",
+    {
+      "config": "golditemexpansion.client.mixins.json",
+      "environment": "client"
+    }
+  ],
   "depends": {
     "fabricloader": ">=${loader_version}",
     "fabric": "*",
