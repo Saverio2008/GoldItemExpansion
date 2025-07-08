@@ -1,23 +1,23 @@
 {
 	"format_version": "1.9.0",
 	"credit": "Made with Blockbench",
-	"ambientocclusion": true,
+	"ambientocclusion": false,
 	"texture_size": [32, 32],
 	"textures": {
-		"0": "golditemexpansion:block/golden_head",
+		"1": "golditemexpansion:block/golden_head",
 		"particle": "golditemexpansion:block/golden_head"
 	},
 	"elements": [
 		{
-			"from": [4, 0, 4],
-			"to": [12, 8, 12],
+			"from": [4, 4, 8],
+			"to": [12, 12, 16],
 			"faces": {
-				"north": {"uv": [8, 4, 4, 0], "texture": "#0"},
-				"east": {"uv": [0, 4, 4, 8], "texture": "#0"},
-				"south": {"uv": [12, 4, 16, 8], "texture": "#0"},
-				"west": {"uv": [8, 4, 12, 8], "texture": "#0"},
-				"up": {"uv": [4, 4, 8, 8], "texture": "#0"},
-				"down": {"uv": [12, 0, 8, 4], "texture": "#0"}
+				"north": {"texture": "#1"},
+				"east": {"uv": [0, 4, 4, 8], "texture": "#1"},
+				"south": {"uv": [12, 4, 16, 8], "texture": "#1"},
+				"west": {"uv": [8, 4, 12, 8], "texture": "#1"},
+				"up": {"uv": [8, 4, 4, 0], "texture": "#1"},
+				"down": {"uv": [12, 0, 8, 4], "texture": "#1"}
 			}
 		}
 	]
