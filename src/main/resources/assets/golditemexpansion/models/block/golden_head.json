@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/skull",
+  "textures": {
+    "particle": "golditemexpansion:block/golden_head",
+    "texture": "golditemexpansion:block/golden_head"
+  }
+}
