@@ -3,12 +3,10 @@ package org.saverio.golditemexpansion.block;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 import org.saverio.golditemexpansion.Golditemexpansion;
-import org.saverio.golditemexpansion.client.mixin.BlockEntityTypeAccessor;
 
 public class ModBlocks {
     public static final Block COMPRESSED_GOLD_BLOCK = new Block(
@@ -31,9 +29,5 @@ public class ModBlocks {
         Registry.register(Registries.BLOCK,
                 new Identifier(Golditemexpansion.MOD_ID, "golden_head"),
                 GOLDEN_HEAD_BLOCK);
-
-        // 通过 Mixin 访问器获得 SKULL 类型的 blocks 集合并添加自定义方块
-        BlockEntityTypeAccessor skullAccessor = (BlockEntityTypeAccessor) BlockEntityType.SKULL;
-        skullAccessor.getBlocks().add(GOLDEN_HEAD_BLOCK);
     }
 }
