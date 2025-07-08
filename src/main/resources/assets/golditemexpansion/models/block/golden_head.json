@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:block/skeleton_skull",
-  "textures": {
-    "skull": "golditemexpansion:block/golden_head"
-  }
-}
