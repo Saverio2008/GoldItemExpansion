@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/head",
+  "textures": {
+    "head": "golditemexpansion:block/golden_head"
+  }
+}

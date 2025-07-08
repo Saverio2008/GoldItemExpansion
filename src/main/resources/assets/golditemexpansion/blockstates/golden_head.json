@@ -1,0 +1,20 @@
+{
+  "variants": {
+    "rotation=0":  { "model": "golditemexpansion:block/golden_head", "x": 0, "y": 0 },
+    "rotation=1":  { "model": "golditemexpansion:block/golden_head", "x": 0, "y": 22.5 },
+    "rotation=2":  { "model": "golditemexpansion:block/golden_head", "x": 0, "y": 45 },
+    "rotation=3":  { "model": "golditemexpansion:block/golden_head", "x": 0, "y": 67.5 },
+    "rotation=4":  { "model": "golditemexpansion:block/golden_head", "x": 0, "y": 90 },
+    "rotation=5":  { "model": "golditemexpansion:block/golden_head", "x": 0, "y": 112.5 },
+    "rotation=6":  { "model": "golditemexpansion:block/golden_head", "x": 0, "y": 135 },
+    "rotation=7":  { "model": "golditemexpansion:block/golden_head", "x": 0, "y": 157.5 },
+    "rotation=8":  { "model": "golditemexpansion:block/golden_head", "x": 0, "y": 180 },
+    "rotation=9":  { "model": "golditemexpansion:block/golden_head", "x": 0, "y": 202.5 },
+    "rotation=10": { "model": "golditemexpansion:block/golden_head", "x": 0, "y": 225 },
+    "rotation=11": { "model": "golditemexpansion:block/golden_head", "x": 0, "y": 247.5 },
+    "rotation=12": { "model": "golditemexpansion:block/golden_head", "x": 0, "y": 270 },
+    "rotation=13": { "model": "golditemexpansion:block/golden_head", "x": 0, "y": 292.5 },
+    "rotation=14": { "model": "golditemexpansion:block/golden_head", "x": 0, "y": 315 },
+    "rotation=15": { "model": "golditemexpansion:block/golden_head", "x": 0, "y": 337.5 }
+  }
+}
