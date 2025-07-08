@@ -28,7 +28,7 @@ import java.util.Map;
 public class SkullBlockEntityRendererMixin {
 
     @Unique
-    private static final Identifier GOLDEN_HEAD_TEXTURE = new Identifier("golditemexpansion", "textures/block/golden_head.png");
+    private static final Identifier GOLDEN_HEAD_TEXTURE = new Identifier("golditemexpansion", "block/golden_head");
 
     @Shadow @Final
     private Map<SkullBlock.SkullType, SkullBlockEntityModel> MODELS;
