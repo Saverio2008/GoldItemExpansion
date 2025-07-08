@@ -4,8 +4,8 @@
 	"ambientocclusion": false,
 	"texture_size": [32, 32],
 	"textures": {
-		"0": "golden_head_ceiling",
-		"particle": "golden_head_ceiling"
+		"0": "golditemexpansion:block/golden_head",
+		"particle": "golditemexpansion:block/golden_head"
 	},
 	"elements": [
 		{
