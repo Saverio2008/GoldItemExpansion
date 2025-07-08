@@ -4,8 +4,8 @@
 	"ambientocclusion": true,
 	"texture_size": [32, 32],
 	"textures": {
-		"0": "golditemexpansion:block/golden_head_wall",
-		"particle": "golditemexpansion:block/golden_head_wall"
+		"0": "golditemexpansion:block/golden_head",
+		"particle": "golditemexpansion:block/golden_head"
 	},
 	"elements": [
 		{
