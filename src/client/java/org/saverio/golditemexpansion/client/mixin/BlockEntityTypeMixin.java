@@ -28,9 +28,11 @@ public abstract class BlockEntityTypeMixin {
     @Inject(method = "<init>", at = @At("RETURN"))
     private void onInit(BlockEntityFactory<?> factory, Set<Block> blocks, Type<?> type, CallbackInfo ci) {
         if ((Object) this == BlockEntityType.SKULL) {
-            Set<Block> modifiable = new HashSet<>(this.blocks);
-            modifiable.add(ModBlocks.GOLDEN_HEAD_BLOCK);
-            this.blocks = modifiable;
+            if (!this.blocks.contains(ModBlocks.GOLDEN_HEAD_BLOCK)) {
+                Set<Block> modifiable = new HashSet<>(this.blocks);
+                modifiable.add(ModBlocks.GOLDEN_HEAD_BLOCK);
+                this.blocks = modifiable;
+            }
         }
     }
 }
