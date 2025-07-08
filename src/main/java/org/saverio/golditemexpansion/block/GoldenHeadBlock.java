@@ -26,11 +26,11 @@ public class GoldenHeadBlock extends Block {
     public static final EnumProperty<Direction> FACING = Properties.HORIZONTAL_FACING;
 
     private static final VoxelShape SHAPE_FLOOR = Block.createCuboidShape(4, 0, 4, 12, 8, 12);
-    private static final VoxelShape SHAPE_WALL_SOUTH = Block.createCuboidShape(4, 0, 8, 12, 8, 16);
-    private static final VoxelShape SHAPE_WALL_NORTH = Block.createCuboidShape(4, 0, 0, 12, 8, 8);
-    private static final VoxelShape SHAPE_WALL_WEST  = Block.createCuboidShape(0, 0, 4, 8, 8, 12);
-    private static final VoxelShape SHAPE_WALL_EAST  = Block.createCuboidShape(8, 0, 4, 16, 8, 12);
     private static final VoxelShape SHAPE_CEILING   = Block.createCuboidShape(4, 8, 4, 12, 16, 12);
+    private static final VoxelShape SHAPE_WALL_SOUTH = Block.createCuboidShape(4, 0, 0, 12, 8, 2);
+    private static final VoxelShape SHAPE_WALL_NORTH = Block.createCuboidShape(4, 0, 14, 12, 8, 16);
+    private static final VoxelShape SHAPE_WALL_WEST  = Block.createCuboidShape(14, 0, 4, 16, 8, 12);
+    private static final VoxelShape SHAPE_WALL_EAST  = Block.createCuboidShape(0, 0, 4, 2, 8, 12);
 
     public GoldenHeadBlock(Settings settings) {
         super(settings);
