@@ -8,10 +8,9 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
-import net.minecraft.state.property.Properties;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Box;
-import net.minecraft.util.math.Direction;
+import net.minecraft.state.property.EnumProperty;
+import net.minecraft.state.property.IntProperty;
+import net.minecraft.util.math.*;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
@@ -23,36 +22,68 @@ public class GoldenHeadBlock extends Block {
     private static final int TICKS_BEFORE_REMOVE = 40;
     private static final int EFFECT_RADIUS = 10;
 
-    // 定义碰撞箱（小方块）
+    public static final EnumProperty<MountType> MOUNT = EnumProperty.of("mount", MountType.class);
+    public static final IntProperty ROTATION = IntProperty.of("rotation", 0, 15);
+
     private static final VoxelShape SHAPE = Block.createCuboidShape(4, 0, 4, 12, 8, 12);
 
     public GoldenHeadBlock(AbstractBlock.Settings settings) {
         super(settings);
-        // 默认朝向北
-        this.setDefaultState(this.stateManager.getDefaultState().with(Properties.HORIZONTAL_FACING, Direction.NORTH));
+        this.setDefaultState(this.stateManager.getDefaultState()
+                .with(MOUNT, MountType.FLOOR)
+                .with(ROTATION, 0));
     }
 
-    // 添加方块状态属性（方向）
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        builder.add(Properties.HORIZONTAL_FACING);
+        builder.add(MOUNT, ROTATION);
     }
 
-    // 放置时确定方向
     @Override
     public BlockState getPlacementState(ItemPlacementContext ctx) {
-        // 朝向玩家反方向
-        return this.getDefaultState().with(Properties.HORIZONTAL_FACING, ctx.getHorizontalPlayerFacing().getOpposite());
+        Direction clicked = ctx.getSide();
+        MountType mount;
+        int rotation;
+
+        if (clicked == Direction.UP) {
+            mount = MountType.FLOOR;
+            rotation = getRotationFromYaw(ctx.getPlayerYaw()); // 地面用16方向
+        } else if (clicked == Direction.DOWN) {
+            mount = MountType.CEILING;
+            rotation = getRotationFromYaw(ctx.getPlayerYaw()); // 天花板用16方向
+        } else {
+            mount = MountType.WALL;
+            rotation = getRotationFromDirection(clicked); // 墙面用4方向映射成rotation的4个值
+        }
+
+        return getDefaultState().with(MOUNT, mount).with(ROTATION, rotation);
     }
 
-    // 返回碰撞箱
-    @SuppressWarnings("deprecation")
+    private int getRotationFromYaw(float yaw) {
+        return MathHelper.floor((yaw * 16.0F / 360.0F) + 0.5F) & 15;
+    }
+
+    private int getRotationFromDirection(Direction direction) {
+        // 墙面四个方向分别对应rotation的四个值(0,4,8,12)
+        // 你可以根据模型调整这几个值对应的方向
+        return switch (direction) {
+            case SOUTH -> 0;  // 南墙
+            case WEST  -> 4;  // 西墙
+            case NORTH -> 8;  // 北墙
+            case EAST  -> 12; // 东墙
+            default -> {
+                System.err.println("Unexpected direction for wall mount: " + direction);
+                yield 0;
+            }
+        };
+    }
+
     @Override
+    @SuppressWarnings("deprecation")
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         return SHAPE;
     }
 
-    // 放置后触发效果和定时销毁
     @Override
     public void onPlaced(World world, BlockPos pos, BlockState state, LivingEntity placer, net.minecraft.item.ItemStack itemStack) {
         super.onPlaced(world, pos, state, placer, itemStack);
@@ -63,7 +94,6 @@ public class GoldenHeadBlock extends Block {
         }
     }
 
-    // 定时销毁
     @SuppressWarnings("deprecation")
     @Override
     public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
