@@ -21,7 +21,7 @@ public class GoldenHeadBlock extends SkullBlock {
     private static final int EFFECT_RADIUS = 10;
 
     public GoldenHeadBlock(Settings settings) {
-        super(Type.SKELETON, settings); // 保持动态渲染
+        super(Type.SKELETON, settings);
     }
 
     @Override
