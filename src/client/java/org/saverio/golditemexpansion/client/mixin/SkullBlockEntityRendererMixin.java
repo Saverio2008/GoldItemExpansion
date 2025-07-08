@@ -1,4 +1,4 @@
-package org.saverio.golditemexpansion.mixin.client;
+package org.saverio.golditemexpansion.client.mixin;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SkullBlock;
