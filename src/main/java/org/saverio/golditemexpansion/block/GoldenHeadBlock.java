@@ -9,7 +9,7 @@ import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.EnumProperty;
-import net.minecraft.state.property.IntProperty;
+import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.*;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
@@ -17,59 +17,46 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
 import java.util.List;
-import java.util.Map;
 
 public class GoldenHeadBlock extends Block {
     private static final int TICKS_BEFORE_REMOVE = 40;
     private static final int EFFECT_RADIUS = 10;
 
     public static final EnumProperty<MountType> MOUNT = EnumProperty.of("mount", MountType.class);
-    public static final IntProperty ROTATION = IntProperty.of("rotation", 0, 15);
+    public static final EnumProperty<Direction> FACING = Properties.HORIZONTAL_FACING;
 
     private static final VoxelShape SHAPE = Block.createCuboidShape(4, 0, 4, 12, 8, 12);
-
-    // 壁挂四方向映射为 4 个 rotation 值，配合 JSON 渲染
-    private static final Map<Direction, Integer> WALL_ROTATION = Map.of(
-            Direction.SOUTH, 0,
-            Direction.WEST, 4,
-            Direction.NORTH, 8,
-            Direction.EAST, 12
-    );
 
     public GoldenHeadBlock(Settings settings) {
         super(settings);
         setDefaultState(getStateManager().getDefaultState()
                 .with(MOUNT, MountType.FLOOR)
-                .with(ROTATION, 0));
+                .with(FACING, Direction.NORTH));
     }
 
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        builder.add(MOUNT, ROTATION);
+        builder.add(MOUNT, FACING);
     }
 
     @Override
     public BlockState getPlacementState(ItemPlacementContext ctx) {
         Direction clicked = ctx.getSide();
         MountType mount;
-        int rotation;
+        Direction facing;
 
         if (clicked == Direction.UP) {
             mount = MountType.FLOOR;
-            rotation = getRotationFromYaw(ctx.getPlayerYaw());
+            facing = ctx.getHorizontalPlayerFacing().getOpposite(); // 玩家朝向反方向作为面朝
         } else if (clicked == Direction.DOWN) {
             mount = MountType.CEILING;
-            rotation = getRotationFromYaw(ctx.getPlayerYaw());
+            facing = ctx.getHorizontalPlayerFacing().getOpposite();
         } else {
             mount = MountType.WALL;
-            rotation = WALL_ROTATION.getOrDefault(clicked, 0);
+            facing = clicked; // 墙面朝向就是点击的面
         }
 
-        return getDefaultState().with(MOUNT, mount).with(ROTATION, rotation);
-    }
-
-    private int getRotationFromYaw(float yaw) {
-        return MathHelper.floor((yaw * 16.0F / 360.0F) + 0.5F) & 15;
+        return getDefaultState().with(MOUNT, mount).with(FACING, facing);
     }
 
     @SuppressWarnings("deprecation")
