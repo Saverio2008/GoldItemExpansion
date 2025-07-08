@@ -29,7 +29,7 @@ public class GoldenHeadBlock extends Block {
     private static final VoxelShape SHAPE_CEILING   = Block.createCuboidShape(4, 8, 4, 12, 16, 12);
     private static final VoxelShape SHAPE_WALL_SOUTH = Block.createCuboidShape(4, 4, 0, 12, 12, 8);
     private static final VoxelShape SHAPE_WALL_NORTH = Block.createCuboidShape(4, 4, 8, 12, 12, 16);
-    private static final VoxelShape SHAPE_WALL_WEST  = Block.createCuboidShape(12, 4, 4, 16, 12, 12);
+    private static final VoxelShape SHAPE_WALL_WEST  = Block.createCuboidShape(8, 4, 4, 16, 12, 12);
     private static final VoxelShape SHAPE_WALL_EAST  = Block.createCuboidShape(0, 4, 4, 8, 12, 12);
 
     public GoldenHeadBlock(Settings settings) {
