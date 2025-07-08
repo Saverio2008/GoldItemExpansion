@@ -12,7 +12,4 @@ public interface BlockEntityTypeAccessor {
 
     @Accessor("blocks")
     Set<Block> getBlocks();
-
-    @Accessor("blocks")
-    void setBlocks(Set<Block> blocks);
 }
