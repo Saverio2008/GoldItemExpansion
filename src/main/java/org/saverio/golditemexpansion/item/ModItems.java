@@ -19,7 +19,7 @@ public class ModItems {
     public static final Item GOLDEN_HEAD_ITEM =
             new BlockItem(ModBlocks.GOLDEN_HEAD_BLOCK, new FabricItemSettings());
 
-    @SuppressWarnings("UnstableApiUsage") // 根据IDE警告可选
+    @SuppressWarnings("UnstableApiUsage")
     public static void registerItems() {
         Registry.register(Registries.ITEM,
                 new Identifier(Golditemexpansion.MOD_ID, "compressed_gold_block"),
@@ -29,7 +29,6 @@ public class ModItems {
                 new Identifier(Golditemexpansion.MOD_ID, "golden_head"),
                 GOLDEN_HEAD_ITEM);
 
-        // 加入物品组方便在创造界面中找到
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.BUILDING_BLOCKS).register(content ->
                 content.addAfter(Blocks.GOLD_BLOCK.asItem(), COMPRESSED_GOLD_BLOCK_ITEM));
 
