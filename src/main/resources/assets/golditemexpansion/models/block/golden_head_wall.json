@@ -4,14 +4,14 @@
 	"ambientocclusion": false,
 	"texture_size": [32, 32],
 	"textures": {
-		"0": "golden_head",
-		"particle": "golden_head"
+		"0": "golden_head_wall",
+		"particle": "golden_head_wall"
 	},
 	"elements": [
 		{
-			"from": [4, 4, 8],
-			"to": [12, 12, 16],
-			"rotation": {"angle": 0, "axis": "y", "origin": [8, 8, 12], "rescale": true},
+			"from": [4, 0, 4],
+			"to": [12, 8, 12],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 4, 8], "rescale": true},
 			"faces": {
 				"north": {"uv": [4, 4, 8, 8], "texture": "#0"},
 				"east": {"uv": [0, 4, 4, 8], "texture": "#0"},
@@ -24,25 +24,32 @@
 	],
 	"display": {
 		"thirdperson_righthand": {
-			"rotation": [91, 0, 0],
-			"translation": [0, 8, -0.5]
+			"translation": [0, 8, 0.75]
 		},
 		"thirdperson_lefthand": {
-			"translation": [0, 4, -3.5]
+			"translation": [0, 8, 0.25]
+		},
+		"firstperson_righthand": {
+			"rotation": [-80, 0, 0]
+		},
+		"firstperson_lefthand": {
+			"rotation": [-80, 0, 0]
 		},
 		"ground": {
 			"translation": [0, 0, -2.5],
 			"scale": [0.7, 0.7, 0.7]
 		},
 		"gui": {
-			"rotation": [25, -135, 0],
-			"translation": [2.5, -0.75, 0]
+			"rotation": [110, 180, 29],
+			"translation": [2.5, -1.5, 0]
 		},
 		"head": {
+			"rotation": [-90, 0, 0],
 			"translation": [-0.25, 1, -6.75],
 			"scale": [1.8457, 1.72727, 1.72852]
 		},
 		"fixed": {
+			"rotation": [-90, 0, 0],
 			"translation": [0, 0.25, -2.5]
 		}
 	}
