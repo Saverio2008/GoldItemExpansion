@@ -25,7 +25,12 @@ public class GoldenHeadBlock extends Block {
     public static final EnumProperty<MountType> MOUNT = EnumProperty.of("mount", MountType.class);
     public static final EnumProperty<Direction> FACING = Properties.HORIZONTAL_FACING;
 
-    private static final VoxelShape SHAPE = Block.createCuboidShape(4, 0, 4, 12, 8, 12);
+    private static final VoxelShape SHAPE_FLOOR = Block.createCuboidShape(4, 0, 4, 12, 8, 12);
+    private static final VoxelShape SHAPE_WALL_SOUTH = Block.createCuboidShape(4, 0, 8, 12, 8, 16);
+    private static final VoxelShape SHAPE_WALL_NORTH = Block.createCuboidShape(4, 0, 0, 12, 8, 8);
+    private static final VoxelShape SHAPE_WALL_WEST  = Block.createCuboidShape(0, 0, 4, 8, 8, 12);
+    private static final VoxelShape SHAPE_WALL_EAST  = Block.createCuboidShape(8, 0, 4, 16, 8, 12);
+    private static final VoxelShape SHAPE_CEILING   = Block.createCuboidShape(4, 8, 4, 12, 16, 12);
 
     public GoldenHeadBlock(Settings settings) {
         super(settings);
@@ -53,7 +58,7 @@ public class GoldenHeadBlock extends Block {
             facing = ctx.getHorizontalPlayerFacing().getOpposite();
         } else {
             mount = MountType.WALL;
-            facing = clicked; // 墙面朝向就是点击的面
+            facing = clicked;
         }
 
         return getDefaultState().with(MOUNT, mount).with(FACING, facing);
@@ -62,7 +67,21 @@ public class GoldenHeadBlock extends Block {
     @SuppressWarnings("deprecation")
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return SHAPE;
+        MountType mount = state.get(MOUNT);
+        Direction facing = state.get(FACING);
+
+        return switch (mount) {
+            case FLOOR -> SHAPE_FLOOR;
+            case CEILING -> SHAPE_CEILING;
+            case WALL ->
+                    switch (facing) {
+                        case SOUTH -> SHAPE_WALL_SOUTH;
+                        case NORTH -> SHAPE_WALL_NORTH;
+                        case WEST  -> SHAPE_WALL_WEST;
+                        case EAST  -> SHAPE_WALL_EAST;
+                        default -> SHAPE_FLOOR;
+                    };
+        };
     }
 
     @Override
