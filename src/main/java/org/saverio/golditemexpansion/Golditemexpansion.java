@@ -8,7 +8,7 @@ public class Golditemexpansion implements ModInitializer {
     public static final String MOD_ID = "golditemexpansion";
     @Override
     public void onInitialize() {
-        ModItems.registerItems();
         ModBlocks.registerBlocks();
+        ModItems.registerItems();
     }
 }
