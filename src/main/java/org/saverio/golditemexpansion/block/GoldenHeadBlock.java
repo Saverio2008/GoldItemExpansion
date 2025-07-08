@@ -17,6 +17,7 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
 import java.util.List;
+import java.util.Map;
 
 public class GoldenHeadBlock extends Block {
     private static final int TICKS_BEFORE_REMOVE = 40;
@@ -27,9 +28,17 @@ public class GoldenHeadBlock extends Block {
 
     private static final VoxelShape SHAPE = Block.createCuboidShape(4, 0, 4, 12, 8, 12);
 
-    public GoldenHeadBlock(AbstractBlock.Settings settings) {
+    // 壁挂四方向映射为 4 个 rotation 值，配合 JSON 渲染
+    private static final Map<Direction, Integer> WALL_ROTATION = Map.of(
+            Direction.SOUTH, 0,
+            Direction.WEST, 4,
+            Direction.NORTH, 8,
+            Direction.EAST, 12
+    );
+
+    public GoldenHeadBlock(Settings settings) {
         super(settings);
-        this.setDefaultState(this.stateManager.getDefaultState()
+        setDefaultState(getStateManager().getDefaultState()
                 .with(MOUNT, MountType.FLOOR)
                 .with(ROTATION, 0));
     }
@@ -47,13 +56,13 @@ public class GoldenHeadBlock extends Block {
 
         if (clicked == Direction.UP) {
             mount = MountType.FLOOR;
-            rotation = getRotationFromYaw(ctx.getPlayerYaw()); // 地面用16方向
+            rotation = getRotationFromYaw(ctx.getPlayerYaw());
         } else if (clicked == Direction.DOWN) {
             mount = MountType.CEILING;
-            rotation = getRotationFromYaw(ctx.getPlayerYaw()); // 天花板用16方向
+            rotation = getRotationFromYaw(ctx.getPlayerYaw());
         } else {
             mount = MountType.WALL;
-            rotation = getRotationFromDirection(clicked); // 墙面用4方向映射成rotation的4个值
+            rotation = WALL_ROTATION.getOrDefault(clicked, 0);
         }
 
         return getDefaultState().with(MOUNT, mount).with(ROTATION, rotation);
@@ -63,23 +72,8 @@ public class GoldenHeadBlock extends Block {
         return MathHelper.floor((yaw * 16.0F / 360.0F) + 0.5F) & 15;
     }
 
-    private int getRotationFromDirection(Direction direction) {
-        // 墙面四个方向分别对应rotation的四个值(0,4,8,12)
-        // 你可以根据模型调整这几个值对应的方向
-        return switch (direction) {
-            case SOUTH -> 0;  // 南墙
-            case WEST  -> 4;  // 西墙
-            case NORTH -> 8;  // 北墙
-            case EAST  -> 12; // 东墙
-            default -> {
-                System.err.println("Unexpected direction for wall mount: " + direction);
-                yield 0;
-            }
-        };
-    }
-
-    @Override
     @SuppressWarnings("deprecation")
+    @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         return SHAPE;
     }
