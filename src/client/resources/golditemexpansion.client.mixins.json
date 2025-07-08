@@ -4,15 +4,13 @@
   "package": "org.saverio.golditemexpansion.client.mixin",
   "compatibilityLevel": "JAVA_17",
   "client": [
-    "SkullBlockEntityRendererMixin"
+    "SkullBlockEntityRendererMixin",
+    "BlockEntityTypeAccessor"
   ],
   "injectors": {
     "defaultRequire": 1
   },
   "overwrites": {
     "requireAnnotations": true
-  },
-  "mixins": [
-    "BlockEntityTypeAccessor"
-  ]
+  }
 }
