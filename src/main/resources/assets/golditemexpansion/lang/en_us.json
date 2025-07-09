@@ -3,6 +3,8 @@
   "block.golditemexpansion.golden_head": "Golden Head",
 
   "item.minecraft.potion.effect.god_potion": "God Potion",
+  "item.minecraft.splash_potion.effect.god_potion": "Splash God Potion",
+  "item.minecraft.lingering_potion.effect.god_potion": "Lingering God Potion",
 
   "advancement.golditemexpansion.compressed_gold_block.title": "Harder, Stronger!",
   "advancement.golditemexpansion.compressed_gold_block.description": "Unlock this advancement after crafting a compressed gold block"
