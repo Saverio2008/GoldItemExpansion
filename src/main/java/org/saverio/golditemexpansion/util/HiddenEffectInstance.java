@@ -1,4 +1,4 @@
-package org.saverio.golditemexpansion.mixin;
+package org.saverio.golditemexpansion.util;
 
 public interface HiddenEffectInstance {
     boolean goldItemExpansion$shouldHideIcon();

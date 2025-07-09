@@ -1,7 +1,6 @@
 package org.saverio.golditemexpansion.util;
 
 import net.minecraft.entity.effect.StatusEffectInstance;
-import org.saverio.golditemexpansion.mixin.HiddenEffectInstance;
 
 public class EffectUtils {
 

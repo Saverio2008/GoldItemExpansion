@@ -1,6 +1,7 @@
 package org.saverio.golditemexpansion.mixin;
 
 import net.minecraft.entity.effect.StatusEffectInstance;
+import org.saverio.golditemexpansion.util.HiddenEffectInstance;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 
