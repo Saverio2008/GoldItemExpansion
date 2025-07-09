@@ -19,14 +19,15 @@ public class ModItems {
     public static final Item GOLDEN_HEAD_ITEM =
             new BlockItem(ModBlocks.GOLDEN_HEAD_BLOCK, new FabricItemSettings());
 
-    public static final Item GOD_POTION_ITEM = new PotionItem(new FabricItemSettings().maxCount(1)) {
-        @Override
-        public ItemStack getDefaultStack() {
-            ItemStack stack = new ItemStack(this);
-            PotionUtil.setPotion(stack, ModPotions.GOD_POTION);
-            return stack;
-        }
-    };
+    public static final ItemStack GOD_POTION_STACK = PotionUtil.setPotion(
+            new ItemStack(Items.POTION), ModPotions.GOD_POTION);
+
+    public static final ItemStack GOD_SPLASH_POTION_STACK = PotionUtil.setPotion(
+            new ItemStack(Items.SPLASH_POTION), ModPotions.GOD_POTION);
+
+    public static final ItemStack GOD_LINGERING_POTION_STACK = PotionUtil.setPotion(
+            new ItemStack(Items.LINGERING_POTION), ModPotions.GOD_POTION);
+
     @SuppressWarnings("UnstableApiUsage")
     public static void registerItems() {
         Registry.register(Registries.ITEM,
@@ -37,17 +38,16 @@ public class ModItems {
                 new Identifier(Golditemexpansion.MOD_ID, "golden_head"),
                 GOLDEN_HEAD_ITEM);
 
-        Registry.register(Registries.ITEM,
-                new Identifier(Golditemexpansion.MOD_ID, "god_potion"),
-                GOD_POTION_ITEM);
-
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.BUILDING_BLOCKS).register(content ->
                 content.addAfter(Blocks.GOLD_BLOCK.asItem(), COMPRESSED_GOLD_BLOCK_ITEM));
 
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.FUNCTIONAL).register(content ->
                 content.addAfter(Blocks.DRAGON_HEAD.asItem(), GOLDEN_HEAD_ITEM));
 
-        ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register(content ->
-                content.add(GOD_POTION_ITEM));
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register(content -> {
+            content.add(GOD_POTION_STACK);
+            content.add(GOD_SPLASH_POTION_STACK);
+            content.add(GOD_LINGERING_POTION_STACK);
+        });
     }
 }
