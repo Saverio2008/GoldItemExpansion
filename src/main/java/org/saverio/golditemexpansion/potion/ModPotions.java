@@ -27,5 +27,6 @@ public class ModPotions {
                         new StatusEffectInstance(StatusEffects.WATER_BREATHING, 3600, 0)
                 )
         );
+        ModBrewingRecipes.registerBrewingRecipes();
     }
 }
