@@ -7,5 +7,7 @@
   "item.minecraft.lingering_potion.effect.god_potion": "Lingering Potion of God",
 
   "advancement.golditemexpansion.compressed_gold_block.title": "Harder, Stronger!",
-  "advancement.golditemexpansion.compressed_gold_block.description": "Unlock this advancement after crafting a compressed gold block"
+  "advancement.golditemexpansion.compressed_gold_block.description": "Unlock this advancement after crafting a compressed gold block",
+
+  "effect.golditemexpansion.god_status_effect": "Omnipotent"
 }
