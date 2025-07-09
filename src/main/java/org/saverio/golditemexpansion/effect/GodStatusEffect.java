@@ -6,8 +6,7 @@ import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
-
-import org.saverio.golditemexpansion.util.EffectUtils;  // 引入工具类
+import org.saverio.golditemexpansion.util.EffectUtils;
 
 import java.util.Objects;
 
