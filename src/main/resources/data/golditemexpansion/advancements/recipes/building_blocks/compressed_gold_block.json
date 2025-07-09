@@ -19,7 +19,12 @@
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
-          { "item": "golditemexpansion:compressed_gold_block" }
+          {
+            "item": "golditemexpansion:compressed_gold_block",
+            "count": {
+              "min": 1
+            }
+          }
         ]
       }
     }
