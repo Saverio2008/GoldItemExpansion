@@ -33,7 +33,6 @@
     }
   },
   "requirements": [
-    ["crafted_compressed_gold_block"],
-    ["obtained_compressed_gold_block"]
+    ["crafted_compressed_gold_block", "obtained_compressed_gold_block"]
   ]
 }
