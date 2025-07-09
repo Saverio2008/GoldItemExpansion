@@ -21,25 +21,36 @@ public class GodStatusEffect extends StatusEffect {
 
             if (entity instanceof PlayerEntity) {
                 // 玩家：覆盖所有正面效果，不显示粒子和图标，且只在剩余时间低时刷新避免频繁移除添加
-                replaceEffect(entity, StatusEffects.STRENGTH, duration, 4);
-                replaceEffect(entity, StatusEffects.RESISTANCE, duration, 4);
-                replaceEffect(entity, StatusEffects.REGENERATION, duration, 4);
                 replaceEffect(entity, StatusEffects.SPEED, duration, 4);
                 replaceEffect(entity, StatusEffects.HASTE, duration, 4);
+                replaceEffect(entity, StatusEffects.STRENGTH, duration, 4);
                 replaceEffect(entity, StatusEffects.JUMP_BOOST, duration, 4);
-                replaceEffect(entity, StatusEffects.HEALTH_BOOST, duration, 4);
+                replaceEffect(entity, StatusEffects.REGENERATION, duration, 4);
+                replaceEffect(entity, StatusEffects.RESISTANCE, duration, 4);
                 replaceEffect(entity, StatusEffects.FIRE_RESISTANCE, duration, 0);
                 replaceEffect(entity, StatusEffects.WATER_BREATHING, duration, 0);
+                replaceEffect(entity, StatusEffects.INVISIBILITY, duration, 0);
+                replaceEffect(entity, StatusEffects.NIGHT_VISION, duration, 0);
+                replaceEffect(entity, StatusEffects.HEALTH_BOOST, duration, 4);
+                replaceEffect(entity, StatusEffects.ABSORPTION, duration, 4);
+                replaceEffect(entity, StatusEffects.LUCK, duration, 4);
+                replaceEffect(entity, StatusEffects.SLOW_FALLING, duration, 0);
+                replaceEffect(entity, StatusEffects.CONDUIT_POWER, duration, 0);
+                replaceEffect(entity, StatusEffects.DOLPHINS_GRACE, duration, 4);
+                replaceEffect(entity, StatusEffects.HERO_OF_THE_VILLAGE, duration, 4);
             } else {
                 // 非玩家：覆盖所有原版负面效果，不显示粒子和图标，避免频繁刷新
-                replaceEffect(entity, StatusEffects.WEAKNESS, duration, 1);
-                replaceEffect(entity, StatusEffects.SLOWNESS, duration, 1);
-                replaceEffect(entity, StatusEffects.MINING_FATIGUE, duration, 1);
-                replaceEffect(entity, StatusEffects.UNLUCK, duration, 0);
-                replaceEffect(entity, StatusEffects.NAUSEA, duration, 0);
-                replaceEffect(entity, StatusEffects.BLINDNESS, duration, 0);
-                replaceEffect(entity, StatusEffects.HUNGER, duration, 1);
-                replaceEffect(entity, StatusEffects.DARKNESS, duration, 0);
+                replaceEffect(entity, StatusEffects.WEAKNESS, duration, 4);
+                replaceEffect(entity, StatusEffects.SLOWNESS, duration, 4);
+                replaceEffect(entity, StatusEffects.MINING_FATIGUE, duration, 4);
+                replaceEffect(entity, StatusEffects.UNLUCK, duration, 4);
+                replaceEffect(entity, StatusEffects.NAUSEA, duration, 4);
+                replaceEffect(entity, StatusEffects.BLINDNESS, duration, 4);
+                replaceEffect(entity, StatusEffects.HUNGER, duration, 4);
+                replaceEffect(entity, StatusEffects.DARKNESS, duration, 4);
+                replaceEffect(entity, StatusEffects.BAD_OMEN, duration, 4);
+                replaceEffect(entity, StatusEffects.LEVITATION, duration, 4);
+                replaceEffect(entity, StatusEffects.GLOWING, duration, 4);
             }
         }
     }
