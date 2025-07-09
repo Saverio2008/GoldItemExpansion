@@ -20,7 +20,7 @@ public class GodStatusEffect extends StatusEffect {
             int duration = Objects.requireNonNull(entity.getStatusEffect(this)).getDuration();
 
             if (entity instanceof PlayerEntity) {
-                // 玩家：覆盖所有正面效果，不显示粒子和图标
+                // 玩家：覆盖所有正面效果，不显示粒子和图标，且只在剩余时间低时刷新避免频繁移除添加
                 replaceEffect(entity, StatusEffects.STRENGTH, duration, 4);
                 replaceEffect(entity, StatusEffects.RESISTANCE, duration, 4);
                 replaceEffect(entity, StatusEffects.REGENERATION, duration, 4);
@@ -31,7 +31,7 @@ public class GodStatusEffect extends StatusEffect {
                 replaceEffect(entity, StatusEffects.FIRE_RESISTANCE, duration, 0);
                 replaceEffect(entity, StatusEffects.WATER_BREATHING, duration, 0);
             } else {
-                // 非玩家：覆盖所有原版负面效果，不显示粒子和图标
+                // 非玩家：覆盖所有原版负面效果，不显示粒子和图标，避免频繁刷新
                 replaceEffect(entity, StatusEffects.WEAKNESS, duration, 1);
                 replaceEffect(entity, StatusEffects.SLOWNESS, duration, 1);
                 replaceEffect(entity, StatusEffects.MINING_FATIGUE, duration, 1);
@@ -45,10 +45,10 @@ public class GodStatusEffect extends StatusEffect {
     }
 
     private void replaceEffect(LivingEntity entity, StatusEffect effect, int duration, int amplifier) {
-        if (entity.hasStatusEffect(effect)) {
-            entity.removeStatusEffect(effect);
+        StatusEffectInstance current = entity.getStatusEffect(effect);
+        if (current == null || current.getDuration() < duration - 20) {
+            entity.addStatusEffect(new StatusEffectInstance(effect, duration, amplifier, false, false));
         }
-        entity.addStatusEffect(new StatusEffectInstance(effect, duration, amplifier, false, false));
     }
 
     @Override
