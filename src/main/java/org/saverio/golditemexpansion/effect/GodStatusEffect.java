@@ -49,7 +49,6 @@ public class GodStatusEffect extends StatusEffect {
                 replaceEffect(entity, StatusEffects.HUNGER, duration, 4);
                 replaceEffect(entity, StatusEffects.DARKNESS, duration, 4);
                 replaceEffect(entity, StatusEffects.BAD_OMEN, duration, 4);
-                replaceEffect(entity, StatusEffects.GLOWING, duration, 4);
             }
         }
     }
