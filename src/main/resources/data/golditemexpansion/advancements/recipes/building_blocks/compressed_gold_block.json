@@ -20,13 +20,16 @@
       "conditions": {
         "items": [
           {
-            "item": "golditemexpansion:compressed_gold_block",
-            "count": {
-              "min": 1
-            }
+            "items": [
+              { "item": "golditemexpansion:compressed_gold_block" }
+            ],
+            "count": { "min": 1 }
           }
         ]
       }
     }
-  }
+  },
+  "requirements": [
+    ["obtained_compressed_gold_block"]
+  ]
 }
