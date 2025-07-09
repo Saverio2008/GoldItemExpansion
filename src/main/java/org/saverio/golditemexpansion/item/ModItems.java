@@ -33,6 +33,6 @@ public class ModItems {
                 content.addAfter(Blocks.GOLD_BLOCK.asItem(), COMPRESSED_GOLD_BLOCK_ITEM));
 
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.FUNCTIONAL).register(content ->
-                content.addAfter(Blocks.PIGLIN_HEAD.asItem(), GOLDEN_HEAD_ITEM));
+                content.addAfter(Blocks.DRAGON_HEAD.asItem(), GOLDEN_HEAD_ITEM));
     }
 }
