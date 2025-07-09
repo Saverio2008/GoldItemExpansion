@@ -20,11 +20,20 @@
       "conditions": {
         "recipe_id": "golditemexpansion:compressed_gold_block"
       }
+    },
+    "obtained_compressed_gold_block": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "golditemexpansion:compressed_gold_block"
+          }
+        ]
+      }
     }
   },
   "requirements": [
-    [
-      "crafted_compressed_gold_block"
-    ]
+    ["crafted_compressed_gold_block"],
+    ["obtained_compressed_gold_block"]
   ]
 }
