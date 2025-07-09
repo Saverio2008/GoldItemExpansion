@@ -6,7 +6,6 @@ import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
-import org.saverio.golditemexpansion.util.EffectUtils;
 
 import java.util.Objects;
 
@@ -57,9 +56,7 @@ public class GodStatusEffect extends StatusEffect {
     private void replaceEffect(LivingEntity entity, StatusEffect effect, int duration, int amplifier) {
         StatusEffectInstance current = entity.getStatusEffect(effect);
         if (current == null || current.getDuration() < duration - 20) {
-            StatusEffectInstance instance = new StatusEffectInstance(effect, duration, amplifier, false, false);
-            EffectUtils.setHideIcon(instance, true);  // 标记为隐藏图标
-            entity.addStatusEffect(instance);
+            entity.addStatusEffect(new StatusEffectInstance(effect, duration, amplifier, false, false));
         }
     }
 
