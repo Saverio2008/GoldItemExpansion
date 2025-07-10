@@ -42,8 +42,7 @@ public class GodPositiveStatusEffect extends StatusEffect implements GodEffectAp
 
     @Override
     public boolean canApplyUpdateEffect(int duration, int amplifier) {
-        // 让 applyUpdateEffect 每tick 调用，如果你想手动控制改成 false
-        return true;
+        return false;
     }
 
     @Override

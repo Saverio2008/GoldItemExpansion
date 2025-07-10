@@ -1,12 +1,12 @@
 package org.saverio.golditemexpansion.effect;
 
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.attribute.AttributeContainer;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import org.saverio.golditemexpansion.util.GodEffectApplier;
-import org.saverio.golditemexpansion.util.LivingEntityUtils;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -38,18 +38,15 @@ public class GodNegativeStatusEffect extends StatusEffect implements GodEffectAp
 
     @Override
     public boolean canApplyUpdateEffect(int duration, int amplifier) {
-        // 让applyUpdateEffect每tick调用（如果需要改可调整）
-        return true;
+        return false;
     }
 
     @Override
-    public void applyUpdateEffect(LivingEntity entity, int amplifier) {
+    public void onApplied(LivingEntity entity, AttributeContainer attributes, int amplifier) {
         if (entity.getWorld().isClient) return;
         StatusEffectInstance instance = entity.getStatusEffect(this);
         if (instance == null) return;
         int duration = instance.getDuration();
-        if (LivingEntityUtils.isGodNegativeApplied(entity)) return;
         applyGodSubEffects(entity, duration);
-        LivingEntityUtils.setGodNegativeApplied(entity, true);
     }
 }
