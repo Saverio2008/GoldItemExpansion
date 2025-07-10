@@ -30,7 +30,6 @@ public class GodStatusEffect extends StatusEffect {
                 replaceEffect(entity, StatusEffects.RESISTANCE, duration, 4);        // 抗性提升
                 replaceEffect(entity, StatusEffects.FIRE_RESISTANCE, duration, 0);   // 抗火
                 replaceEffect(entity, StatusEffects.WATER_BREATHING, duration, 0);   // 水下呼吸
-                replaceEffect(entity, StatusEffects.INVISIBILITY, duration, 0);      // 隐身
                 replaceEffect(entity, StatusEffects.NIGHT_VISION, duration, 0);      // 夜视
                 replaceEffect(entity, StatusEffects.HEALTH_BOOST, duration, 4);      // 生命提升
                 replaceEffect(entity, StatusEffects.ABSORPTION, duration, 4);        // 伤害吸收
