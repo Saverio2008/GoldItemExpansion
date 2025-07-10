@@ -4,7 +4,6 @@ import com.google.common.collect.Ordering;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.AbstractInventoryScreen;
-import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffectUtil;
 import net.minecraft.entity.player.PlayerEntity;
@@ -16,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,26 +27,24 @@ public abstract class AbstractInventoryScreenMixin {
         PlayerEntity player = MinecraftClient.getInstance().player;
         if (player == null) return;
 
-        Collection<StatusEffectInstance> filtered = player.getStatusEffects().stream()
-                .filter(effectInstance -> {
-                    StatusEffect effect = effectInstance.getEffectType();
-                    StatusEffectInstance godEffect = player.getStatusEffect(ModEffects.GOD_STATUS_EFFECT);
-                    if (godEffect != null) {
-                        int amplifier = godEffect.getAmplifier();
-                        switch (amplifier) {
-                            case 0 -> {
-                                return !GodEffects.GOD_POSITIVE_EFFECTS.containsKey(effect); // 屏蔽正面效果
-                            }
-                            case 1, 2 -> {
-                                return !GodEffects.GOD_NEGATIVE_EFFECTS.containsKey(effect); // 屏蔽负面效果
-                            }
-                        }
-                    }
-                    return true;
-                })
-                .toList();
+        List<StatusEffectInstance> effects = new ArrayList<>(player.getStatusEffects());
 
-        if (filtered.isEmpty()) {
+        StatusEffectInstance godEffect = player.getStatusEffect(ModEffects.GOD_STATUS_EFFECT);
+        if (godEffect != null) {
+            int amplifier = godEffect.getAmplifier();
+            effects.removeIf(e -> e.getEffectType() == ModEffects.GOD_STATUS_EFFECT);
+
+            switch (amplifier) {
+                case 0 ->
+                        effects.removeIf(e ->
+                                e.getEffectType() != ModEffects.GOD_POSITIVE_EFFECT && GodEffects.GOD_POSITIVE_EFFECTS.containsKey(e.getEffectType()));
+                case 1, 2 ->
+                        effects.removeIf(e ->
+                                e.getEffectType() != ModEffects.GOD_NEGATIVE_EFFECT && GodEffects.GOD_NEGATIVE_EFFECTS.containsKey(e.getEffectType()));
+            }
+        }
+
+        if (effects.isEmpty()) {
             ci.cancel();
             return;
         }
@@ -66,11 +63,11 @@ public abstract class AbstractInventoryScreenMixin {
 
         boolean wide = j >= 120;
         int k = 33;
-        if (filtered.size() > 5) {
-            k = 132 / (filtered.size() - 1);
+        if (effects.size() > 5) {
+            k = 132 / (effects.size() - 1);
         }
 
-        Iterable<StatusEffectInstance> iterable = Ordering.natural().sortedCopy(filtered);
+        Iterable<StatusEffectInstance> iterable = Ordering.natural().sortedCopy(effects);
 
         invoker.callDrawStatusEffectBackgrounds(context, i, k, iterable, wide);
         invoker.callDrawStatusEffectSprites(context, i, k, iterable, wide);
