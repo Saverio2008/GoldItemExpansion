@@ -4,15 +4,17 @@ import com.google.common.collect.Ordering;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.AbstractInventoryScreen;
+import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffectUtil;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.Text;
+import org.saverio.golditemexpansion.effect.ModEffects;
+import org.saverio.golditemexpansion.util.GodEffects;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.saverio.golditemexpansion.util.GodEffects;
 
 import java.util.Collection;
 import java.util.List;
@@ -27,7 +29,21 @@ public abstract class AbstractInventoryScreenMixin {
         if (player == null) return;
 
         Collection<StatusEffectInstance> filtered = player.getStatusEffects().stream()
-                .filter(effectInstance -> !GodEffects.GOD_POSITIVE_EFFECTS.containsKey(effectInstance.getEffectType()))
+                .filter(effectInstance -> {
+                    StatusEffect effect = effectInstance.getEffectType();
+                    if (effect == ModEffects.GOD_STATUS_EFFECT) {
+                        int amplifier = effectInstance.getAmplifier();
+                        switch (amplifier) {
+                            case 0 -> {
+                                return GodEffects.GOD_POSITIVE_EFFECTS.containsKey(effect); // 屏蔽正面
+                            }
+                            case 1, 2 -> {
+                                return GodEffects.GOD_NEGATIVE_EFFECTS.containsKey(effect); // 屏蔽负面
+                            }
+                        }
+                    }
+                    return true;
+                })
                 .toList();
 
         if (filtered.isEmpty()) {
