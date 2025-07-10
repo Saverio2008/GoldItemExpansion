@@ -24,6 +24,7 @@ import static org.saverio.golditemexpansion.effect.GodPositiveStatusEffect.GOD_P
 @Mixin(AbstractInventoryScreen.class)
 public abstract class AbstractInventoryScreenMixin {
 
+    @SuppressWarnings("ReassignedVariable")
     @Inject(method = "drawStatusEffects", at = @At("HEAD"), cancellable = true)
     private void onDrawStatusEffects(DrawContext context, int mouseX, int mouseY, CallbackInfo ci) {
         PlayerEntity player = MinecraftClient.getInstance().player;
