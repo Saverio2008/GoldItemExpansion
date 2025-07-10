@@ -14,8 +14,5 @@ public class ModEffects {
     public static void registerEffects() {
         Registry.register(Registries.STATUS_EFFECT, new Identifier(Golditemexpansion.MOD_ID, "god_positive_status_effect"), GOD_POSITIVE_EFFECT);
         Registry.register(Registries.STATUS_EFFECT, new Identifier(Golditemexpansion.MOD_ID, "god_negative_status_effect"), GOD_NEGATIVE_EFFECT);
-        Registry.register(Registries.STATUS_EFFECT,
-                new Identifier(Golditemexpansion.MOD_ID, "god_status_effect"),
-                GOD_STATUS_EFFECT);
     }
 }
