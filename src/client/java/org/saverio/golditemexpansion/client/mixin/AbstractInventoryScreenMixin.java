@@ -31,14 +31,15 @@ public abstract class AbstractInventoryScreenMixin {
         Collection<StatusEffectInstance> filtered = player.getStatusEffects().stream()
                 .filter(effectInstance -> {
                     StatusEffect effect = effectInstance.getEffectType();
-                    if (effect == ModEffects.GOD_STATUS_EFFECT) {
-                        int amplifier = effectInstance.getAmplifier();
+                    StatusEffectInstance godEffect = player.getStatusEffect(ModEffects.GOD_STATUS_EFFECT);
+                    if (godEffect != null) {
+                        int amplifier = godEffect.getAmplifier();
                         switch (amplifier) {
                             case 0 -> {
-                                return GodEffects.GOD_POSITIVE_EFFECTS.containsKey(effect); // 屏蔽正面
+                                return !GodEffects.GOD_POSITIVE_EFFECTS.containsKey(effect); // 屏蔽正面效果
                             }
                             case 1, 2 -> {
-                                return GodEffects.GOD_NEGATIVE_EFFECTS.containsKey(effect); // 屏蔽负面
+                                return !GodEffects.GOD_NEGATIVE_EFFECTS.containsKey(effect); // 屏蔽负面效果
                             }
                         }
                     }
