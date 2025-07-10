@@ -24,7 +24,6 @@ public class GodStatusEffect extends StatusEffect {
                 replaceEffect(entity, StatusEffects.SPEED, duration, 4);             // 迅捷
                 replaceEffect(entity, StatusEffects.HASTE, duration, 4);             // 急迫
                 replaceEffect(entity, StatusEffects.STRENGTH, duration, 4);          // 力量
-                replaceEffect(entity, StatusEffects.INSTANT_HEALTH, duration, 4);    // 瞬间治疗
                 replaceEffect(entity, StatusEffects.JUMP_BOOST, duration, 4);        // 跳跃提升
                 replaceEffect(entity, StatusEffects.REGENERATION, duration, 4);      // 生命恢复
                 replaceEffect(entity, StatusEffects.RESISTANCE, duration, 4);        // 抗性提升
