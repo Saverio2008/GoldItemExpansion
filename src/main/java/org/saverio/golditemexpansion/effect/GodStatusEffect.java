@@ -10,7 +10,7 @@ import net.minecraft.entity.player.PlayerEntity;
 
 public class GodStatusEffect extends StatusEffect {
     public GodStatusEffect() {
-        super(StatusEffectCategory.NEUTRAL, 0x00000000); // 无颜色
+        super(StatusEffectCategory.NEUTRAL, 0xFFFF69B4);
     }
 
     @Override
