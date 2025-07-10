@@ -9,8 +9,8 @@ import org.saverio.golditemexpansion.util.GodEffects;
 import java.util.Objects;
 
 public class GodStatusEffect extends StatusEffect {
-    public GodStatusEffect() {
-        super(StatusEffectCategory.BENEFICIAL, 0xFF77FF);
+    public GodStatusEffect(StatusEffectCategory category, int color) {
+        super(category, color);
     }
 
     @Override
