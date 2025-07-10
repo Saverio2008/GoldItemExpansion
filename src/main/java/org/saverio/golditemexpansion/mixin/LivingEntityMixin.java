@@ -4,12 +4,16 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
+import net.minecraft.entity.effect.StatusEffect;
+import org.saverio.golditemexpansion.effect.ModEffects;
+import org.saverio.golditemexpansion.util.LivingEntityUtils;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.saverio.golditemexpansion.util.LivingEntityAccessor;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin implements LivingEntityAccessor {
@@ -63,5 +67,24 @@ public abstract class LivingEntityMixin implements LivingEntityAccessor {
     @Override
     public void goldItemExpansion$setGodStatusApplied(boolean applied) {
         self().getDataTracker().set(GOD_STATUS_APPLIED, applied);
+    }
+    @Inject(method = "removeStatusEffect", at = @At("HEAD"))
+    private void onRemoveStatusEffect(StatusEffect effect, CallbackInfoReturnable<Boolean> cir) {
+        LivingEntity self = (LivingEntity)(Object)this;
+        if (effect == ModEffects.GOD_NEGATIVE_EFFECT) {
+            LivingEntityUtils.setGodNegativeApplied(self, false);
+        } else if (effect == ModEffects.GOD_POSITIVE_EFFECT) {
+            LivingEntityUtils.setGodPositiveApplied(self, false);
+        } else if (effect == ModEffects.GOD_STATUS_EFFECT) {
+            LivingEntityUtils.setGodStatusApplied(self, false);
+        }
+    }
+
+    @Inject(method = "clearStatusEffects", at = @At("HEAD"))
+    private void onClearStatusEffects(CallbackInfoReturnable<Boolean> cir) {
+        LivingEntity self = (LivingEntity)(Object)this;
+        LivingEntityUtils.setGodNegativeApplied(self, false);
+        LivingEntityUtils.setGodPositiveApplied(self, false);
+        LivingEntityUtils.setGodStatusApplied(self, false);
     }
 }

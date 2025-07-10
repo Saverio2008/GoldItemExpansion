@@ -6,6 +6,7 @@ import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
+import org.saverio.golditemexpansion.util.LivingEntityUtils;
 
 public class GodStatusEffect extends StatusEffect {
     public GodStatusEffect() {
@@ -14,10 +15,18 @@ public class GodStatusEffect extends StatusEffect {
 
     @Override
     public boolean canApplyUpdateEffect(int duration, int amplifier) {
-        return false;
+        return true;
     }
 
-    public void applyChildEffect(LivingEntity entity, int amplifier, int duration) {
+    @Override
+    public void applyUpdateEffect(LivingEntity entity, int amplifier) {
+        if (entity.getWorld().isClient) return;
+        if (LivingEntityUtils.isGodStatusApplied(entity)) {
+            return;
+        }
+        StatusEffectInstance instance = entity.getStatusEffect(this);
+        if (instance == null) return;
+        int duration = instance.getDuration();
         boolean isPositive;
         switch (amplifier) {
             case 0 -> isPositive = entity instanceof PlayerEntity;
@@ -28,6 +37,8 @@ public class GodStatusEffect extends StatusEffect {
         StatusEffect childEffect = isPositive
                 ? ModEffects.GOD_POSITIVE_EFFECT
                 : ModEffects.GOD_NEGATIVE_EFFECT;
+
         entity.addStatusEffect(new StatusEffectInstance(childEffect, duration, 0, false, false));
+        LivingEntityUtils.setGodStatusApplied(entity, true);
     }
 }
