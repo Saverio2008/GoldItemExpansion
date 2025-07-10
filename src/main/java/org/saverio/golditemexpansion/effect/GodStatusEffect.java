@@ -18,27 +18,42 @@ public class GodStatusEffect extends StatusEffect {
         return true;
     }
 
+    @SuppressWarnings("ReassignedVariable")
     @Override
     public void applyUpdateEffect(LivingEntity entity, int amplifier) {
         if (entity.getWorld().isClient) return;
-        if (LivingEntityUtils.isGodStatusApplied(entity)) {
-            return;
-        }
-        StatusEffectInstance instance = entity.getStatusEffect(this);
-        if (instance == null) return;
-        int duration = instance.getDuration();
+
+        StatusEffectInstance godInstance = entity.getStatusEffect(this);
+        if (godInstance == null) return;
+
+        int duration = godInstance.getDuration();
         boolean isPositive;
+
+        // 根据 amplifier 决定使用哪个子效果
         switch (amplifier) {
             case 0 -> isPositive = entity instanceof PlayerEntity;
             case 1 -> isPositive = entity.getGroup() == EntityGroup.UNDEAD;
             case 2 -> isPositive = entity.getGroup() == EntityGroup.ARTHROPOD;
             default -> isPositive = true;
         }
+
         StatusEffect childEffect = isPositive
                 ? ModEffects.GOD_POSITIVE_EFFECT
                 : ModEffects.GOD_NEGATIVE_EFFECT;
+        StatusEffectInstance currentChild = entity.getStatusEffect(childEffect);
+        int newDuration = duration;
 
-        entity.addStatusEffect(new StatusEffectInstance(childEffect, duration, 0, false, false));
+        if (currentChild != null) {
+            newDuration += currentChild.getDuration();
+        }
+        entity.addStatusEffect(new StatusEffectInstance(
+                childEffect,
+                newDuration,
+                0,
+                false,
+                false
+        ));
+
         LivingEntityUtils.setGodStatusApplied(entity, true);
     }
 }

@@ -2,10 +2,8 @@ package org.saverio.golditemexpansion.potion;
 
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.PotionItem;
 import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionUtil;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
@@ -31,11 +29,5 @@ public class ModPotions {
                 new PotionItem(new Item.Settings().rarity(Rarity.RARE))
         );
         ModBrewingRecipes.registerBrewingRecipes();
-    }
-
-    public static ItemStack getGodPotionStack() {
-        ItemStack stack = new ItemStack(GOD_POTION_ITEM);
-        PotionUtil.setPotion(stack, GOD_POTION);
-        return stack;
     }
 }
