@@ -1,9 +1,12 @@
 package org.saverio.golditemexpansion.effect;
 
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import org.saverio.golditemexpansion.util.GodEffectApplier;
+import org.saverio.golditemexpansion.util.LivingEntityUtils;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -27,6 +30,7 @@ public class GodPositiveStatusEffect extends StatusEffect implements GodEffectAp
         put(StatusEffects.DOLPHINS_GRACE, 4);
         put(StatusEffects.HERO_OF_THE_VILLAGE, 4);
     }};
+
     public GodPositiveStatusEffect() {
         super(StatusEffectCategory.BENEFICIAL, 0xFF77FF);
     }
@@ -38,6 +42,18 @@ public class GodPositiveStatusEffect extends StatusEffect implements GodEffectAp
 
     @Override
     public boolean canApplyUpdateEffect(int duration, int amplifier) {
-        return false;
+        // 让 applyUpdateEffect 每tick 调用，如果你想手动控制改成 false
+        return true;
+    }
+
+    @Override
+    public void applyUpdateEffect(LivingEntity entity, int amplifier) {
+        if (entity.getWorld().isClient) return;
+        StatusEffectInstance instance = entity.getStatusEffect(this);
+        if (instance == null) return;
+        int duration = instance.getDuration();
+        if (LivingEntityUtils.isGodPositiveApplied(entity)) return;
+        applyGodSubEffects(entity, duration);
+        LivingEntityUtils.setGodPositiveApplied(entity, true);
     }
 }
