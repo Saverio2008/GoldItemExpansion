@@ -9,5 +9,6 @@
   "advancement.golditemexpansion.compressed_gold_block.title": "Harder, Stronger!",
   "advancement.golditemexpansion.compressed_gold_block.description": "Unlock this advancement after crafting a compressed gold block",
 
-  "effect.golditemexpansion.god_status_effect": "Omnipotent"
+  "effect.golditemexpansion.god_positive_status_effect": "Omnipotent",
+  "effect.golditemexpansion.god_negative_status_effect": "Omnipotent"
 }
