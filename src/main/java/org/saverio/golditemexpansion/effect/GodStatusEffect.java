@@ -2,11 +2,11 @@ package org.saverio.golditemexpansion.effect;
 
 import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.attribute.AttributeContainer;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
-import org.saverio.golditemexpansion.util.LivingEntityUtils;
 
 public class GodStatusEffect extends StatusEffect {
     public GodStatusEffect() {
@@ -18,18 +18,16 @@ public class GodStatusEffect extends StatusEffect {
         return true;
     }
 
-    @SuppressWarnings("ReassignedVariable")
     @Override
-    public void applyUpdateEffect(LivingEntity entity, int amplifier) {
+    public void onApplied(LivingEntity entity, AttributeContainer attributes, int amplifier) {
         if (entity.getWorld().isClient) return;
 
-        StatusEffectInstance godInstance = entity.getStatusEffect(this);
-        if (godInstance == null) return;
+        StatusEffectInstance current = entity.getStatusEffect(this);
+        if (current == null) return;
 
-        int duration = godInstance.getDuration();
+        int duration = current.getDuration();
+
         boolean isPositive;
-
-        // 根据 amplifier 决定使用哪个子效果
         switch (amplifier) {
             case 0 -> isPositive = entity instanceof PlayerEntity;
             case 1 -> isPositive = entity.getGroup() == EntityGroup.UNDEAD;
@@ -37,23 +35,16 @@ public class GodStatusEffect extends StatusEffect {
             default -> isPositive = true;
         }
 
-        StatusEffect childEffect = isPositive
-                ? ModEffects.GOD_POSITIVE_EFFECT
-                : ModEffects.GOD_NEGATIVE_EFFECT;
-        StatusEffectInstance currentChild = entity.getStatusEffect(childEffect);
+        StatusEffect childEffect = isPositive ? ModEffects.GOD_POSITIVE_EFFECT : ModEffects.GOD_NEGATIVE_EFFECT;
+
+        StatusEffectInstance child = entity.getStatusEffect(childEffect);
         int newDuration = duration;
 
-        if (currentChild != null) {
-            newDuration += currentChild.getDuration();
+        if (child != null) {
+            newDuration += child.getDuration();
+            entity.removeStatusEffect(childEffect);
         }
-        entity.addStatusEffect(new StatusEffectInstance(
-                childEffect,
-                newDuration,
-                0,
-                false,
-                false
-        ));
 
-        LivingEntityUtils.setGodStatusApplied(entity, true);
+        entity.addStatusEffect(new StatusEffectInstance(childEffect, newDuration, 0, false, false));
     }
 }
