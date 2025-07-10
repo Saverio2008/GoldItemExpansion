@@ -1,12 +1,12 @@
 package org.saverio.golditemexpansion.effect;
 
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.attribute.AttributeContainer;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import org.saverio.golditemexpansion.util.GodEffectApplier;
-import org.saverio.golditemexpansion.util.LivingEntityUtils;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -47,13 +47,11 @@ public class GodPositiveStatusEffect extends StatusEffect implements GodEffectAp
     }
 
     @Override
-    public void applyUpdateEffect(LivingEntity entity, int amplifier) {
+    public void onApplied(LivingEntity entity, AttributeContainer attributes, int amplifier) {
         if (entity.getWorld().isClient) return;
         StatusEffectInstance instance = entity.getStatusEffect(this);
         if (instance == null) return;
         int duration = instance.getDuration();
-        if (LivingEntityUtils.isGodPositiveApplied(entity)) return;
         applyGodSubEffects(entity, duration);
-        LivingEntityUtils.setGodPositiveApplied(entity, true);
     }
 }
