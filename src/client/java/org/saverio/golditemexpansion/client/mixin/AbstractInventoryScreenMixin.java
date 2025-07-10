@@ -9,7 +9,6 @@ import net.minecraft.entity.effect.StatusEffectUtil;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.Text;
 import org.saverio.golditemexpansion.effect.ModEffects;
-import org.saverio.golditemexpansion.util.GodEffects;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -18,6 +17,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static org.saverio.golditemexpansion.effect.GodNegativeStatusEffect.GOD_NEGATIVE_EFFECTS;
+import static org.saverio.golditemexpansion.effect.GodPositiveStatusEffect.GOD_POSITIVE_EFFECTS;
 
 @Mixin(AbstractInventoryScreen.class)
 public abstract class AbstractInventoryScreenMixin {
@@ -37,10 +39,12 @@ public abstract class AbstractInventoryScreenMixin {
             switch (amplifier) {
                 case 0 ->
                         effects.removeIf(e ->
-                                e.getEffectType() != ModEffects.GOD_POSITIVE_EFFECT && GodEffects.GOD_POSITIVE_EFFECTS.containsKey(e.getEffectType()));
+                                e.getEffectType() != ModEffects.GOD_POSITIVE_EFFECT &&
+                                        GOD_POSITIVE_EFFECTS.containsKey(e.getEffectType()));
                 case 1, 2 ->
                         effects.removeIf(e ->
-                                e.getEffectType() != ModEffects.GOD_NEGATIVE_EFFECT && GodEffects.GOD_NEGATIVE_EFFECTS.containsKey(e.getEffectType()));
+                                e.getEffectType() != ModEffects.GOD_NEGATIVE_EFFECT &&
+                                        GOD_NEGATIVE_EFFECTS.containsKey(e.getEffectType()));
             }
         }
 
