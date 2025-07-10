@@ -68,6 +68,7 @@ public abstract class LivingEntityMixin implements LivingEntityAccessor {
     public void goldItemExpansion$setGodStatusApplied(boolean applied) {
         self().getDataTracker().set(GOD_STATUS_APPLIED, applied);
     }
+
     @Inject(method = "removeStatusEffect", at = @At("HEAD"))
     private void onRemoveStatusEffect(StatusEffect effect, CallbackInfoReturnable<Boolean> cir) {
         LivingEntity self = (LivingEntity)(Object)this;
