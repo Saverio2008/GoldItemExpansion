@@ -20,11 +20,12 @@ public abstract class StatusEffectSpriteManagerMixin {
             Identifier spriteId = switch (id.getPath()) {
                 case "god_positive_status_effect" -> new Identifier("golditemexpansion", "gui/status_effect/god_positive_status_effect");
                 case "god_negative_status_effect" -> new Identifier("golditemexpansion", "gui/status_effect/god_negative_status_effect");
-                default -> new Identifier("golditemexpansion", "gui/status_effect/god_default");
+                default -> null;
             };
-            Sprite sprite = ((SpriteAtlasHolderAccessor) this).golditemexpansion$invokeGetSprite(spriteId);
-            if (sprite != null && !sprite.getContents().getId().getPath().contains("missing")) {
+            if (spriteId != null) {
+                Sprite sprite = ((SpriteAtlasHolderAccessor) this).golditemexpansion$invokeGetSprite(spriteId);
                 cir.setReturnValue(sprite);
+                cir.cancel();
             }
         }
     }
