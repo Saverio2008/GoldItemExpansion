@@ -13,7 +13,6 @@ public class ModEffects {
     public static final GodStatusEffect GOD_STATUS_EFFECT = new GodStatusEffect();
 
     public static final Set<StatusEffect> HIDDEN_EFFECTS = Set.of(
-            GOD_STATUS_EFFECT,
             StatusEffects.SPEED,
             StatusEffects.HASTE,
             StatusEffects.STRENGTH,
