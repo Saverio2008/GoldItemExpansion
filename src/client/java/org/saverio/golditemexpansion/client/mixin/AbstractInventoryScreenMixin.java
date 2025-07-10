@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.saverio.golditemexpansion.effect.ModEffects;
+import org.saverio.golditemexpansion.util.GodEffects;
 
 import java.util.Collection;
 import java.util.List;
@@ -27,7 +27,7 @@ public abstract class AbstractInventoryScreenMixin {
         if (player == null) return;
 
         Collection<StatusEffectInstance> filtered = player.getStatusEffects().stream()
-                .filter(effectInstance -> !ModEffects.HIDDEN_EFFECTS.contains(effectInstance.getEffectType()))
+                .filter(effectInstance -> !GodEffects.GOD_POSITIVE_EFFECTS.containsKey(effectInstance.getEffectType()))
                 .toList();
 
         if (filtered.isEmpty()) {

@@ -40,7 +40,7 @@ public class GodStatusEffect extends StatusEffect {
             } else {
                 // 非玩家：覆盖所有原版负面效果，不显示粒子和图标，避免频繁刷新
                 replaceEffect(entity, StatusEffects.WEAKNESS, duration, 4);         // 虚弱
-                replaceEffect(entity, StatusEffects.SLOWNESS, duration, 4);         // 缓慢（行动）
+                replaceEffect(entity, StatusEffects.SLOWNESS, duration, 4);         // 缓慢
                 replaceEffect(entity, StatusEffects.MINING_FATIGUE, duration, 4);   // 挖掘疲劳
                 replaceEffect(entity, StatusEffects.UNLUCK, duration, 4);           // 霉运
                 replaceEffect(entity, StatusEffects.NAUSEA, duration, 4);           // 反胃
@@ -48,7 +48,6 @@ public class GodStatusEffect extends StatusEffect {
                 replaceEffect(entity, StatusEffects.HUNGER, duration, 4);           // 饥饿
                 replaceEffect(entity, StatusEffects.DARKNESS, duration, 4);         // 黑暗
                 replaceEffect(entity, StatusEffects.BAD_OMEN, duration, 4);         // 不祥之兆
-                replaceEffect(entity, StatusEffects.INSTANT_DAMAGE, duration, 4);   // 瞬间伤害
                 replaceEffect(entity, StatusEffects.POISON, duration, 4);           // 中毒
                 replaceEffect(entity, StatusEffects.WITHER, duration, 4);           // 凋零
                 replaceEffect(entity, StatusEffects.SLOW_FALLING, duration, 4);     // 缓降
