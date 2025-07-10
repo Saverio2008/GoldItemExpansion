@@ -36,12 +36,10 @@ public abstract class AbstractInventoryScreenMixin {
                         int amplifier = godEffect.getAmplifier();
                         switch (amplifier) {
                             case 0 -> {
-                                return effect != ModEffects.GOD_STATUS_EFFECT &&
-                                        !GodEffects.GOD_POSITIVE_EFFECTS.containsKey(effect);
+                                return !GodEffects.GOD_POSITIVE_EFFECTS.containsKey(effect); // 屏蔽正面效果
                             }
                             case 1, 2 -> {
-                                return effect != ModEffects.GOD_STATUS_EFFECT &&
-                                        !GodEffects.GOD_NEGATIVE_EFFECTS.containsKey(effect);
+                                return !GodEffects.GOD_NEGATIVE_EFFECTS.containsKey(effect); // 屏蔽负面效果
                             }
                         }
                     }
