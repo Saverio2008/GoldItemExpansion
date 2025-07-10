@@ -6,8 +6,10 @@
   "client": [
     "AbstractInventoryScreenMixin",
     "AbstractInventoryScreenInvoker",
-    "HandledScreenAccessor",
-    "ScreenAccessor"
+    "accessor.HandledScreenAccessor",
+    "accessor.ScreenAccessor",
+    "accessor.SpriteAtlasHolderAccessor",
+    "StatusEffectSpriteManagerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

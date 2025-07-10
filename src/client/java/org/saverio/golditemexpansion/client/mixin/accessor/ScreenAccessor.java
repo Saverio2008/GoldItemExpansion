@@ -1,4 +1,4 @@
-package org.saverio.golditemexpansion.client.mixin;
+package org.saverio.golditemexpansion.client.mixin.accessor;
 
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.screen.Screen;
