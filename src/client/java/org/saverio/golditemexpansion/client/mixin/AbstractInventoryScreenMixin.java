@@ -17,7 +17,7 @@ public abstract class AbstractInventoryScreenMixin {
     private void onDrawStatusEffects(DrawContext context, int mouseX, int mouseY, CallbackInfo ci) {
         PlayerEntity player = MinecraftClient.getInstance().player;
         if (player != null && player.hasStatusEffect(ModEffects.GOD_STATUS_EFFECT)) {
-            ci.cancel(); // 阻止状态图标绘制
+            ci.cancel();
         }
     }
 }
