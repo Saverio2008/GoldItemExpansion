@@ -7,8 +7,10 @@
     "AbstractInventoryScreenMixin",
     "AbstractInventoryScreenInvoker",
     "SpriteLoaderMixin",
+    "InGameHudMixin",
     "accessor.HandledScreenAccessor",
-    "accessor.ScreenAccessor"
+    "accessor.ScreenAccessor",
+    "accessor.SpriteAccessor"
   ],
   "injectors": {
     "defaultRequire": 1
