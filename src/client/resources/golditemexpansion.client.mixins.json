@@ -8,8 +8,7 @@
     "AbstractInventoryScreenInvoker",
     "SpriteLoaderMixin",
     "accessor.HandledScreenAccessor",
-    "accessor.ScreenAccessor",
-    "accessor.SpriteInvoker"
+    "accessor.ScreenAccessor"
   ],
   "injectors": {
     "defaultRequire": 1
