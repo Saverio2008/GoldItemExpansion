@@ -1,8 +1,11 @@
 package org.saverio.golditemexpansion.util;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.util.Identifier;
 
 import java.util.Map;
 
@@ -15,4 +18,7 @@ public interface GodEffectApplier {
             entity.addStatusEffect(new StatusEffectInstance(effect, duration, amplifier, false, false));
         }
     }
+
+    @Environment(EnvType.CLIENT)
+    Identifier getIcon();
 }
