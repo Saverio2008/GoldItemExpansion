@@ -27,9 +27,15 @@ public class SpriteLoaderMixin {
     @Shadow @Final private static Logger LOGGER;
 
     @Inject(method = "load*", at = @At("RETURN"), cancellable = true)
-    private void onLoad(ResourceManager resourceManager, Identifier path, int mipLevel, Executor executor, CallbackInfoReturnable<CompletableFuture<StitchResult>> cir) {
-        // 只处理 minecraft:mob_effects 图集
-        if (!path.equals(new Identifier("minecraft", "mob_effects"))) {
+    private void injectCustomMobEffectSprites(
+            ResourceManager resourceManager,
+            Identifier atlasId,
+            int mipLevel,
+            Executor executor,
+            CallbackInfoReturnable<CompletableFuture<StitchResult>> cir
+    ) {
+        // 只注入到 mob_effects 图集中
+        if (!atlasId.equals(new Identifier("minecraft", "mob_effects"))) {
             return;
         }
 
@@ -40,10 +46,13 @@ public class SpriteLoaderMixin {
             for (Sprite sprite : originalResult.regions().values()) {
                 contentsList.add(sprite.getContents());
             }
+
+            // 自定义图标（不包含 textures/ 前缀和 .png 后缀）
             List<Identifier> customIds = List.of(
-                    new Identifier("golditemexpansion", "textures/mob_effects/god_positive_status_effect.png"),
-                    new Identifier("golditemexpansion", "textures/mob_effects/god_negative_status_effect.png")
+                    new Identifier("golditemexpansion", "god_positive_status_effect"),
+                    new Identifier("golditemexpansion", "god_negative_status_effect")
             );
+
             List<CompletableFuture<SpriteContents>> loadFutures = new ArrayList<>();
 
             for (Identifier id : customIds) {
@@ -52,12 +61,13 @@ public class SpriteLoaderMixin {
 
             return CompletableFuture.allOf(loadFutures.toArray(new CompletableFuture[0]))
                     .thenApply(v -> {
-                        for (CompletableFuture<SpriteContents> f : loadFutures) {
-                            SpriteContents c = f.join();
-                            if (c != null) {
-                                contentsList.add(c);
+                        for (CompletableFuture<SpriteContents> future : loadFutures) {
+                            SpriteContents contents = future.join();
+                            if (contents != null) {
+                                contentsList.add(contents);
                             }
                         }
+
                         SpriteLoader self = (SpriteLoader) (Object) this;
                         return self.stitch(contentsList, mipLevel, executor);
                     });
@@ -69,28 +79,30 @@ public class SpriteLoaderMixin {
     @Unique
     private SpriteContents loadSprite(ResourceManager manager, Identifier id) {
         try {
-            System.out.println("[GoldItemExpansion] Trying to load resource at: " + id);
-            System.out.println("[GoldItemExpansion] Resource namespaces: " + manager.getAllNamespaces());
+            System.out.println("[GoldItemExpansion] 🔍 Trying to load sprite: " + id);
+            // 自动加上 textures 路径和 .png 后缀
+            Identifier texturePath = new Identifier(id.getNamespace(), "textures/mob_effects/" + id.getPath() + ".png");
 
-            var optionalResource = manager.getResource(id);
+            var optionalResource = manager.getResource(texturePath);
             if (optionalResource.isEmpty()) {
-                System.out.println("[GoldItemExpansion] ❌ Resource not found: " + id);
+                System.out.println("[GoldItemExpansion] ❌ Resource not found: " + texturePath);
                 return null;
             }
 
             Resource resource = optionalResource.get();
-            SpriteContents spriteContents = SpriteLoader.load(id, resource);
+            SpriteContents contents = SpriteLoader.load(id, resource);
 
-            if (spriteContents == null) {
-                System.out.println("[GoldItemExpansion] ❌ Failed to load SpriteContents for: " + id);
+            if (contents == null) {
+                System.out.println("[GoldItemExpansion] ❌ Failed to load sprite: " + id);
             } else {
                 System.out.println("[GoldItemExpansion] ✅ Successfully loaded sprite: " + id);
             }
-            return spriteContents;
+
+            return contents;
 
         } catch (Exception e) {
-            System.out.println("[GoldItemExpansion] ❌ Exception loading sprite for " + id + ": " + e.getMessage());
-            LOGGER.error("Exception loading sprite", e);
+            System.out.println("[GoldItemExpansion] ❌ Exception loading sprite " + id + ": " + e.getMessage());
+            LOGGER.error("Failed to load custom sprite: {}", id, e);
             return null;
         }
     }
