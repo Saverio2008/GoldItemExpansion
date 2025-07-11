@@ -6,7 +6,10 @@ import net.minecraft.client.texture.SpriteLoader;
 import net.minecraft.client.texture.SpriteLoader.StitchResult;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
+import org.slf4j.Logger;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -20,9 +23,11 @@ import java.util.concurrent.Executor;
 @Mixin(SpriteLoader.class)
 public class SpriteLoaderMixin {
 
+    @Shadow @Final private static Logger LOGGER;
+
     @Inject(method = "load*", at = @At("RETURN"), cancellable = true)
     private void onLoad(ResourceManager resourceManager, Identifier path, int mipLevel, Executor executor, CallbackInfoReturnable<CompletableFuture<StitchResult>> cir) {
-        if (!path.getNamespace().equals("minecraft") || !path.getPath().equals("mob_effects")) {
+        if (!path.equals(new Identifier("minecraft", "mob_effects"))) {
             return;
         }
         CompletableFuture<StitchResult> originalFuture = cir.getReturnValue();
@@ -58,10 +63,25 @@ public class SpriteLoaderMixin {
     @Unique
     private SpriteContents loadSprite(ResourceManager manager, Identifier id) {
         try {
-            var optionalResource = manager.getResource(id);
-            return optionalResource.map(resource -> SpriteLoader.load(id, resource)).orElse(null);
+            Identifier resourceId = new Identifier(id.getNamespace(), "textures/" + id.getPath() + ".png");
+
+            var optionalResource = manager.getResource(resourceId);
+            if (optionalResource.isEmpty()) {
+                System.out.println("[GoldItemExpansion] ❌ Resource not found: " + resourceId);
+                return null;
+            }
+
+            SpriteContents spriteContents = SpriteLoader.load(id, optionalResource.get());
+            if (spriteContents == null) {
+                System.out.println("[GoldItemExpansion] ❌ Failed to load SpriteContents for: " + resourceId);
+            } else {
+                System.out.println("[GoldItemExpansion] ✅ Successfully loaded sprite: " + id);
+            }
+
+            return spriteContents;
         } catch (Exception e) {
-            // 记录异常或直接返回 null
+            System.out.println("[GoldItemExpansion] ❌ Exception loading sprite for " + id);
+            LOGGER.error(e.getMessage());
             return null;
         }
     }
