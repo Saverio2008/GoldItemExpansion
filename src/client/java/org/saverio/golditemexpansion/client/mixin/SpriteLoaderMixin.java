@@ -28,7 +28,7 @@ public class SpriteLoaderMixin {
     )
     private void onLoad(ResourceManager manager, Identifier atlasId, int mipLevel, Executor executor,
                         CallbackInfoReturnable<CompletableFuture<SpriteLoader.StitchResult>> cir) {
-        if (!atlasId.equals(new Identifier("textures", "atlas/mob_effects.png"))) {
+        if (!atlasId.equals(new Identifier("minecraft", "mob_effects"))) {
             return;
         }
 
