@@ -23,7 +23,7 @@ import static com.mojang.text2speech.Narrator.LOGGER;
 public class SpriteLoaderMixin {
 
     @Inject(method = "load*", at = @At("RETURN"), cancellable = true)
-    private void onLoad(ResourceManager manager, Identifier atlasId, int mipLevel, CallbackInfoReturnable<SpriteLoader.StitchResult> cir) {
+    private void onLoad(ResourceManager manager, Identifier atlasId, int mipLevel, java.util.concurrent.Executor executor, CallbackInfoReturnable<SpriteLoader.StitchResult> cir) {
         SpriteLoader.StitchResult originalResult = cir.getReturnValue();
         if (!atlasId.equals(new Identifier("textures", "atlas/mob_effects.png"))) {
             return;
