@@ -40,12 +40,10 @@ public class SpriteLoaderMixin {
             for (Sprite sprite : originalResult.regions().values()) {
                 contentsList.add(sprite.getContents());
             }
-
             List<Identifier> customIds = List.of(
-                    new Identifier("golditemexpansion", "mob_effects/god_positive_status_effect"),
-                    new Identifier("golditemexpansion", "mob_effects/god_negative_status_effect")
+                    new Identifier("golditemexpansion", "textures/mob_effects/god_positive_status_effect.png"),
+                    new Identifier("golditemexpansion", "textures/mob_effects/god_negative_status_effect.png")
             );
-
             List<CompletableFuture<SpriteContents>> loadFutures = new ArrayList<>();
 
             for (Identifier id : customIds) {
@@ -71,7 +69,7 @@ public class SpriteLoaderMixin {
     @Unique
     private SpriteContents loadSprite(ResourceManager manager, Identifier id) {
         try {
-            System.out.println("[GoldItemExpansion] Checking resource for ID: " + id);
+            System.out.println("[GoldItemExpansion] Trying to load resource at: " + id);
             System.out.println("[GoldItemExpansion] Resource namespaces: " + manager.getAllNamespaces());
 
             var optionalResource = manager.getResource(id);
