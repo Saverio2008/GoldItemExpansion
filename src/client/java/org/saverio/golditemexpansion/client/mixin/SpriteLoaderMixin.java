@@ -80,6 +80,7 @@ public class SpriteLoaderMixin {
 
         cir.setReturnValue(newFuture);
     }
+
     @Unique
     private SpriteContents loadSpriteContents(ResourceManager manager, Identifier id) {
         try {
@@ -119,8 +120,13 @@ public class SpriteLoaderMixin {
             return null;
         }
     }
+
     @Unique
     private Identifier idToResourceId(Identifier id) {
-        return new Identifier(id.getNamespace(), "textures/" + id.getPath() + ".png");
+        String path = id.getPath();
+        if (!path.startsWith("mob_effects/")) {
+            path = "mob_effects/" + path;
+        }
+        return new Identifier(id.getNamespace(), "textures/" + path + ".png");
     }
 }
