@@ -32,7 +32,10 @@ public class GolditemexpansionClient implements ClientModInitializer {
                     Executor prepareExecutor,
                     Executor applyExecutor) {
                 System.out.println("[Golditemexpansion] Resource reload triggered.");
-                return CompletableFuture.completedFuture(null);
+                CompletableFuture<Void> prepare = CompletableFuture.runAsync(() ->
+                        System.out.println("[Golditemexpansion] Preparing resource injection..."), prepareExecutor);
+                return prepare.thenCompose(synchronizer::whenPrepared).thenRunAsync(() ->
+                        System.out.println("[Golditemexpansion] Resource injection applied."), applyExecutor);
             }
         });
     }
