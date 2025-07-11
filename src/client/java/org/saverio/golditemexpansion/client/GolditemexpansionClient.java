@@ -37,13 +37,28 @@ public class GolditemexpansionClient implements ClientModInitializer {
                     Executor prepareExecutor,
                     Executor applyExecutor
             ) {
+                System.out.println("[Golditemexpansion] 🔄 资源重载开始");
+
                 return CompletableFuture.supplyAsync(() -> {
-                    System.out.println("[Golditemexpansion] 🔄 Preloading mob_effects sprites...");
-                    // 这里可同步执行简单操作，比如加载贴图资源缓存（即使没实际资源加载，也模拟一下）
+                    // 这里可以放异步预加载代码（无实际加载也可）
+                    System.out.println("[Golditemexpansion] 🔄 异步预加载中...");
                     return null;
                 }, prepareExecutor).thenRunAsync(() -> {
-                    System.out.println("[Golditemexpansion] ✅ Mob effects sprites reloaded.");
-                    // 这里做刷新缓存或标记贴图已经准备好等操作
+                    System.out.println("[Golditemexpansion] 🔄 资源重载应用阶段，准备刷新图标");
+
+                    // 安排刷新操作到主线程
+                    MinecraftClient mc = MinecraftClient.getInstance();
+                    if (mc != null) {
+                        mc.execute(() -> {
+                            StatusEffectSpriteManager spriteManager = mc.getStatusEffectSpriteManager();
+                            if (spriteManager != null) {
+                                spriteManager.getSprite(ModEffects.GOD_POSITIVE_EFFECT);
+                                spriteManager.getSprite(ModEffects.GOD_NEGATIVE_EFFECT);
+                                System.out.println("[Golditemexpansion] ✅ 自定义药水图标刷新完成");
+                            }
+                        });
+                    }
+
                 }, applyExecutor);
             }
         });
@@ -52,11 +67,15 @@ public class GolditemexpansionClient implements ClientModInitializer {
             if (!hasRegisteredIcons) {
                 hasRegisteredIcons = true;
                 MinecraftClient mc = MinecraftClient.getInstance();
-                StatusEffectSpriteManager spriteManager = mc.getStatusEffectSpriteManager();
-                if (spriteManager != null) {
-                    spriteManager.getSprite(ModEffects.GOD_POSITIVE_EFFECT);
-                    spriteManager.getSprite(ModEffects.GOD_NEGATIVE_EFFECT);
-                    System.out.println("[Golditemexpansion] ✅ 进入世界时自定义药水图标注册成功！");
+                if (mc != null) {
+                    mc.execute(() -> {
+                        StatusEffectSpriteManager spriteManager = mc.getStatusEffectSpriteManager();
+                        if (spriteManager != null) {
+                            spriteManager.getSprite(ModEffects.GOD_POSITIVE_EFFECT);
+                            spriteManager.getSprite(ModEffects.GOD_NEGATIVE_EFFECT);
+                            System.out.println("[Golditemexpansion] ✅ 进入世界时自定义药水图标注册成功！");
+                        }
+                    });
                 }
             }
         });
