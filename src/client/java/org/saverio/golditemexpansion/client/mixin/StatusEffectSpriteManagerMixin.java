@@ -17,13 +17,11 @@ public abstract class StatusEffectSpriteManagerMixin {
     private void injectCustomSprite(StatusEffect effect, CallbackInfoReturnable<Sprite> cir) {
         Identifier id = Registries.STATUS_EFFECT.getId(effect);
         if (id != null && id.getNamespace().equals("golditemexpansion")) {
-            Identifier spriteId = switch (id.getPath()) {
-                case "god_positive_status_effect" -> new Identifier("golditemexpansion", "gui/status_effect/god_positive_status_effect");
-                case "god_negative_status_effect" -> new Identifier("golditemexpansion", "gui/status_effect/god_negative_status_effect");
-                default -> null;
-            };
-            if (spriteId != null) {
+            String path = id.getPath();
+            if ("god_positive_status_effect".equals(path) || "god_negative_status_effect".equals(path)) {
+                Identifier spriteId = new Identifier("golditemexpansion", "gui/status_effect/" + path);
                 Sprite sprite = ((SpriteAtlasHolderAccessor) this).golditemexpansion$invokeGetSprite(spriteId);
+                System.out.println("[Mixin] Injecting sprite for " + path + ": " + sprite);
                 cir.setReturnValue(sprite);
                 cir.cancel();
             }
