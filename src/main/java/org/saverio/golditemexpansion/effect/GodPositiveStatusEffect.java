@@ -1,14 +1,11 @@
 package org.saverio.golditemexpansion.effect;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.AttributeContainer;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.util.Identifier;
 import org.saverio.golditemexpansion.util.GodEffectApplier;
 
 import java.util.LinkedHashMap;
@@ -55,10 +52,5 @@ public class GodPositiveStatusEffect extends StatusEffect implements GodEffectAp
         if (instance == null) return;
         int duration = instance.getDuration();
         applyGodSubEffects(entity, duration);
-    }
-    @Environment(EnvType.CLIENT)
-    @Override
-    public Identifier getIcon() {
-        return new Identifier("golditemexpansion", "mob_effects/god_positive_status_effect");
     }
 }
