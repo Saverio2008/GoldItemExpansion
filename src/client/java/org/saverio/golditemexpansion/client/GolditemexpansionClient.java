@@ -1,41 +1,28 @@
 package org.saverio.golditemexpansion.client;
 
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
-import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
-import net.minecraft.resource.ResourceManager;
-import net.minecraft.resource.ResourceType;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.profiler.Profiler;
-import org.jetbrains.annotations.NotNull;
-
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executor;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.texture.StatusEffectSpriteManager;
+import org.saverio.golditemexpansion.effect.ModEffects;
 
 public class GolditemexpansionClient implements ClientModInitializer {
 
-    private static final Identifier RELOAD_LISTENER_ID = new Identifier("golditemexpansion", "mob_effects_injector");
+    private static boolean hasRegisteredIcons = false;
 
     @Override
     public void onInitializeClient() {
-        ResourceManagerHelper.get(ResourceType.CLIENT_RESOURCES).registerReloadListener(new IdentifiableResourceReloadListener() {
-            @Override
-            public @NotNull Identifier getFabricId() {
-                return RELOAD_LISTENER_ID;
-            }
-            @Override
-            public CompletableFuture<Void> reload(
-                    Synchronizer synchronizer,
-                    @NotNull ResourceManager manager,
-                    Profiler prepareProfiler,
-                    Profiler applyProfiler,
-                    Executor prepareExecutor,
-                    Executor applyExecutor) {
-                System.out.println("[Golditemexpansion] Resource reload triggered.");
-                CompletableFuture<Void> prepare = CompletableFuture.runAsync(() ->
-                        System.out.println("[Golditemexpansion] Preparing resource injection..."), prepareExecutor);
-                return prepare.thenCompose(synchronizer::whenPrepared).thenRunAsync(() ->
-                        System.out.println("[Golditemexpansion] Resource injection applied."), applyExecutor);
+        ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            if (!hasRegisteredIcons && client.world != null) {
+                hasRegisteredIcons = true;
+
+                StatusEffectSpriteManager spriteManager = MinecraftClient.getInstance().getStatusEffectSpriteManager();
+
+                // 强制加载你的自定义药水图标
+                spriteManager.getSprite(ModEffects.GOD_POSITIVE_EFFECT);
+                spriteManager.getSprite(ModEffects.GOD_NEGATIVE_EFFECT);
+
+                System.out.println("[Golditemexpansion] ✅ 自定义药水图标注册成功！");
             }
         });
     }
