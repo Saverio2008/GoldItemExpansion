@@ -6,8 +6,10 @@
   "client": [
     "AbstractInventoryScreenMixin",
     "AbstractInventoryScreenInvoker",
+    "SpriteLoaderMixin",
     "accessor.HandledScreenAccessor",
-    "accessor.ScreenAccessor"
+    "accessor.ScreenAccessor",
+    "accessor.SpriteInvoker"
   ],
   "injectors": {
     "defaultRequire": 1
