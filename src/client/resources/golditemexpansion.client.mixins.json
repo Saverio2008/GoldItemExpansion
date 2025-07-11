@@ -7,9 +7,7 @@
     "AbstractInventoryScreenMixin",
     "AbstractInventoryScreenInvoker",
     "accessor.HandledScreenAccessor",
-    "accessor.ScreenAccessor",
-    "accessor.SpriteAtlasHolderAccessor",
-    "StatusEffectSpriteManagerMixin"
+    "accessor.ScreenAccessor"
   ],
   "injectors": {
     "defaultRequire": 1
