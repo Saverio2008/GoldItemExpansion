@@ -53,7 +53,6 @@ public class SpriteLoaderMixin {
                                 SpriteContents c = f.join();
                                 if (c != null) allContents.add(c);
                             }
-                            // 5. 调用官方stitch方法重新缝合，返回新的结果
                             SpriteLoader self = (SpriteLoader)(Object)this;
                             return self.stitch(allContents, mipLevel, executor);
                         });
