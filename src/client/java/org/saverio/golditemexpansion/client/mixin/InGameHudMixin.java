@@ -60,7 +60,6 @@ public class InGameHudMixin {
             });
         }
     }
-
     @Unique
     private boolean isCustomEffect(StatusEffect effect) {
         return effect == ModEffects.GOD_POSITIVE_EFFECT || effect == ModEffects.GOD_NEGATIVE_EFFECT;
