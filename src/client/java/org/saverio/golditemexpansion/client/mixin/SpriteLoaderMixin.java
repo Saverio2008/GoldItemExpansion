@@ -42,8 +42,13 @@ public class SpriteLoaderMixin {
 
         CompletableFuture<StitchResult> newFuture = originalFuture.thenCompose(originalResult -> {
             List<SpriteContents> contentsList = new ArrayList<>(originalResult.regions().size());
+
+            // 1. 打印原始图集已有的 SpriteContents 并加入列表
+            System.out.println("[GoldItemExpansion] 原始图集已有贴图:");
             for (Sprite sprite : originalResult.regions().values()) {
-                contentsList.add(sprite.getContents());
+                SpriteContents contents = sprite.getContents();
+                System.out.println(" - " + (contents == null ? "null" : contents.getId()));
+                contentsList.add(contents);
             }
 
             List<Identifier> customIds = List.of(
@@ -52,36 +57,39 @@ public class SpriteLoaderMixin {
             );
 
             List<CompletableFuture<SpriteContents>> loadFutures = new ArrayList<>();
+
+            // 2. 加载自定义贴图，打印加载状态
             for (Identifier id : customIds) {
-                loadFutures.add(CompletableFuture.supplyAsync(() -> loadSprite(resourceManager, id), executor));
+                loadFutures.add(CompletableFuture.supplyAsync(() -> {
+                    SpriteContents loaded = loadSprite(resourceManager, id);
+                    System.out.println("[GoldItemExpansion] 加载自定义贴图: " + (loaded == null ? "null" : loaded.getId()));
+                    return loaded;
+                }, executor));
             }
 
             return CompletableFuture.allOf(loadFutures.toArray(new CompletableFuture[0]))
                     .thenApply(v -> {
+                        // 3. 加载完毕后加入拼接列表并打印
                         for (CompletableFuture<SpriteContents> future : loadFutures) {
                             SpriteContents contents = future.join();
                             if (contents != null) {
+                                System.out.println("[GoldItemExpansion] 添加到拼接列表的自定义贴图: " + contents.getId());
                                 contentsList.add(contents);
                             }
+                        }
+
+                        System.out.println("[GoldItemExpansion] 拼接前列表总数量: " + contentsList.size());
+                        for (SpriteContents sc : contentsList) {
+                            System.out.println("[GoldItemExpansion] 列表项: " + (sc == null ? "null" : sc.getId()));
                         }
 
                         SpriteLoader self = (SpriteLoader) (Object) this;
                         StitchResult stitched = self.stitch(contentsList, mipLevel, executor);
 
-                        // 🔍 检查贴图注册结果
-                        for (Identifier id : customIds) {
-                            Sprite sprite = stitched.regions().get(id);
-                            if (sprite == null || sprite.getContents() == null) {
-                                System.out.println("[GoldItemExpansion] ❌ " + id + " 未注册或内容为空！");
-                            } else {
-                                System.out.println("[GoldItemExpansion] ✅ 注册贴图 " + id);
-                                System.out.println(" - Atlas: " + sprite.getAtlasId());
-                                System.out.println(" - Size: " + sprite.getContents().getWidth() + "x" + sprite.getContents().getHeight());
-                                System.out.println(" - Pos: x=" + sprite.getX() + ", y=" + sprite.getY());
-                                System.out.println(" - UV: minU=" + sprite.getMinU() + ", maxU=" + sprite.getMaxU() +
-                                        ", minV=" + sprite.getMinV() + ", maxV=" + sprite.getMaxV());
-                            }
-                        }
+                        // 4. 拼接完成后打印拼接图集内容
+                        System.out.println("[GoldItemExpansion] 拼接后图集内容:");
+                        stitched.regions().forEach((id, sprite) ->
+                                System.out.println(" - " + id + " 在位置 x=" + sprite.getX() + ", y=" + sprite.getY()));
 
                         return stitched;
                     });
@@ -93,12 +101,12 @@ public class SpriteLoaderMixin {
     @Unique
     private SpriteContents loadSprite(ResourceManager manager, Identifier id) {
         try {
-            System.out.println("[GoldItemExpansion] 🔍 Trying to load sprite: " + id);
+            System.out.println("[GoldItemExpansion] 🔍 尝试加载贴图: " + id);
             Identifier texturePath = new Identifier(id.getNamespace(), "textures/mob_effects/" + id.getPath() + ".png");
 
             var optionalResource = manager.getResource(texturePath);
             if (optionalResource.isEmpty()) {
-                System.out.println("[GoldItemExpansion] ❌ Resource not found: " + texturePath);
+                System.out.println("[GoldItemExpansion] ❌ 资源未找到: " + texturePath);
                 return null;
             }
 
@@ -106,15 +114,15 @@ public class SpriteLoaderMixin {
             SpriteContents contents = SpriteLoader.load(id, resource);
 
             if (contents == null) {
-                System.out.println("[GoldItemExpansion] ❌ Failed to load sprite: " + id);
+                System.out.println("[GoldItemExpansion] ❌ 加载贴图失败: " + id);
             } else {
-                System.out.println("[GoldItemExpansion] ✅ Successfully loaded sprite: " + id);
+                System.out.println("[GoldItemExpansion] ✅ 成功加载贴图: " + id);
             }
 
             return contents;
 
         } catch (Exception e) {
-            System.out.println("[GoldItemExpansion] ❌ Exception loading sprite " + id + ": " + e.getMessage());
+            System.out.println("[GoldItemExpansion] ❌ 异常加载贴图 " + id + ": " + e.getMessage());
             LOGGER.error("Failed to load custom sprite: {}", id, e);
             return null;
         }
