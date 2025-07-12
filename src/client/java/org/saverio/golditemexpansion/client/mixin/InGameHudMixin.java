@@ -10,6 +10,7 @@ import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 import org.saverio.golditemexpansion.client.mixin.accessor.SpriteAtlasHolderAccessor;
+import org.saverio.golditemexpansion.effect.ModEffects;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -94,19 +95,17 @@ public class InGameHudMixin {
             )
     )
     private Sprite redirectGetSprite(StatusEffectSpriteManager manager, StatusEffect effect) {
-        Identifier id = Registries.STATUS_EFFECT.getId(effect);
-        if (id != null && id.getNamespace().equals("golditemexpansion") &&
-                (id.getPath().equals("god_positive_status_effect") || id.getPath().equals("god_negative_status_effect"))) {
-
-            SpriteAtlasTexture atlas = ((SpriteAtlasHolderAccessor) manager).golditemexpansion$getAtlas();
-            Sprite custom = atlas.getSprite(id);
-            if (custom != null && custom.getContents() != null && !custom.getContents().getId().getPath().equals("missingno")) {
-                // 返回自定义 Sprite，替换默认
-                return custom;
+        if (effect == ModEffects.GOD_POSITIVE_EFFECT || effect == ModEffects.GOD_NEGATIVE_EFFECT) {
+            Identifier id = Registries.STATUS_EFFECT.getId(effect);
+            if (id != null) {
+                SpriteAtlasTexture atlas = ((SpriteAtlasHolderAccessor) manager).golditemexpansion$getAtlas();
+                Sprite custom = atlas.getSprite(id);
+                if (custom != null && custom.getContents() != null && !custom.getContents().getId().getPath().equals("missingno")) {
+                    System.out.println("[GoldItemExpansion] 替换自定义状态效果贴图: " + id);
+                    return custom;
+                }
             }
         }
-
-        // 其他正常返回默认贴图
         return manager.getSprite(effect);
     }
     @Inject(
