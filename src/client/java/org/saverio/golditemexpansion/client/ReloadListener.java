@@ -21,6 +21,7 @@ public class ReloadListener implements IdentifiableResourceReloadListener {
         return ID;
     }
 
+    @SuppressWarnings("resource")
     @Override
     public CompletableFuture<Void> reload(
             ResourceReloader.Synchronizer synchronizer,
@@ -35,11 +36,10 @@ public class ReloadListener implements IdentifiableResourceReloadListener {
             MinecraftClient client = MinecraftClient.getInstance();
             if (client != null && client.getStatusEffectSpriteManager() != null) {
                 StatusEffectSpriteManager spriteManager = client.getStatusEffectSpriteManager();
-                try (SpriteAtlasTexture atlas = ((SpriteAtlasHolderAccessor) spriteManager).golditemexpansion$getAtlas()) {
-                    if (atlas != null) {
-                        System.out.println("[Golditemexpansion] 🧹 清除图集缓存！");
-                        atlas.clear();
-                    }
+                SpriteAtlasTexture atlas = ((SpriteAtlasHolderAccessor) spriteManager).golditemexpansion$getAtlas();
+                if (atlas != null) {
+                    System.out.println("[Golditemexpansion] 🧹 清除图集缓存！");
+                    atlas.clear();
                 }
             }
         }, applyExecutor);
