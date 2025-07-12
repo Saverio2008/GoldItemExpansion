@@ -19,8 +19,6 @@ import java.util.concurrent.Executor;
 import org.saverio.golditemexpansion.client.mixin.accessor.SpriteAtlasHolderAccessor;
 import org.saverio.golditemexpansion.effect.ModEffects;
 
-import static com.mojang.text2speech.Narrator.LOGGER;
-
 public class GolditemexpansionClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
@@ -37,31 +35,37 @@ public class GolditemexpansionClient implements ClientModInitializer {
                                                   Profiler applyProfiler,
                                                   Executor prepareExecutor,
                                                   Executor applyExecutor) {
-                return synchronizer.whenPrepared(Unit.INSTANCE).thenRunAsync(() -> {
+                return synchronizer.whenPrepared(Unit.INSTANCE).thenComposeAsync(unit -> {
                     applyProfiler.startTick();
                     applyProfiler.push("golditemexpansion:status_effect_icon_loader");
 
                     MinecraftClient client = MinecraftClient.getInstance();
+
                     if (client != null && client.getStatusEffectSpriteManager() != null) {
                         StatusEffectSpriteManager spriteManager = client.getStatusEffectSpriteManager();
                         try (SpriteAtlasTexture atlas = ((SpriteAtlasHolderAccessor) spriteManager).golditemexpansion$getAtlas()) {
 
                             if (atlas != null) {
-                                atlas.clear();
                                 System.out.println("[Golditemexpansion] 🧹 清除图集缓存！");
+                                atlas.clear();
                             }
-                        } catch (Exception e) {
-                            LOGGER.error(e.getMessage());
                         }
 
-                        // 触发加载自定义图标的请求
-                        spriteManager.getSprite(ModEffects.GOD_POSITIVE_EFFECT);
-                        spriteManager.getSprite(ModEffects.GOD_NEGATIVE_EFFECT);
-                        System.out.println("[Golditemexpansion] ✅ 自定义药水图标注册成功！");
+                        // 异步触发资源重新加载，并返回这个 CompletableFuture
+                        return client.reloadResources().thenRun(() -> {
+                            StatusEffectSpriteManager sm = client.getStatusEffectSpriteManager();
+                            sm.getSprite(ModEffects.GOD_POSITIVE_EFFECT);
+                            sm.getSprite(ModEffects.GOD_NEGATIVE_EFFECT);
+                            System.out.println("[Golditemexpansion] ✅ 自定义药水图标注册成功！");
+                            applyProfiler.pop();
+                            applyProfiler.endTick();
+                        });
+                    } else {
+                        // 如果没有 client 或 spriteManager，也要正常结束 profiler
+                        applyProfiler.pop();
+                        applyProfiler.endTick();
+                        return CompletableFuture.completedFuture(null);
                     }
-
-                    applyProfiler.pop();
-                    applyProfiler.endTick();
                 }, applyExecutor);
             }
         });
