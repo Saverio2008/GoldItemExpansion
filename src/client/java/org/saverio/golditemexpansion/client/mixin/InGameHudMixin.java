@@ -5,6 +5,7 @@ import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.texture.StatusEffectSpriteManager;
 import net.minecraft.entity.effect.StatusEffect;
+import net.minecraft.registry.Registries;
 import org.saverio.golditemexpansion.effect.ModEffects;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -26,7 +27,7 @@ public class InGameHudMixin {
 
     @Inject(method = "renderStatusEffectOverlay", at = @At("HEAD"))
     private void beforeRenderStatusEffects(CallbackInfo ci) {
-        if (logCount >= MAX_LOGS) return; // 超过限制不打印
+        if (logCount >= MAX_LOGS) return;
 
         MinecraftClient client = MinecraftClient.getInstance();
         StatusEffectSpriteManager manager = client.getStatusEffectSpriteManager();
@@ -50,7 +51,10 @@ public class InGameHudMixin {
                 } else {
                     System.out.println("[GoldItemExpansion][HUD] 状态效果 " + effect + " 使用贴图：" + sprite.getAtlasId());
                 }
-
+                assert sprite != null;
+                System.out.println("[GoldItemExpansion][HUD] UV坐标: minU=" + sprite.getMinU() + ", maxU=" + sprite.getMaxU() +
+                        ", minV=" + sprite.getMinV() + ", maxV=" + sprite.getMaxV());
+                System.out.println("Effect ID: " + Registries.STATUS_EFFECT.getId(effect));
                 loggedEffects.add(effect);
                 logCount++;
             });
