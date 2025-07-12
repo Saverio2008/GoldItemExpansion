@@ -83,4 +83,44 @@ public class InGameHudMixin {
             }
         });
     }
+    @Inject(
+            method = "renderStatusEffectOverlay",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/client/texture/StatusEffectSpriteManager;getSprite(Lnet/minecraft/entity/effect/StatusEffect;)Lnet/minecraft/client/texture/Sprite;"
+            )
+    )
+    private void onSpriteChosen(DrawContext context, CallbackInfo ci) {
+        if (logCount >= MAX_LOGS) return;
+
+        MinecraftClient client = MinecraftClient.getInstance();
+        if (client.player == null) return;
+
+        StatusEffectSpriteManager manager = client.getStatusEffectSpriteManager();
+
+        client.player.getStatusEffects().forEach(effectInstance -> {
+            if (logCount >= MAX_LOGS) return;
+
+            StatusEffect effect = effectInstance.getEffectType();
+            Identifier id = Registries.STATUS_EFFECT.getId(effect);
+            if (id != null && id.getNamespace().equals("golditemexpansion") &&
+                    (id.getPath().equals("god_positive_status_effect") || id.getPath().equals("god_negative_status_effect"))) {
+
+                Sprite sprite = manager.getSprite(effect);
+                if (sprite == null || sprite.getContents() == null) {
+                    System.out.println("[GoldItemExpansion][WARN] ⛔ Sprite is null or has no contents at draw list insertion for " + id);
+                    return;
+                }
+
+                System.out.println("[GoldItemExpansion][DEBUG] 📌 Sprite chosen for drawing (at draw list insertion)");
+                System.out.println(" - ID: " + id);
+                System.out.println(" - Atlas: " + sprite.getAtlasId());
+                System.out.println(" - UV: minU=" + sprite.getMinU() + ", maxU=" + sprite.getMaxU() +
+                        ", minV=" + sprite.getMinV() + ", maxV=" + sprite.getMaxV());
+                System.out.println(" - Size: " + sprite.getContents().getWidth() + "x" + sprite.getContents().getHeight());
+
+                logCount++;
+            }
+        });
+    }
 }

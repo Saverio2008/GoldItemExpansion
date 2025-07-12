@@ -30,8 +30,8 @@ public class DrawContextMixin {
         if (logCount.get() >= MAX_LOGS) return;
         if (sprite == null || sprite.getContents() == null) return;
 
-        Identifier spriteId = sprite.getContents().getId(); // ✅ 获取具体的贴图ID golditemexpansion:god_positive_status_effect
-
+        Identifier spriteId = sprite.getContents().getId();
+        System.out.println("[DEBUG] spriteContents id: " + spriteId + ", GOD_POSITIVE_SPRITE_ID: " + GOD_POSITIVE_SPRITE_ID);
         // 只检查你的贴图
         if (!spriteId.equals(GOD_POSITIVE_SPRITE_ID) && !spriteId.equals(GOD_NEGATIVE_SPRITE_ID)) {
             return;
