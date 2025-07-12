@@ -34,7 +34,6 @@ public class SpriteLoaderMixin {
             Executor executor,
             CallbackInfoReturnable<CompletableFuture<StitchResult>> cir
     ) {
-        // 只注入到 mob_effects 图集中
         if (!atlasId.equals(new Identifier("minecraft", "mob_effects"))) {
             return;
         }
@@ -47,14 +46,12 @@ public class SpriteLoaderMixin {
                 contentsList.add(sprite.getContents());
             }
 
-            // 自定义图标（不包含 textures/ 前缀和 .png 后缀）
             List<Identifier> customIds = List.of(
                     new Identifier("golditemexpansion", "god_positive_status_effect"),
                     new Identifier("golditemexpansion", "god_negative_status_effect")
             );
 
             List<CompletableFuture<SpriteContents>> loadFutures = new ArrayList<>();
-
             for (Identifier id : customIds) {
                 loadFutures.add(CompletableFuture.supplyAsync(() -> loadSprite(resourceManager, id), executor));
             }
@@ -69,7 +66,24 @@ public class SpriteLoaderMixin {
                         }
 
                         SpriteLoader self = (SpriteLoader) (Object) this;
-                        return self.stitch(contentsList, mipLevel, executor);
+                        StitchResult stitched = self.stitch(contentsList, mipLevel, executor);
+
+                        // 🔍 检查贴图注册结果
+                        for (Identifier id : customIds) {
+                            Sprite sprite = stitched.regions().get(id);
+                            if (sprite == null || sprite.getContents() == null) {
+                                System.out.println("[GoldItemExpansion] ❌ " + id + " 未注册或内容为空！");
+                            } else {
+                                System.out.println("[GoldItemExpansion] ✅ 注册贴图 " + id);
+                                System.out.println(" - Atlas: " + sprite.getAtlasId());
+                                System.out.println(" - Size: " + sprite.getContents().getWidth() + "x" + sprite.getContents().getHeight());
+                                System.out.println(" - Pos: x=" + sprite.getX() + ", y=" + sprite.getY());
+                                System.out.println(" - UV: minU=" + sprite.getMinU() + ", maxU=" + sprite.getMaxU() +
+                                        ", minV=" + sprite.getMinV() + ", maxV=" + sprite.getMaxV());
+                            }
+                        }
+
+                        return stitched;
                     });
         });
 
@@ -80,7 +94,6 @@ public class SpriteLoaderMixin {
     private SpriteContents loadSprite(ResourceManager manager, Identifier id) {
         try {
             System.out.println("[GoldItemExpansion] 🔍 Trying to load sprite: " + id);
-            // 自动加上 textures 路径和 .png 后缀
             Identifier texturePath = new Identifier(id.getNamespace(), "textures/mob_effects/" + id.getPath() + ".png");
 
             var optionalResource = manager.getResource(texturePath);

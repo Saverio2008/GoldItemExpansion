@@ -21,8 +21,7 @@ import java.util.concurrent.Executor;
 @Mixin(SpriteAtlasHolder.class)
 public abstract class SpriteAtlasHolderMixin {
 
-    @SuppressWarnings("resource")
-    @Inject(method = "reload", at = @At("TAIL"))
+    @Inject(method = "reload", at = @At("TAIL"), cancellable = true)
     private void onReload(ResourceReloader.Synchronizer synchronizer,
                           ResourceManager manager,
                           Profiler prepareProfiler,
@@ -32,28 +31,27 @@ public abstract class SpriteAtlasHolderMixin {
                           CallbackInfoReturnable<CompletableFuture<Void>> cir) {
 
         SpriteAtlasHolder holder = (SpriteAtlasHolder) (Object) this;
+        try (SpriteAtlasTexture atlas = ((SpriteAtlasHolderAccessor) holder).golditemexpansion$getAtlas()) {
 
-        SpriteAtlasTexture atlas = ((SpriteAtlasHolderAccessor) holder).golditemexpansion$getAtlas();
-        System.out.println("[GoldItemExpansion] 当前reload的图集ID: " + atlas.getId());
-        if (!atlas.getId().equals(new Identifier("minecraft", "textures/atlas/mob_effects.png"))) {
-            return;
-        }
-
-        cir.getReturnValue().thenRunAsync(() -> {
-            Sprite positive = atlas.getSprite(new Identifier("golditemexpansion", "god_positive_status_effect"));
-            Sprite negative = atlas.getSprite(new Identifier("golditemexpansion", "god_negative_status_effect"));
-
-            // 测试是否加载成功
-            if (positive.getContents() == null || negative.getContents() == null) {
-                System.err.println("[GoldItemExpansion] ❌ 自定义状态图标未加载成功！");
+            if (!atlas.getId().equals(new Identifier("minecraft", "textures/atlas/mob_effects.png"))) {
                 return;
             }
 
-            // 触发预加载
-            MinecraftClient.getInstance().getStatusEffectSpriteManager().getSprite(ModEffects.GOD_POSITIVE_EFFECT);
-            MinecraftClient.getInstance().getStatusEffectSpriteManager().getSprite(ModEffects.GOD_NEGATIVE_EFFECT);
+            // 用 applyExecutor 保证资源应用阶段同步执行
+            cir.setReturnValue(cir.getReturnValue().thenApplyAsync((v) -> {
+                Sprite positive = atlas.getSprite(new Identifier("golditemexpansion", "god_positive_status_effect"));
+                Sprite negative = atlas.getSprite(new Identifier("golditemexpansion", "god_negative_status_effect"));
 
-            System.out.println("[GoldItemExpansion] ✅ 自定义状态图标成功 stitch 且可用！");
-        }, MinecraftClient.getInstance());
+                if (positive.getContents() == null || negative.getContents() == null) {
+                    System.err.println("[GoldItemExpansion] ❌ 自定义状态图标未加载成功！");
+                } else {
+                    MinecraftClient.getInstance().getStatusEffectSpriteManager().getSprite(ModEffects.GOD_POSITIVE_EFFECT);
+                    MinecraftClient.getInstance().getStatusEffectSpriteManager().getSprite(ModEffects.GOD_NEGATIVE_EFFECT);
+                    System.out.println("[GoldItemExpansion] ✅ 自定义状态图标成功 stitch 且可用！");
+                }
+
+                return v;
+            }, applyExecutor));
+        }
     }
 }

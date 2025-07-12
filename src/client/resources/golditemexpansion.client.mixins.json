@@ -6,12 +6,14 @@
   "client": [
     "AbstractInventoryScreenInvoker",
     "AbstractInventoryScreenMixin",
+    "DrawContextMixin",
     "InGameHudMixin",
     "SpriteAtlasHolderMixin",
     "SpriteLoaderMixin",
     "accessor.HandledScreenAccessor",
     "accessor.ScreenAccessor",
-    "accessor.SpriteAtlasHolderAccessor"
+    "accessor.SpriteAtlasHolderAccessor",
+    "accessor.SpriteAtlasTextureAccessor"
   ],
   "injectors": {
     "defaultRequire": 1
