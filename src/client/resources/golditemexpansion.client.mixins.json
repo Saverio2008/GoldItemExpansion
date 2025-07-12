@@ -6,11 +6,9 @@
   "client": [
     "AbstractInventoryScreenInvoker",
     "AbstractInventoryScreenMixin",
-    "InGameHudMixin",
     "SpriteLoaderMixin",
     "accessor.HandledScreenAccessor",
     "accessor.ScreenAccessor",
-    "accessor.SpriteAccessor",
     "accessor.SpriteAtlasHolderAccessor"
   ],
   "injectors": {
