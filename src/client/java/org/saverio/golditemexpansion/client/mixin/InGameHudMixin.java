@@ -1,6 +1,5 @@
 package org.saverio.golditemexpansion.client.mixin;
 
-import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
@@ -15,6 +14,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(InGameHud.class)
@@ -23,7 +23,6 @@ public class InGameHudMixin {
     private static final int MAX_LOGS = 50;
     @Unique
     private static int logCount = 0;
-
     @Inject(method = "renderStatusEffectOverlay", at = @At("HEAD"))
     private void beforeRenderStatusEffectOverlay(DrawContext context, CallbackInfo ci) {
         if (logCount >= MAX_LOGS) return;
@@ -87,33 +86,28 @@ public class InGameHudMixin {
         });
     }
     @SuppressWarnings("resource")
-    @ModifyReturnValue(
+    @Redirect(
             method = "renderStatusEffectOverlay",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/client/texture/StatusEffectSpriteManager;getSprite(Lnet/minecraft/entity/effect/StatusEffect;)Lnet/minecraft/client/texture/Sprite;"
             )
     )
-    private Sprite golditemexpansion$overrideCustomSprite(Sprite original, StatusEffect effect) {
+    private Sprite redirectGetSprite(StatusEffectSpriteManager manager, StatusEffect effect) {
         Identifier id = Registries.STATUS_EFFECT.getId(effect);
-        if (id == null) return original;
-        String path = id.getPath();
-        if (id.getNamespace().equals("golditemexpansion") && (
-                path.equals("god_positive_status_effect") || path.equals("god_negative_status_effect"))) {
-            SpriteAtlasTexture atlas = ((SpriteAtlasHolderAccessor)
-                    MinecraftClient.getInstance().getStatusEffectSpriteManager())
-                    .golditemexpansion$getAtlas();
+        if (id != null && id.getNamespace().equals("golditemexpansion") &&
+                (id.getPath().equals("god_positive_status_effect") || id.getPath().equals("god_negative_status_effect"))) {
 
-            Sprite correct = atlas.getSprite(id);
-            if (correct != null && !correct.getContents().getId().getPath().equals("missingno")) {
-                System.out.println("[GoldItemExpansion] ✅ 使用自定义 Sprite 替换: " + id);
-                return correct;
-            } else {
-                System.out.println("[GoldItemExpansion] ⚠️ 自定义 Sprite 替换失败（fallback）: " + id);
+            SpriteAtlasTexture atlas = ((SpriteAtlasHolderAccessor) manager).golditemexpansion$getAtlas();
+            Sprite custom = atlas.getSprite(id);
+            if (custom != null && custom.getContents() != null && !custom.getContents().getId().getPath().equals("missingno")) {
+                // 返回自定义 Sprite，替换默认
+                return custom;
             }
         }
 
-        return original;
+        // 其他正常返回默认贴图
+        return manager.getSprite(effect);
     }
     @Inject(
             method = "renderStatusEffectOverlay",
