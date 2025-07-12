@@ -1,13 +1,16 @@
 package org.saverio.golditemexpansion.client.mixin;
 
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.texture.Sprite;
+import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.texture.StatusEffectSpriteManager;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
+import org.saverio.golditemexpansion.client.mixin.accessor.SpriteAtlasHolderAccessor;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -82,6 +85,35 @@ public class InGameHudMixin {
                 logCount++;
             }
         });
+    }
+    @SuppressWarnings("resource")
+    @ModifyReturnValue(
+            method = "renderStatusEffectOverlay",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/client/texture/StatusEffectSpriteManager;getSprite(Lnet/minecraft/entity/effect/StatusEffect;)Lnet/minecraft/client/texture/Sprite;"
+            )
+    )
+    private Sprite golditemexpansion$overrideCustomSprite(Sprite original, StatusEffect effect) {
+        Identifier id = Registries.STATUS_EFFECT.getId(effect);
+        if (id == null) return original;
+        String path = id.getPath();
+        if (id.getNamespace().equals("golditemexpansion") && (
+                path.equals("god_positive_status_effect") || path.equals("god_negative_status_effect"))) {
+            SpriteAtlasTexture atlas = ((SpriteAtlasHolderAccessor)
+                    MinecraftClient.getInstance().getStatusEffectSpriteManager())
+                    .golditemexpansion$getAtlas();
+
+            Sprite correct = atlas.getSprite(id);
+            if (correct != null && !correct.getContents().getId().getPath().equals("missingno")) {
+                System.out.println("[GoldItemExpansion] ✅ 使用自定义 Sprite 替换: " + id);
+                return correct;
+            } else {
+                System.out.println("[GoldItemExpansion] ⚠️ 自定义 Sprite 替换失败（fallback）: " + id);
+            }
+        }
+
+        return original;
     }
     @Inject(
             method = "renderStatusEffectOverlay",
