@@ -39,17 +39,45 @@ public class InGameHudMixin {
                     (id.getPath().equals("god_positive_status_effect") || id.getPath().equals("god_negative_status_effect"))) {
 
                 Sprite sprite = manager.getSprite(effect);
-                String contentInfo = sprite.getContents() == null ? "null"
-                        : sprite.getContents().getWidth() + "x" + sprite.getContents().getHeight();
+                if (sprite == null) {
+                    System.out.println("[GoldItemExpansion][WARN] Sprite is null for effect " + id);
+                    return;
+                }
+
+                if (sprite.getContents() == null) {
+                    System.out.println("[GoldItemExpansion][WARN] Sprite contents is null for effect " + id);
+                    return;
+                }
+
+                int width = sprite.getContents().getWidth();
+                int height = sprite.getContents().getHeight();
+
+                float minU = sprite.getMinU();
+                float maxU = sprite.getMaxU();
+                float minV = sprite.getMinV();
+                float maxV = sprite.getMaxV();
+
+                boolean uvValid = (minU >= 0 && maxU <= 1 && minV >= 0 && maxV <= 1 && minU < maxU && minV < maxV);
+                boolean sizeValid = (width == 16 || width == 32) && (height == 16 || height == 32);
 
                 System.out.println("[GoldItemExpansion][DEBUG] Effect: " + id +
                         ", Sprite Atlas: " + sprite.getAtlasId() +
-                        ", Sprite Contents Hash: " + (sprite.getContents() == null ? "null" : sprite.getContents().hashCode()) +
-                        ", Size: " + contentInfo +
-                        ", UV: minU=" + sprite.getMinU() +
-                        ", maxU=" + sprite.getMaxU() +
-                        ", minV=" + sprite.getMinV() +
-                        ", maxV=" + sprite.getMaxV());
+                        ", Sprite Contents Hash: " + sprite.getContents().hashCode() +
+                        ", Size: " + width + "x" + height +
+                        ", UV: minU=" + minU +
+                        ", maxU=" + maxU +
+                        ", minV=" + minV +
+                        ", maxV=" + maxV);
+
+                if (!uvValid) {
+                    System.out.println("[GoldItemExpansion][WARN] UV coordinates invalid for " + id +
+                            ": minU=" + minU + ", maxU=" + maxU + ", minV=" + minV + ", maxV=" + maxV);
+                }
+
+                if (!sizeValid) {
+                    System.out.println("[GoldItemExpansion][WARN] Sprite size unusual for " + id +
+                            ": width=" + width + ", height=" + height);
+                }
 
                 logCount++;
             }
