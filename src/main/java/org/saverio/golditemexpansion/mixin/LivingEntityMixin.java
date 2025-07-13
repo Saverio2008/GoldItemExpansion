@@ -14,8 +14,7 @@ public abstract class LivingEntityMixin {
     private void beforeAddGodEffect(StatusEffectInstance effect, CallbackInfoReturnable<Boolean> cir) {
         if (effect.getEffectType() == ModEffects.GOD_STATUS_EFFECT) {
             LivingEntity self = (LivingEntity) (Object) this;
-            self.removeStatusEffect(ModEffects.GOD_POSITIVE_EFFECT);
-            self.removeStatusEffect(ModEffects.GOD_NEGATIVE_EFFECT);
+            self.removeStatusEffect(ModEffects.GOD_STATUS_EFFECT);
         }
     }
 }
