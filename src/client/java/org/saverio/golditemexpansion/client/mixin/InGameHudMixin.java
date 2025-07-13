@@ -1,11 +1,13 @@
 package org.saverio.golditemexpansion.client.mixin;
 
+import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.texture.StatusEffectSpriteManager;
 import net.minecraft.entity.effect.StatusEffect;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Mixin;
@@ -28,13 +30,11 @@ public class InGameHudMixin {
         StatusEffectSpriteManager manager = client.getStatusEffectSpriteManager();
 
         client.player.getStatusEffects().forEach(effectInstance -> {
-            // 每 LOG_INTERVAL 次打印一次，避免日志刷屏
             if (logCount % LOG_INTERVAL == 0) {
                 StatusEffect effect = effectInstance.getEffectType();
                 Identifier id = Registries.STATUS_EFFECT.getId(effect);
-                if (id != null && id.getNamespace().equals("golditemexpansion") &&
-                        (id.getPath().equals("god_positive_status_effect") || id.getPath().equals("god_negative_status_effect"))) {
 
+                if (id != null && id.getNamespace().equals("golditemexpansion")) {
                     Sprite sprite = manager.getSprite(effect);
                     if (sprite == null || sprite.getContents() == null) return;
 
@@ -52,5 +52,27 @@ public class InGameHudMixin {
             }
             logCount++;
         });
+    }
+
+    @Inject(
+            method = "renderStatusEffectOverlay",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Ljava/util/List;add(Ljava/lang/Object;)Z"
+            )
+    )
+    private void onAddRenderRunnable(DrawContext context, CallbackInfo ci,
+                                     @Local StatusEffectSpriteManager manager,
+                                     @Local StatusEffectInstance effectInstance,
+                                     @Local Sprite sprite) {
+        StatusEffect effect = effectInstance.getEffectType();
+        Identifier id = Registries.STATUS_EFFECT.getId(effect);
+
+        if (id != null && logCount % LOG_INTERVAL == 0) {
+            System.out.println("[GoldItemExpansion][Inject@add] 插入渲染逻辑前检测:");
+            System.out.println(" - effect: " + id);
+            System.out.println(" - Sprite atlas: " + sprite.getAtlasId());
+            System.out.println(" - Sprite contents ID: " + sprite.getContents().getId());
+        }
     }
 }

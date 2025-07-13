@@ -38,6 +38,6 @@ public class GodStatusEffect extends StatusEffect {
         if (child != null) {
             newDuration += child.getDuration();
         }
-        entity.addStatusEffect(new StatusEffectInstance(childEffect, newDuration, 0, false, false));
+        entity.addStatusEffect(new StatusEffectInstance(childEffect, newDuration, 0, true, true));
     }
 }
