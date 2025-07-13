@@ -5,15 +5,12 @@ import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.*;
 import net.minecraft.potion.PotionUtil;
-import net.minecraft.potion.Potions;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 import org.saverio.golditemexpansion.Golditemexpansion;
 import org.saverio.golditemexpansion.block.ModBlocks;
 import org.saverio.golditemexpansion.potion.ModPotions;
-
-import java.util.List;
 
 public class ModItems {
     public static final Item COMPRESSED_GOLD_BLOCK_ITEM =
@@ -25,17 +22,29 @@ public class ModItems {
     public static final ItemStack GOD_POTION_STACK = PotionUtil.setPotion(
             new ItemStack(Items.POTION), ModPotions.GOD_POTION);
 
-    public static final ItemStack GOD_SPLASH_POTION_STACK = PotionUtil.setPotion(
-            new ItemStack(Items.SPLASH_POTION), ModPotions.GOD_POTION);
-
-    public static final ItemStack GOD_LINGERING_POTION_STACK = PotionUtil.setPotion(
-            new ItemStack(Items.LINGERING_POTION), ModPotions.GOD_POTION);
-
     public static final ItemStack HEALING_V_STACK = PotionUtil.setPotion(
             new ItemStack(Items.POTION), ModPotions.HEALING_V);
 
     public static final ItemStack GODLY_HEALING_STACK = PotionUtil.setPotion(
             new ItemStack(Items.POTION), ModPotions.GODLY_HEALING);
+
+    public static final ItemStack GOD_SPLASH_POTION_STACK = PotionUtil.setPotion(
+            new ItemStack(Items.SPLASH_POTION), ModPotions.GOD_POTION);
+
+    public static final ItemStack HEALING_V_SPLASH_STACK = PotionUtil.setPotion(
+            new ItemStack(Items.SPLASH_POTION), ModPotions.HEALING_V);
+
+    public static final ItemStack GODLY_HEALING_SPLASH_STACK = PotionUtil.setPotion(
+            new ItemStack(Items.SPLASH_POTION), ModPotions.GODLY_HEALING);
+
+    public static final ItemStack GOD_LINGERING_POTION_STACK = PotionUtil.setPotion(
+            new ItemStack(Items.LINGERING_POTION), ModPotions.GOD_POTION);
+
+    public static final ItemStack HEALING_V_LINGERING_STACK = PotionUtil.setPotion(
+            new ItemStack(Items.LINGERING_POTION), ModPotions.HEALING_V);
+
+    public static final ItemStack GODLY_HEALING_LINGERING_STACK = PotionUtil.setPotion(
+            new ItemStack(Items.LINGERING_POTION), ModPotions.GODLY_HEALING);
 
     @SuppressWarnings("UnstableApiUsage")
     public static void registerItems() {
@@ -54,24 +63,15 @@ public class ModItems {
                 content.addAfter(Blocks.DRAGON_HEAD.asItem(), GOLDEN_HEAD_ITEM));
 
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register(content -> {
-            List<ItemStack> displayStacks = content.getDisplayStacks();
             content.add(GOD_POTION_STACK);
             content.add(GOD_SPLASH_POTION_STACK);
             content.add(GOD_LINGERING_POTION_STACK);
-
-            ItemStack strongHealingStack = null;
-            for (ItemStack stack : displayStacks) {
-                if (stack.getItem() == Items.POTION && PotionUtil.getPotion(stack).equals(Potions.STRONG_HEALING)) {
-                    strongHealingStack = stack;
-                    break;
-                }
-            }
-            if (strongHealingStack != null) {
-                displayStacks.add(displayStacks.indexOf(strongHealingStack) + 1, HEALING_V_STACK);
-            } else {
-                displayStacks.add(HEALING_V_STACK);
-            }
-            displayStacks.add(displayStacks.indexOf(HEALING_V_STACK) + 1, GODLY_HEALING_STACK);
+            content.add(HEALING_V_STACK);
+            content.add(HEALING_V_SPLASH_STACK);
+            content.add(HEALING_V_LINGERING_STACK);
+            content.add(GODLY_HEALING_STACK);
+            content.add(GODLY_HEALING_SPLASH_STACK);
+            content.add(GODLY_HEALING_LINGERING_STACK);
         });
     }
 }
