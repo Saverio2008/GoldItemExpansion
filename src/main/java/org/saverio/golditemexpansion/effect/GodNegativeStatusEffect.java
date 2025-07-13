@@ -7,6 +7,7 @@ import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import org.saverio.golditemexpansion.util.GodEffectApplier;
+import org.saverio.golditemexpansion.util.TickDelayExecutor;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -48,7 +49,7 @@ public class GodNegativeStatusEffect extends StatusEffect implements GodEffectAp
         StatusEffectInstance instance = entity.getStatusEffect(this);
         if (instance == null) return;
         int duration = instance.getDuration();
-        applyGodSubEffects(entity, duration);
+        TickDelayExecutor.runLater(entity.getServer(), 6, () -> applyGodSubEffects(entity, duration));
     }
 
     @Override
