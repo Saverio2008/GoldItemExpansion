@@ -14,6 +14,8 @@ import org.saverio.golditemexpansion.effect.ModEffects;
 public class ModPotions {
     public static Potion GOD_POTION;
     public static Item GOD_POTION_ITEM;
+    public static Potion UNDEAD_GOD_POTION;
+    public static Item UNDEAD_GOD_POTION_ITEM;
 
     public static void registerPotions() {
         // 注册药水
@@ -23,10 +25,20 @@ public class ModPotions {
                 new Potion(new StatusEffectInstance(ModEffects.GOD_STATUS_EFFECT,
                         3600, 0,false,true,false))
         );
+        UNDEAD_GOD_POTION = Registry.register(Registries.POTION,
+                new Identifier(Golditemexpansion.MOD_ID, "undead_god_potion"),
+                new Potion(new StatusEffectInstance(ModEffects.GOD_STATUS_EFFECT,
+                        3600, 1,false,true,false))
+        );
         // 注册药水物品
         GOD_POTION_ITEM = Registry.register(
                 Registries.ITEM,
                 new Identifier(Golditemexpansion.MOD_ID, "god_potion"),
+                new PotionItem(new Item.Settings().rarity(Rarity.RARE))
+        );
+        UNDEAD_GOD_POTION_ITEM = Registry.register(
+                Registries.ITEM,
+                new Identifier(Golditemexpansion.MOD_ID, "undead_god_potion"),
                 new PotionItem(new Item.Settings().rarity(Rarity.RARE))
         );
         ModBrewingRecipes.registerBrewingRecipes();
