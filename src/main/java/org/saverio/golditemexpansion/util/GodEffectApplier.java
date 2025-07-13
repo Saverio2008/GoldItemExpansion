@@ -16,6 +16,7 @@ public interface GodEffectApplier {
         }
     }
 
+    @SuppressWarnings("ReassignedVariable")
     default StatusEffectInstance buildEffectChain(int duration) {
         List<Map.Entry<StatusEffect, Integer>> entries = new ArrayList<>(getGodEffects().entrySet());
         Collections.reverse(entries); // 使链式顺序正确（外 -> 内）
