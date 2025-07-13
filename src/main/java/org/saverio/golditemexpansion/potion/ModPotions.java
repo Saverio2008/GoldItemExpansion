@@ -25,17 +25,17 @@ public class ModPotions {
                 Registries.POTION,
                 new Identifier(Golditemexpansion.MOD_ID, "god_potion"),
                 new Potion(new StatusEffectInstance(ModEffects.GOD_STATUS_EFFECT,
-                        3600, 0,false,false,false))
+                        3600, 0,false,true,false))
         );
         UNDEAD_GOD_POTION = Registry.register(Registries.POTION,
                 new Identifier(Golditemexpansion.MOD_ID, "undead_god_potion"),
                 new Potion(new StatusEffectInstance(ModEffects.GOD_STATUS_EFFECT,
-                        3600, 1,false,false,false))
+                        3600, 1,false,true,false))
         );
         ARTHROPOD_GOD_POTION = Registry.register(Registries.POTION,
                 new Identifier(Golditemexpansion.MOD_ID, "arthropod_god_potion"),
                 new Potion(new StatusEffectInstance(ModEffects.GOD_STATUS_EFFECT,
-                        3600, 2,false,false,false))
+                        3600, 2,false,true,false))
         );
         // 注册药水物品
         GOD_POTION_ITEM = Registry.register(
