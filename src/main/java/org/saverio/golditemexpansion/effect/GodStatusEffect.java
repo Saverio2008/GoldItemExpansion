@@ -26,7 +26,6 @@ public class GodStatusEffect extends StatusEffect {
         StatusEffectInstance current = entity.getStatusEffect(this);
         if (current == null) return;
 
-        // 如果当前 amplifier 不等于已有的，就移除旧的并重新添加
         if (current.getAmplifier() != amplifier) {
             entity.removeStatusEffect(this);
             entity.addStatusEffect(new StatusEffectInstance(this, current.getDuration(), amplifier, false, false, false));
