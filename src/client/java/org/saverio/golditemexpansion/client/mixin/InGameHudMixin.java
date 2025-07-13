@@ -4,17 +4,14 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.texture.Sprite;
-import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.texture.StatusEffectSpriteManager;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
-import org.saverio.golditemexpansion.client.mixin.accessor.SpriteAtlasHolderAccessor;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(InGameHud.class)
@@ -55,25 +52,5 @@ public class InGameHudMixin {
             }
             logCount++;
         });
-    }
-
-    @SuppressWarnings("resource")
-    @Redirect(
-            method = "renderStatusEffectOverlay",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/client/texture/StatusEffectSpriteManager;getSprite(Lnet/minecraft/entity/effect/StatusEffect;)Lnet/minecraft/client/texture/Sprite;"
-            )
-    )
-    private Sprite redirectGetSprite(StatusEffectSpriteManager manager, StatusEffect effect) {
-        Identifier id = Registries.STATUS_EFFECT.getId(effect);
-        if (id != null) {
-            SpriteAtlasTexture atlas = ((SpriteAtlasHolderAccessor) manager).golditemexpansion$getAtlas();
-            Sprite custom = atlas.getSprite(id);
-            if (custom != null && custom.getContents() != null && !custom.getContents().getId().getPath().equals("missingno")) {
-                return custom;
-            }
-        }
-        return manager.getSprite(effect);
     }
 }
