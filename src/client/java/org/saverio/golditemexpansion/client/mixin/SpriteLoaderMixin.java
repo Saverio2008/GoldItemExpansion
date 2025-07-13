@@ -43,7 +43,6 @@ public class SpriteLoaderMixin {
         CompletableFuture<StitchResult> newFuture = originalFuture.thenCompose(originalResult -> {
             List<SpriteContents> contentsList = new ArrayList<>(originalResult.regions().size());
 
-            // 1. 打印原始图集已有的 SpriteContents 并加入列表
             System.out.println("[GoldItemExpansion] 原始图集已有贴图:");
             for (Sprite sprite : originalResult.regions().values()) {
                 SpriteContents contents = sprite.getContents();
@@ -86,7 +85,6 @@ public class SpriteLoaderMixin {
                         SpriteLoader self = (SpriteLoader) (Object) this;
                         StitchResult stitched = self.stitch(contentsList, mipLevel, executor);
 
-                        // 4. 拼接完成后打印拼接图集内容
                         System.out.println("[GoldItemExpansion] 拼接后图集内容:");
                         stitched.regions().forEach((id, sprite) ->
                                 System.out.println(" - " + id + " 在位置 x=" + sprite.getX() + ", y=" + sprite.getY()));
