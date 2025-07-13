@@ -28,6 +28,12 @@ public class ModItems {
     public static final ItemStack GOD_LINGERING_POTION_STACK = PotionUtil.setPotion(
             new ItemStack(Items.LINGERING_POTION), ModPotions.GOD_POTION);
 
+    public static final ItemStack HEALING_V_STACK = PotionUtil.setPotion(
+            new ItemStack(Items.LINGERING_POTION), ModPotions.HEALING_V);
+
+    public static final ItemStack GODLY_HEALING_STACK = PotionUtil.setPotion(
+            new ItemStack(Items.LINGERING_POTION), ModPotions.GODLY_HEALING);
+
     @SuppressWarnings("UnstableApiUsage")
     public static void registerItems() {
         Registry.register(Registries.ITEM,
@@ -48,8 +54,8 @@ public class ModItems {
             content.add(GOD_POTION_STACK);
             content.add(GOD_SPLASH_POTION_STACK);
             content.add(GOD_LINGERING_POTION_STACK);
-            content.addAfter(Items.POTION, ModPotions.HEALING_V_ITEM);
-            content.addAfter(ModPotions.HEALING_V_ITEM, ModPotions.GODLY_HEALING_ITEM);
+            content.add(HEALING_V_STACK);
+            content.add(GODLY_HEALING_STACK);
         });
     }
 }
