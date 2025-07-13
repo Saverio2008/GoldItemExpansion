@@ -48,6 +48,8 @@ public class ModItems {
             content.add(GOD_POTION_STACK);
             content.add(GOD_SPLASH_POTION_STACK);
             content.add(GOD_LINGERING_POTION_STACK);
+            content.addAfter(Items.POTION, ModPotions.HEALING_V_ITEM);
+            content.addAfter(ModPotions.HEALING_V_ITEM, ModPotions.GODLY_HEALING_ITEM);
         });
     }
 }
