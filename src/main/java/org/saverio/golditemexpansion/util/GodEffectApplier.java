@@ -8,31 +8,17 @@ import java.util.*;
 
 public interface GodEffectApplier {
     Map<StatusEffect, Integer> getGodEffects();
+
     default void applyGodSubEffects(LivingEntity entity, int duration) {
         StatusEffectInstance hiddenChain = buildEffectChain(duration);
-        for (Map.Entry<StatusEffect, Integer> entry : getGodEffects().entrySet()) {
-            StatusEffect effect = entry.getKey();
-            int amplifier = entry.getValue();
-
-            Optional<StatusEffectInstance.FactorCalculationData> factorData = effect.getFactorCalculationDataSupplier();
-
-            StatusEffectInstance newEffectInstance = new StatusEffectInstance(
-                    effect,
-                    duration,
-                    amplifier,
-                    false,
-                    false,
-                    false,
-                    hiddenChain,
-                    factorData
-            );
-
-            entity.addStatusEffect(newEffectInstance);
+        if (hiddenChain != null) {
+            entity.addStatusEffect(hiddenChain);
         }
     }
+
     default StatusEffectInstance buildEffectChain(int duration) {
         List<Map.Entry<StatusEffect, Integer>> entries = new ArrayList<>(getGodEffects().entrySet());
-        Collections.reverse(entries);
+        Collections.reverse(entries); // 使链式顺序正确（外 -> 内）
 
         StatusEffectInstance chain = null;
         for (Map.Entry<StatusEffect, Integer> entry : entries) {
@@ -43,10 +29,10 @@ public interface GodEffectApplier {
                     effect,
                     duration,
                     amplifier,
-                    false,
-                    false,
-                    false,
-                    chain,
+                    false, // ambient
+                    false, // showParticles
+                    false, // showIcon
+                    chain, // hiddenEffect
                     effect.getFactorCalculationDataSupplier()
             );
         }
