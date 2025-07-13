@@ -16,10 +16,19 @@ public interface GodEffectApplier {
             entity.addStatusEffect(new StatusEffectInstance(effect, duration, amplifier, false, false,false));
         }
     }
+    @SuppressWarnings("ReassignedVariable")
     default void removeGodSubEffects(LivingEntity entity) {
         Objects.requireNonNull(entity.getServer()).execute(() -> {
+            var currentEffects = new java.util.ArrayList<>(entity.getStatusEffects());
             for (StatusEffect effect : getGodEffects().keySet()) {
-                if (entity.hasStatusEffect(effect)) {
+                boolean hasEffect = false;
+                for (StatusEffectInstance inst : currentEffects) {
+                    if (inst.getEffectType() == effect) {
+                        hasEffect = true;
+                        break;
+                    }
+                }
+                if (hasEffect) {
                     entity.removeStatusEffect(effect);
                 }
             }
