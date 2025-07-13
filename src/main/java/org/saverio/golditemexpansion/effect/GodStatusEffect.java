@@ -15,7 +15,7 @@ public class GodStatusEffect extends StatusEffect {
 
     @Override
     public boolean canApplyUpdateEffect(int duration, int amplifier) {
-        return true;
+        return false;
     }
 
     @SuppressWarnings("ReassignedVariable")
