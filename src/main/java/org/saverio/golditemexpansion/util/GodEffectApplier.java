@@ -12,6 +12,10 @@ public interface GodEffectApplier {
         for (Map.Entry<StatusEffect, Integer> entry : getGodEffects().entrySet()) {
             StatusEffect effect = entry.getKey();
             int amplifier = entry.getValue();
+            StatusEffectInstance existing = entity.getStatusEffect(effect);
+            if (existing != null && existing.getDuration() == -1) {
+                continue;
+            }
             entity.addStatusEffect(new StatusEffectInstance(effect, -1, amplifier, false, false, false));
         }
     }
