@@ -8,11 +8,11 @@ import java.util.Map;
 
 public interface GodEffectApplier {
     Map<StatusEffect, Integer> getGodEffects();
-    default void applyGodSubEffects(LivingEntity entity, int duration) {
+    default void applyGodSubEffects(LivingEntity entity) {
         for (Map.Entry<StatusEffect, Integer> entry : getGodEffects().entrySet()) {
             StatusEffect effect = entry.getKey();
             int amplifier = entry.getValue();
-            entity.addStatusEffect(new StatusEffectInstance(effect, duration, amplifier, false, false,false));
+            entity.addStatusEffect(new StatusEffectInstance(effect, -1, amplifier, false, false, false));
         }
     }
     default void removeGodSubEffects(LivingEntity entity) {

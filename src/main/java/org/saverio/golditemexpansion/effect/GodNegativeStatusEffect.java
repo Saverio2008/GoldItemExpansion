@@ -48,8 +48,7 @@ public class GodNegativeStatusEffect extends StatusEffect implements GodEffectAp
         entity.removeStatusEffect(ModEffects.GOD_POSITIVE_EFFECT);
         StatusEffectInstance instance = entity.getStatusEffect(this);
         if (instance == null) return;
-        int duration = instance.getDuration();
-        TickDelayExecutor.runLater(entity.getServer(), 6, () -> applyGodSubEffects(entity, duration));
+        TickDelayExecutor.runLater(entity.getServer(), 6, () -> applyGodSubEffects(entity));
     }
 
     @Override
