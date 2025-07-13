@@ -20,7 +20,7 @@ public class ModPotions {
         GOD_POTION = Registry.register(
                 Registries.POTION,
                 new Identifier(Golditemexpansion.MOD_ID, "god_potion"),
-                new Potion(new StatusEffectInstance(ModEffects.GOD_STATUS_EFFECT, 3600, 0))
+                new Potion(new StatusEffectInstance(ModEffects.GOD_STATUS_EFFECT, 3600, 0,false,true,false))
         );
         // 注册药水物品
         GOD_POTION_ITEM = Registry.register(
