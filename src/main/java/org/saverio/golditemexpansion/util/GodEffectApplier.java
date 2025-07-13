@@ -5,6 +5,7 @@ import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 
 import java.util.Map;
+import java.util.Objects;
 
 public interface GodEffectApplier {
     Map<StatusEffect, Integer> getGodEffects();
@@ -16,8 +17,12 @@ public interface GodEffectApplier {
         }
     }
     default void removeGodSubEffects(LivingEntity entity) {
-        for (StatusEffect effect : getGodEffects().keySet()) {
-            entity.removeStatusEffect(effect);
-        }
+        Objects.requireNonNull(entity.getServer()).execute(() -> {
+            for (StatusEffect effect : getGodEffects().keySet()) {
+                if (entity.hasStatusEffect(effect)) {
+                    entity.removeStatusEffect(effect);
+                }
+            }
+        });
     }
 }
