@@ -34,21 +34,22 @@ public abstract class AbstractInventoryScreenMixin {
 
         List<StatusEffectInstance> effects = new ArrayList<>(player.getStatusEffects());
 
-        StatusEffectInstance godEffect = player.getStatusEffect(ModEffects.GOD_STATUS_EFFECT);
-        if (godEffect != null) {
-            int amplifier = godEffect.getAmplifier();
-            effects.removeIf(e -> e.getEffectType() == ModEffects.GOD_STATUS_EFFECT);
+        effects.removeIf(e -> e.getEffectType() == ModEffects.GOD_STATUS_EFFECT);
 
-            switch (amplifier) {
-                case 0 ->
-                        effects.removeIf(e ->
-                                e.getEffectType() != ModEffects.GOD_POSITIVE_EFFECT &&
-                                        GOD_POSITIVE_EFFECTS.containsKey(e.getEffectType()));
-                case 1, 2 ->
-                        effects.removeIf(e ->
-                                e.getEffectType() != ModEffects.GOD_NEGATIVE_EFFECT &&
-                                        GOD_NEGATIVE_EFFECTS.containsKey(e.getEffectType()));
-            }
+        boolean hasPositive = effects.stream()
+                .anyMatch(e -> e.getEffectType() == ModEffects.GOD_POSITIVE_EFFECT);
+        if (hasPositive) {
+            effects.removeIf(e ->
+                    e.getEffectType() != ModEffects.GOD_POSITIVE_EFFECT &&
+                            GOD_POSITIVE_EFFECTS.containsKey(e.getEffectType()));
+        }
+
+        boolean hasNegative = effects.stream()
+                .anyMatch(e -> e.getEffectType() == ModEffects.GOD_NEGATIVE_EFFECT);
+        if (hasNegative) {
+            effects.removeIf(e ->
+                    e.getEffectType() != ModEffects.GOD_NEGATIVE_EFFECT &&
+                            GOD_NEGATIVE_EFFECTS.containsKey(e.getEffectType()));
         }
 
         if (effects.isEmpty()) {
@@ -91,14 +92,12 @@ public abstract class AbstractInventoryScreenMixin {
                 l += k;
             }
             if (hovered != null) {
-                ScreenAccessor screenAccessor = (ScreenAccessor) screen;
                 List<Text> tooltip = List.of(
                         invoker.callGetStatusEffectDescription(hovered),
                         StatusEffectUtil.getDurationText(hovered, 1.0F));
-                context.drawTooltip(screenAccessor.getTextRenderer(), tooltip, Optional.empty(), mouseX, mouseY);
+                context.drawTooltip(screenAccess.getTextRenderer(), tooltip, Optional.empty(), mouseX, mouseY);
             }
         }
-
         ci.cancel();
     }
 }
