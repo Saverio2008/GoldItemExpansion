@@ -13,6 +13,8 @@ import org.saverio.golditemexpansion.Golditemexpansion;
 import org.saverio.golditemexpansion.block.ModBlocks;
 import org.saverio.golditemexpansion.potion.ModPotions;
 
+import java.util.List;
+
 public class ModItems {
     public static final Item COMPRESSED_GOLD_BLOCK_ITEM =
             new BlockItem(ModBlocks.COMPRESSED_GOLD_BLOCK, new FabricItemSettings());
@@ -52,24 +54,24 @@ public class ModItems {
                 content.addAfter(Blocks.DRAGON_HEAD.asItem(), GOLDEN_HEAD_ITEM));
 
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register(content -> {
+            List<ItemStack> displayStacks = content.getDisplayStacks();
             content.add(GOD_POTION_STACK);
             content.add(GOD_SPLASH_POTION_STACK);
             content.add(GOD_LINGERING_POTION_STACK);
 
             ItemStack strongHealingStack = null;
-            for (ItemStack stack : content.getSearchTabStacks()) {
-                if (stack.getItem() == Items.POTION && PotionUtil.getPotion(stack) == Potions.STRONG_HEALING) {
+            for (ItemStack stack : displayStacks) {
+                if (stack.getItem() == Items.POTION && PotionUtil.getPotion(stack).equals(Potions.STRONG_HEALING)) {
                     strongHealingStack = stack;
                     break;
                 }
             }
-            if (strongHealingStack != null && ItemStack.canCombine(strongHealingStack, HEALING_V_STACK)) {
-                content.addAfter(strongHealingStack, HEALING_V_STACK);
+            if (strongHealingStack != null) {
+                displayStacks.add(displayStacks.indexOf(strongHealingStack) + 1, HEALING_V_STACK);
             } else {
-                content.add(HEALING_V_STACK);
+                displayStacks.add(HEALING_V_STACK);
             }
-
-            content.addAfter(HEALING_V_STACK, GODLY_HEALING_STACK);
+            displayStacks.add(displayStacks.indexOf(HEALING_V_STACK) + 1, GODLY_HEALING_STACK);
         });
     }
 }

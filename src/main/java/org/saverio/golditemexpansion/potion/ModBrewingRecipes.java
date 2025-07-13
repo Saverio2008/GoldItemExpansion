@@ -22,5 +22,15 @@ public class ModBrewingRecipes {
                 Items.SPIDER_EYE,
                 ModPotions.ARTHROPOD_GOD_POTION
         );
+        BrewingRecipeRegistry.registerPotionRecipe(
+                Potions.AWKWARD,
+                Items.GOLDEN_APPLE,
+                ModPotions.HEALING_V
+        );
+        BrewingRecipeRegistry.registerPotionRecipe(
+                Potions.AWKWARD,
+                Items.ENCHANTED_GOLDEN_APPLE,
+                ModPotions.GODLY_HEALING
+        );
     }
 }
