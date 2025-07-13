@@ -10,7 +10,6 @@ import org.saverio.golditemexpansion.util.GodEffectApplier;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Objects;
 
 public class GodNegativeStatusEffect extends StatusEffect implements GodEffectApplier {
     public static final LinkedHashMap<StatusEffect, Integer> GOD_NEGATIVE_EFFECTS = new LinkedHashMap<>() {{
@@ -45,17 +44,16 @@ public class GodNegativeStatusEffect extends StatusEffect implements GodEffectAp
     @Override
     public void onApplied(LivingEntity entity, AttributeContainer attributes, int amplifier) {
         if (entity.getWorld().isClient || entity.getServer() == null) return;
-        entity.getServer().execute(() -> {
-            StatusEffectInstance instance = entity.getStatusEffect(this);
-            if (instance == null) return;
-            int duration = instance.getDuration();
-            applyGodSubEffects(entity, duration);
-        });
+        entity.removeStatusEffect(ModEffects.GOD_POSITIVE_EFFECT);
+        StatusEffectInstance instance = entity.getStatusEffect(this);
+        if (instance == null) return;
+        int duration = instance.getDuration();
+        applyGodSubEffects(entity, duration);
     }
 
     @Override
     public void onRemoved(LivingEntity entity, AttributeContainer attributes, int amplifier) {
         if (entity.getWorld().isClient) return;
-        Objects.requireNonNull(entity.getServer()).execute(() -> removeGodSubEffects(entity));
+        removeGodSubEffects(entity);
     }
 }
