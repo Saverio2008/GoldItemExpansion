@@ -49,9 +49,6 @@ public class GodPositiveStatusEffect extends StatusEffect implements GodEffectAp
     @Override
     public void onApplied(LivingEntity entity, AttributeContainer attributes, int amplifier) {
         if (entity.getWorld().isClient || entity.getServer() == null) return;
-        if (entity.hasStatusEffect(ModEffects.GOD_NEGATIVE_EFFECT)) {
-            entity.removeStatusEffect(ModEffects.GOD_NEGATIVE_EFFECT);
-        }
         StatusEffectInstance instance = entity.getStatusEffect(this);
         if (instance == null) return;
         TickDelayExecutor.runLater(entity.getServer(), 5, () -> applyGodSubEffects(entity));
