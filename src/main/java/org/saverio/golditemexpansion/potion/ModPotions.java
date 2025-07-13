@@ -48,7 +48,7 @@ public class ModPotions {
                 new Identifier(Golditemexpansion.MOD_ID, "undead_god_potion"),
                 new PotionItem(new Item.Settings().rarity(Rarity.RARE))
         );
-        ARTHROPOD_GOD_POTION_ITEM = UNDEAD_GOD_POTION_ITEM = Registry.register(
+        ARTHROPOD_GOD_POTION_ITEM = Registry.register(
                 Registries.ITEM,
                 new Identifier(Golditemexpansion.MOD_ID, "arthropod_god_potion"),
                 new PotionItem(new Item.Settings().rarity(Rarity.RARE))
