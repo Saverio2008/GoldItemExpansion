@@ -32,6 +32,7 @@ public class GodStatusEffect extends StatusEffect {
             case 2 -> isPositive = entity.getGroup() == EntityGroup.ARTHROPOD;
             default -> isPositive = true;
         }
+        entity.removeStatusEffect(isPositive ? ModEffects.GOD_NEGATIVE_EFFECT : ModEffects.GOD_POSITIVE_EFFECT);
         StatusEffect childEffect = isPositive ? ModEffects.GOD_POSITIVE_EFFECT : ModEffects.GOD_NEGATIVE_EFFECT;
         StatusEffectInstance child = entity.getStatusEffect(childEffect);
         int newDuration = duration;
