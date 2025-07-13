@@ -45,10 +45,12 @@ public class GodNegativeStatusEffect extends StatusEffect implements GodEffectAp
     @Override
     public void onApplied(LivingEntity entity, AttributeContainer attributes, int amplifier) {
         if (entity.getWorld().isClient || entity.getServer() == null) return;
-        StatusEffectInstance instance = entity.getStatusEffect(this);
-        if (instance == null) return;
-        int duration = instance.getDuration();
-        applyGodSubEffects(entity, duration);
+        entity.getServer().execute(() -> {
+            StatusEffectInstance instance = entity.getStatusEffect(this);
+            if (instance == null) return;
+            int duration = instance.getDuration();
+            applyGodSubEffects(entity, duration);
+        });
     }
 
     @Override
