@@ -5,6 +5,7 @@ import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.*;
 import net.minecraft.potion.PotionUtil;
+import net.minecraft.potion.Potions;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
@@ -29,10 +30,10 @@ public class ModItems {
             new ItemStack(Items.LINGERING_POTION), ModPotions.GOD_POTION);
 
     public static final ItemStack HEALING_V_STACK = PotionUtil.setPotion(
-            new ItemStack(Items.LINGERING_POTION), ModPotions.HEALING_V);
+            new ItemStack(Items.POTION), ModPotions.HEALING_V);
 
     public static final ItemStack GODLY_HEALING_STACK = PotionUtil.setPotion(
-            new ItemStack(Items.LINGERING_POTION), ModPotions.GODLY_HEALING);
+            new ItemStack(Items.POTION), ModPotions.GODLY_HEALING);
 
     @SuppressWarnings("UnstableApiUsage")
     public static void registerItems() {
@@ -54,8 +55,21 @@ public class ModItems {
             content.add(GOD_POTION_STACK);
             content.add(GOD_SPLASH_POTION_STACK);
             content.add(GOD_LINGERING_POTION_STACK);
-            content.add(HEALING_V_STACK);
-            content.add(GODLY_HEALING_STACK);
+
+            ItemStack strongHealingStack = null;
+            for (ItemStack stack : content.getSearchTabStacks()) {
+                if (stack.getItem() == Items.POTION && PotionUtil.getPotion(stack) == Potions.STRONG_HEALING) {
+                    strongHealingStack = stack;
+                    break;
+                }
+            }
+            if (strongHealingStack != null && ItemStack.canCombine(strongHealingStack, HEALING_V_STACK)) {
+                content.addAfter(strongHealingStack, HEALING_V_STACK);
+            } else {
+                content.add(HEALING_V_STACK);
+            }
+
+            content.addAfter(HEALING_V_STACK, GODLY_HEALING_STACK);
         });
     }
 }
