@@ -15,4 +15,9 @@ public interface GodEffectApplier {
             entity.addStatusEffect(new StatusEffectInstance(effect, duration, amplifier, false, false,false));
         }
     }
+    default void removeGodSubEffects(LivingEntity entity) {
+        for (StatusEffect effect : getGodEffects().keySet()) {
+            entity.removeStatusEffect(effect);
+        }
+    }
 }

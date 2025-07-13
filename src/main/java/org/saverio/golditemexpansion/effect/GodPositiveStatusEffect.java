@@ -53,4 +53,10 @@ public class GodPositiveStatusEffect extends StatusEffect implements GodEffectAp
         int duration = instance.getDuration();
         applyGodSubEffects(entity, duration);
     }
+
+    @Override
+    public void onRemoved(LivingEntity entity, AttributeContainer attributes, int amplifier) {
+        if (entity.getWorld().isClient) return;
+        removeGodSubEffects(entity);
+    }
 }
