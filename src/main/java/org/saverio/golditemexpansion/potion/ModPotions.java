@@ -16,7 +16,7 @@ public class ModPotions {
     public static Item GOD_POTION_ITEM;
 
     public static void registerPotions() {
-        // 注册 Potion 实例
+        // 注册药水
         GOD_POTION = Registry.register(
                 Registries.POTION,
                 new Identifier(Golditemexpansion.MOD_ID, "god_potion"),
