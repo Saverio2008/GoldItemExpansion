@@ -33,6 +33,11 @@ public class GodStatusEffect extends StatusEffect {
             default -> isPositive = true;
         }
         StatusEffect childEffect = isPositive ? ModEffects.GOD_POSITIVE_EFFECT : ModEffects.GOD_NEGATIVE_EFFECT;
+        StatusEffect otherEffect = isPositive ? ModEffects.GOD_NEGATIVE_EFFECT : ModEffects.GOD_POSITIVE_EFFECT;
+        // 先移除对立子效果，避免冲突
+        if (entity.hasStatusEffect(otherEffect)) {
+            entity.removeStatusEffect(otherEffect);
+        }
         StatusEffectInstance child = entity.getStatusEffect(childEffect);
         int newDuration = duration;
         if (child != null) {
