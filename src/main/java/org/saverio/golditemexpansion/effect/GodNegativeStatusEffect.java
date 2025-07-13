@@ -53,7 +53,7 @@ public class GodNegativeStatusEffect extends StatusEffect implements GodEffectAp
 
     @Override
     public void onRemoved(LivingEntity entity, AttributeContainer attributes, int amplifier) {
-        if (entity.getWorld().isClient) return;
+        if (entity.getWorld().isClient || entity.getServer() == null) return;
         removeGodSubEffects(entity);
     }
 }
