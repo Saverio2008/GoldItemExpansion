@@ -29,10 +29,10 @@ public interface GodEffectApplier {
                     effect,
                     duration,
                     amplifier,
-                    false, // ambient
-                    false, // showParticles
-                    false, // showIcon
-                    chain, // hiddenEffect
+                    false,
+                    false,
+                    false,
+                    chain,
                     effect.getFactorCalculationDataSupplier()
             );
         }
