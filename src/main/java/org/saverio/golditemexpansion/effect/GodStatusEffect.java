@@ -22,16 +22,8 @@ public class GodStatusEffect extends StatusEffect {
     @Override
     public void onApplied(LivingEntity entity, AttributeContainer attributes, int amplifier) {
         if (entity.getWorld().isClient) return;
-
         StatusEffectInstance current = entity.getStatusEffect(this);
         if (current == null) return;
-
-        if (current.getAmplifier() != amplifier) {
-            entity.removeStatusEffect(this);
-            entity.addStatusEffect(new StatusEffectInstance(this, current.getDuration(), amplifier, false, false, false));
-            return;
-        }
-
         int duration = current.getDuration();
         boolean isPositive;
         switch (amplifier) {
@@ -40,14 +32,12 @@ public class GodStatusEffect extends StatusEffect {
             case 2 -> isPositive = entity.getGroup() == EntityGroup.ARTHROPOD;
             default -> isPositive = true;
         }
-
         StatusEffect childEffect = isPositive ? ModEffects.GOD_POSITIVE_EFFECT : ModEffects.GOD_NEGATIVE_EFFECT;
         StatusEffectInstance child = entity.getStatusEffect(childEffect);
         int newDuration = duration;
         if (child != null) {
             newDuration += child.getDuration();
         }
-
-        entity.addStatusEffect(new StatusEffectInstance(childEffect, newDuration, 0, false, true, true));
+        entity.addStatusEffect(new StatusEffectInstance(childEffect, newDuration, 0, false, true,true));
     }
 }
