@@ -12,13 +12,12 @@ import org.saverio.golditemexpansion.client.mixin.accessor.HandledScreenAccessor
 import org.saverio.golditemexpansion.client.mixin.accessor.ScreenAccessor;
 import org.saverio.golditemexpansion.effect.ModEffects;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.saverio.golditemexpansion.effect.GodNegativeStatusEffect.GOD_NEGATIVE_EFFECTS;
 import static org.saverio.golditemexpansion.effect.GodPositiveStatusEffect.GOD_POSITIVE_EFFECTS;
@@ -26,30 +25,46 @@ import static org.saverio.golditemexpansion.effect.GodPositiveStatusEffect.GOD_P
 @Mixin(AbstractInventoryScreen.class)
 public abstract class AbstractInventoryScreenMixin {
 
-    @SuppressWarnings("ReassignedVariable")
+    @Unique
+    private static final Map<StatusEffectInstance, Long> godEffectExpireTick = new WeakHashMap<>();
+
     @Inject(method = "drawStatusEffects", at = @At("HEAD"), cancellable = true)
     private void onDrawStatusEffects(DrawContext context, int mouseX, int mouseY, CallbackInfo ci) {
         PlayerEntity player = MinecraftClient.getInstance().player;
-        if (player == null) return;
+        if (player == null || player.getWorld() == null) return;
 
+        long currentTick = player.getWorld().getTime();
         List<StatusEffectInstance> effects = new ArrayList<>(player.getStatusEffects());
 
         effects.removeIf(e -> e.getEffectType() == ModEffects.GOD_STATUS_EFFECT);
 
-        boolean hasPositive = effects.stream()
-                .anyMatch(e -> e.getEffectType() == ModEffects.GOD_POSITIVE_EFFECT);
-        if (hasPositive) {
+        Optional<StatusEffectInstance> godPositive = effects.stream()
+                .filter(e -> e.getEffectType() == ModEffects.GOD_POSITIVE_EFFECT)
+                .findFirst();
+        Optional<StatusEffectInstance> godNegative = effects.stream()
+                .filter(e -> e.getEffectType() == ModEffects.GOD_NEGATIVE_EFFECT)
+                .findFirst();
+
+        if (godPositive.isPresent()) {
             effects.removeIf(e ->
                     e.getEffectType() != ModEffects.GOD_POSITIVE_EFFECT &&
                             GOD_POSITIVE_EFFECTS.containsKey(e.getEffectType()));
+            godEffectExpireTick.put(godPositive.get(), currentTick);
+        } else {
+            effects.removeIf(e ->
+                    GOD_POSITIVE_EFFECTS.containsKey(e.getEffectType()) &&
+                            shouldHideAfterExpire(e, currentTick));
         }
 
-        boolean hasNegative = effects.stream()
-                .anyMatch(e -> e.getEffectType() == ModEffects.GOD_NEGATIVE_EFFECT);
-        if (hasNegative) {
+        if (godNegative.isPresent()) {
             effects.removeIf(e ->
                     e.getEffectType() != ModEffects.GOD_NEGATIVE_EFFECT &&
                             GOD_NEGATIVE_EFFECTS.containsKey(e.getEffectType()));
+            godEffectExpireTick.put(godNegative.get(), currentTick);
+        } else {
+            effects.removeIf(e ->
+                    GOD_NEGATIVE_EFFECTS.containsKey(e.getEffectType()) &&
+                            shouldHideAfterExpire(e, currentTick));
         }
 
         if (effects.isEmpty()) {
@@ -99,5 +114,11 @@ public abstract class AbstractInventoryScreenMixin {
             }
         }
         ci.cancel();
+    }
+
+    @Unique
+    private boolean shouldHideAfterExpire(StatusEffectInstance e, long currentTick) {
+        Long tick = godEffectExpireTick.get(e);
+        return tick != null && currentTick - tick <= 5;
     }
 }
