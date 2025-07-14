@@ -4,6 +4,7 @@ import com.google.common.collect.Ordering;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.AbstractInventoryScreen;
+import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffectUtil;
 import net.minecraft.entity.player.PlayerEntity;
@@ -26,7 +27,7 @@ import static org.saverio.golditemexpansion.effect.GodPositiveStatusEffect.GOD_P
 public abstract class AbstractInventoryScreenMixin {
 
     @Unique
-    private static final Map<StatusEffectInstance, Long> godEffectExpireTick = new WeakHashMap<>();
+    private static final Map<StatusEffect, Long> godEffectExpireTick = new HashMap<>();
 
     @Unique
     private static final int GOD_EFFECT_HIDE_TICKS = 5;
@@ -39,42 +40,54 @@ public abstract class AbstractInventoryScreenMixin {
         long currentTick = player.getWorld().getTime();
         List<StatusEffectInstance> effects = new ArrayList<>(player.getStatusEffects());
 
+        // 永久屏蔽 GOD_STATUS_EFFECT
         effects.removeIf(e -> e.getEffectType() == ModEffects.GOD_STATUS_EFFECT);
 
-        Optional<StatusEffectInstance> godPositive = effects.stream()
-                .filter(e -> e.getEffectType() == ModEffects.GOD_POSITIVE_EFFECT)
-                .findFirst();
-        Optional<StatusEffectInstance> godNegative = effects.stream()
-                .filter(e -> e.getEffectType() == ModEffects.GOD_NEGATIVE_EFFECT)
-                .findFirst();
+        boolean hasGodPositive = effects.stream()
+                .anyMatch(e -> e.getEffectType() == ModEffects.GOD_POSITIVE_EFFECT);
+        boolean hasGodNegative = effects.stream()
+                .anyMatch(e -> e.getEffectType() == ModEffects.GOD_NEGATIVE_EFFECT);
 
-        if (godPositive.isPresent()) {
+        boolean hasPositiveChildren = effects.stream()
+                .anyMatch(e -> GOD_POSITIVE_EFFECTS.containsKey(e.getEffectType()));
+        boolean hasNegativeChildren = effects.stream()
+                .anyMatch(e -> GOD_NEGATIVE_EFFECTS.containsKey(e.getEffectType()));
+
+        if (hasGodPositive) {
+            godEffectExpireTick.put(ModEffects.GOD_POSITIVE_EFFECT, currentTick);
             effects.removeIf(e ->
                     e.getEffectType() != ModEffects.GOD_POSITIVE_EFFECT &&
                             GOD_POSITIVE_EFFECTS.containsKey(e.getEffectType()));
-            godEffectExpireTick.put(godPositive.get(), currentTick);
-        } else {
-            effects.removeIf(e ->
-                    GOD_POSITIVE_EFFECTS.containsKey(e.getEffectType()) &&
-                            shouldHideAfterExpire(e, currentTick));
+        } else if (hasPositiveChildren) {
+            long expire = godEffectExpireTick.getOrDefault(ModEffects.GOD_POSITIVE_EFFECT, -100L);
+            if (currentTick - expire <= GOD_EFFECT_HIDE_TICKS) {
+                effects.removeIf(e -> GOD_POSITIVE_EFFECTS.containsKey(e.getEffectType()));
+            } else {
+                godEffectExpireTick.remove(ModEffects.GOD_POSITIVE_EFFECT);
+            }
         }
 
-        if (godNegative.isPresent()) {
+        if (hasGodNegative) {
+            godEffectExpireTick.put(ModEffects.GOD_NEGATIVE_EFFECT, currentTick);
             effects.removeIf(e ->
                     e.getEffectType() != ModEffects.GOD_NEGATIVE_EFFECT &&
                             GOD_NEGATIVE_EFFECTS.containsKey(e.getEffectType()));
-            godEffectExpireTick.put(godNegative.get(), currentTick);
-        } else {
-            effects.removeIf(e ->
-                    GOD_NEGATIVE_EFFECTS.containsKey(e.getEffectType()) &&
-                            shouldHideAfterExpire(e, currentTick));
+        } else if (hasNegativeChildren) {
+            long expire = godEffectExpireTick.getOrDefault(ModEffects.GOD_NEGATIVE_EFFECT, -100L);
+            if (currentTick - expire <= GOD_EFFECT_HIDE_TICKS) {
+                effects.removeIf(e -> GOD_NEGATIVE_EFFECTS.containsKey(e.getEffectType()));
+            } else {
+                godEffectExpireTick.remove(ModEffects.GOD_NEGATIVE_EFFECT);
+            }
         }
 
+        // 无需绘制任何状态效果
         if (effects.isEmpty()) {
             ci.cancel();
             return;
         }
 
+        // 以下为状态效果绘制逻辑（与原版一致）
         AbstractInventoryScreen<?> screen = (AbstractInventoryScreen<?>) (Object) this;
         AbstractInventoryScreenInvoker invoker = (AbstractInventoryScreenInvoker) screen;
         HandledScreenAccessor handled = (HandledScreenAccessor) screen;
@@ -94,7 +107,6 @@ public abstract class AbstractInventoryScreenMixin {
         }
 
         Iterable<StatusEffectInstance> iterable = Ordering.natural().sortedCopy(effects);
-
         invoker.callDrawStatusEffectBackgrounds(context, i, k, iterable, wide);
         invoker.callDrawStatusEffectSprites(context, i, k, iterable, wide);
 
@@ -116,12 +128,7 @@ public abstract class AbstractInventoryScreenMixin {
                 context.drawTooltip(screenAccess.getTextRenderer(), tooltip, Optional.empty(), mouseX, mouseY);
             }
         }
-        ci.cancel();
-    }
 
-    @Unique
-    private boolean shouldHideAfterExpire(StatusEffectInstance e, long currentTick) {
-        Long tick = godEffectExpireTick.get(e);
-        return tick != null && currentTick - tick <= GOD_EFFECT_HIDE_TICKS;
+        ci.cancel();
     }
 }
