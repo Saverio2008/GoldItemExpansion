@@ -12,7 +12,7 @@ public class Golditemexpansion implements ModInitializer {
     public void onInitialize() {
         ModEffects.registerEffects();
         ModBlocks.registerBlocks();
-        ModItems.registerItems();
         ModPotions.registerPotions();
+        ModItems.registerItems();
     }
 }
