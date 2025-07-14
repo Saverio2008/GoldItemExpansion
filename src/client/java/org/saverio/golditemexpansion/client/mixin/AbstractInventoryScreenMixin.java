@@ -28,6 +28,9 @@ public abstract class AbstractInventoryScreenMixin {
     @Unique
     private static final Map<StatusEffectInstance, Long> godEffectExpireTick = new WeakHashMap<>();
 
+    @Unique
+    private static final int GOD_EFFECT_HIDE_TICKS = 5;
+
     @Inject(method = "drawStatusEffects", at = @At("HEAD"), cancellable = true)
     private void onDrawStatusEffects(DrawContext context, int mouseX, int mouseY, CallbackInfo ci) {
         PlayerEntity player = MinecraftClient.getInstance().player;
@@ -119,6 +122,6 @@ public abstract class AbstractInventoryScreenMixin {
     @Unique
     private boolean shouldHideAfterExpire(StatusEffectInstance e, long currentTick) {
         Long tick = godEffectExpireTick.get(e);
-        return tick != null && currentTick - tick <= 5;
+        return tick != null && currentTick - tick <= GOD_EFFECT_HIDE_TICKS;
     }
 }
