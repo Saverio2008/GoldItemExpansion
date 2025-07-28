@@ -1,7 +1,6 @@
 package org.saverio.golditemexpansion.effect;
 
-public class ModEffects {
+public final class ModEffects {
     public static void registerEffects() {
-
     }
 }
