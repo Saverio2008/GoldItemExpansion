@@ -1,0 +1,35 @@
+modLoader = "javafml"
+loaderVersion = "[46,)"
+#issueTrackerURL = ""
+license = "GNU AGPL 3.0"
+
+[[mods]]
+modId = "golditemexpansion"
+version = "${version}"
+displayName = "Gold Item Expansion"
+authors = ""
+description = '''
+
+'''
+#logoFile = ""
+
+[[dependencies.golditemexpansion]]
+modId = "forge"
+mandatory = true
+versionRange = "[46,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.golditemexpansion]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.20,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.golditemexpansion]]
+modId = "architectury"
+mandatory = true
+versionRange = "[9.2.14,)"
+ordering = "AFTER"
+side = "BOTH"
