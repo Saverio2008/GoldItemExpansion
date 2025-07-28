@@ -1,2 +1,0 @@
-# GoldItemExpansion
-Minecraft MOD
