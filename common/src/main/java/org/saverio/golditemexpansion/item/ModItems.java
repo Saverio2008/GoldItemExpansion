@@ -10,7 +10,8 @@ import org.saverio.golditemexpansion.block.ModBlocks;
 import static org.saverio.golditemexpansion.Golditemexpansion.MOD_ID;
 
 public final class ModItems {
-    public static final Item COMPRESSED_GOLD_BLOCK_ITEM = new BlockItem(ModBlocks.COMPRESSED_GOLD_BLOCK, new Item.Properties());
+    public static final Item COMPRESSED_GOLD_BLOCK_ITEM =
+            new BlockItem(ModBlocks.COMPRESSED_GOLD_BLOCK, new Item.Properties());
 
     public static void registerItems() {
         Registry.register(
