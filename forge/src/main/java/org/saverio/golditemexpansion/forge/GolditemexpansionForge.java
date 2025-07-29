@@ -12,11 +12,12 @@ import org.saverio.golditemexpansion.forge.registry.potion.ModPotions;
 @Mod(Golditemexpansion.MOD_ID)
 public final class GolditemexpansionForge {
     public GolditemexpansionForge() {
+        var modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         EventBuses.registerModEventBus(Golditemexpansion.MOD_ID, FMLJavaModLoadingContext.get().getModEventBus());
         ModEffects.registerEffects();
-        ModBlocks.registerBlocks();
+        ModBlocks.registerBlocks(modEventBus);
         ModPotions.registerPotions();
-        ModItems.registerItems();
+        ModItems.registerItems(modEventBus);
         Golditemexpansion.init();
     }
 }
