@@ -12,6 +12,7 @@ public final class ModBlocks {
     public static final DeferredRegister<Block> BLOCKS =
             DeferredRegister.create(ForgeRegistries.BLOCKS, Golditemexpansion.MOD_ID);
 
+    @SuppressWarnings("unused")
     public static final RegistryObject<Block> COMPRESSED_GOLD_BLOCK =
             BLOCKS.register("compressed_gold_block", () -> CompressedGoldBlock.COMPRESSED_GOLD_BLOCK);
 

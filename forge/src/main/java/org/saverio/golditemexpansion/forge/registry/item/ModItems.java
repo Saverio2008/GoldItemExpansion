@@ -13,7 +13,7 @@ public final class ModItems {
     public static final DeferredRegister<Item> ITEMS =
             DeferredRegister.create(ForgeRegistries.ITEMS, Golditemexpansion.MOD_ID);
 
-    // 注册压缩金块的物品表示
+    @SuppressWarnings("unused")
     public static final RegistryObject<Item> COMPRESSED_GOLD_BLOCK_ITEM =
             ITEMS.register("compressed_gold_block", () ->
                     new BlockItem(CompressedGoldBlock.COMPRESSED_GOLD_BLOCK, new Item.Properties())
