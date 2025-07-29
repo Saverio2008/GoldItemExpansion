@@ -1,18 +1,13 @@
-package org.saverio.golditemexpansion.item;
+package org.saverio.golditemexpansion.fabric.registry.item;
 
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
-import org.saverio.golditemexpansion.block.ModBlocks;
 
 import static org.saverio.golditemexpansion.Golditemexpansion.MOD_ID;
+import static org.saverio.golditemexpansion.effect.CompressedGoldBlockItem.COMPRESSED_GOLD_BLOCK_ITEM;
 
 public final class ModItems {
-    public static final Item COMPRESSED_GOLD_BLOCK_ITEM =
-            new BlockItem(ModBlocks.COMPRESSED_GOLD_BLOCK, new Item.Properties());
-
     public static void registerItems() {
         Registry.register(
                 BuiltInRegistries.ITEM,
