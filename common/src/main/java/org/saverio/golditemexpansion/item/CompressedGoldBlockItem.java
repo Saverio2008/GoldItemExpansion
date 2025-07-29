@@ -1,4 +1,4 @@
-package org.saverio.golditemexpansion.effect;
+package org.saverio.golditemexpansion.item;
 
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
