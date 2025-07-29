@@ -4,13 +4,18 @@ import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 
 import static org.saverio.golditemexpansion.Golditemexpansion.MOD_ID;
-import static org.saverio.golditemexpansion.item.CompressedGoldBlockItem.COMPRESSED_GOLD_BLOCK_ITEM;
+import static org.saverio.golditemexpansion.block.CompressedGoldBlock.COMPRESSED_GOLD_BLOCK;
 
 public final class ModItems {
+    public static final Item COMPRESSED_GOLD_BLOCK_ITEM =
+            new BlockItem(COMPRESSED_GOLD_BLOCK, new Item.Properties());
+
     @SuppressWarnings("UnstableApiUsage")
     public static void registerItems() {
         Registry.register(
