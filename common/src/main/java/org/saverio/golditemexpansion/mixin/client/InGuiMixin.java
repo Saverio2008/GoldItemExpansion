@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(Gui.class)
-public class InGuiMixin {
+public final class InGuiMixin {
     @Redirect(
             method = "renderEffects",
             at = @At(
