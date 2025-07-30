@@ -23,7 +23,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 
 public final class GoldenHead extends Block {
-    private static final int TICKS_BEFORE_REMOVE = 40;
+    private static final int TICKS_BEFORE_REMOVE = 20;
 
     public static final EnumProperty<AttachFace> FACE = BlockStateProperties.ATTACH_FACE;
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
