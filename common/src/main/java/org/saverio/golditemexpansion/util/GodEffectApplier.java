@@ -4,6 +4,8 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public interface GodEffectApplier {
@@ -24,10 +26,9 @@ public interface GodEffectApplier {
 
     default void removeGodSubEffects(LivingEntity entity) {
         if (entity.level().isClientSide()) return;
-        for (MobEffect effect : getGodEffects().keySet()) {
-            if (entity.hasEffect(effect)) {
-                entity.addEffect(new MobEffectInstance(effect, 0, 0, false, false, false));
-            }
+        List<MobEffect> effectsToRemove = new ArrayList<>(getGodEffects().keySet());
+        for (MobEffect effect : effectsToRemove) {
+            entity.removeEffect(effect);
         }
     }
 }
