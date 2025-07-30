@@ -27,6 +27,7 @@ public final class EffectRenderingInventoryScreenMixin {
         if (player == null) {
             return originalCollection;
         }
+
         boolean hidePositive = player.hasEffect(ModEffectInstances.GOD_POSITIVE_EFFECT);
         boolean hideNegative = player.hasEffect(ModEffectInstances.GOD_NEGATIVE_EFFECT);
 
