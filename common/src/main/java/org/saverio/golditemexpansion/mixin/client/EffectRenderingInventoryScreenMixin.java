@@ -24,21 +24,25 @@ public final class EffectRenderingInventoryScreenMixin {
         Player player = Minecraft.getInstance().player;
         if (player == null) return;
 
-        boolean hasGodStatus = player.hasEffect(ModEffectInstances.GOD_STATUS_EFFECT);
+        boolean hidePositive = player.hasEffect(ModEffectInstances.GOD_POSITIVE_EFFECT);
+        boolean hideNegative = player.hasEffect(ModEffectInstances.GOD_NEGATIVE_EFFECT);
 
         Collection<MobEffectInstance> filtered = player.getActiveEffects().stream()
                 .filter(effectInstance -> {
                     MobEffect effect = effectInstance.getEffect();
-                    if (effect.equals(ModEffectInstances.GOD_STATUS_EFFECT)) {
+                    if (effect.equals(ModEffectInstances.GOD_STATUS_EFFECT) ||
+                            effect.equals(ModEffectInstances.GOD_POSITIVE_EFFECT) ||
+                            effect.equals(ModEffectInstances.GOD_NEGATIVE_EFFECT)) {
                         return false;
-                    }
-                    if (hasGodStatus) {
-                        return !(GOD_POSITIVE_EFFECTS.containsKey(effect) ||
-                                GOD_NEGATIVE_EFFECTS.containsKey(effect));
+                    } else if (hidePositive && GOD_POSITIVE_EFFECTS.containsKey(effect)) {
+                        return false;
+                    } else if (hideNegative && GOD_NEGATIVE_EFFECTS.containsKey(effect)) {
+                        return false;
                     }
                     return true;
                 })
                 .toList();
+
         if (filtered.isEmpty()) {
             ci.cancel();
         }
