@@ -24,9 +24,11 @@ public class GodStatusEffect extends MobEffect {
     @Override
     public void addAttributeModifiers(LivingEntity entity, AttributeMap attributes, int amplifier) {
         if (entity.level().isClientSide) return;
+
         MobEffectInstance current = entity.getEffect(this);
         if (current == null) return;
         int duration = current.getDuration();
+
         boolean isPositive;
         switch (amplifier) {
             case 0 -> isPositive = entity instanceof Player;
@@ -34,16 +36,20 @@ public class GodStatusEffect extends MobEffect {
             case 2 -> isPositive = entity.getMobType() == MobType.ARTHROPOD;
             default -> isPositive = true;
         }
+
         MobEffect childEffect = isPositive ? GOD_POSITIVE_EFFECT : GOD_NEGATIVE_EFFECT;
         MobEffect otherEffect = isPositive ? GOD_NEGATIVE_EFFECT : GOD_POSITIVE_EFFECT;
+
         if (entity.hasEffect(otherEffect)) {
             entity.removeEffect(otherEffect);
         }
-        int newDuration = duration;
+
         MobEffectInstance child = entity.getEffect(childEffect);
+        int newDuration = duration;
         if (child != null) {
             newDuration += child.getDuration();
         }
+
         entity.addEffect(new MobEffectInstance(childEffect, newDuration, 0, false, false, true));
     }
 }
