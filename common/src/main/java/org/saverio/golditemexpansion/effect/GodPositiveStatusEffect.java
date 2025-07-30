@@ -28,7 +28,6 @@ public final class GodPositiveStatusEffect extends MobEffect implements GodEffec
         put(MobEffects.LUCK, 4);
         put(MobEffects.CONDUIT_POWER, 0);
         put(MobEffects.DOLPHINS_GRACE, 4);
-        put(MobEffects.HERO_OF_THE_VILLAGE, 4);
     }};
 
     public GodPositiveStatusEffect() {
