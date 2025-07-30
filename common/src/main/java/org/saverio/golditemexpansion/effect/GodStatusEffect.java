@@ -35,13 +35,6 @@ public final class GodStatusEffect extends MobEffect {
             default -> isPositive = true;
         }
         MobEffect childEffect = isPositive ? GOD_POSITIVE_EFFECT : GOD_NEGATIVE_EFFECT;
-        MobEffect otherEffect = isPositive ? GOD_NEGATIVE_EFFECT : GOD_POSITIVE_EFFECT;
-        if (entity.hasEffect(otherEffect)) {
-            entity.removeEffect(otherEffect);
-        }
-        if (entity.hasEffect(childEffect)) {
-            entity.removeEffect(childEffect);
-        }
         entity.addEffect(new MobEffectInstance(childEffect, duration, 0, false, false, true));
     }
 }
