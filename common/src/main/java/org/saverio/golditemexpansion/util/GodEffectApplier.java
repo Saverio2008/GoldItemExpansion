@@ -3,8 +3,9 @@ package org.saverio.golditemexpansion.util;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.server.MinecraftServer;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public interface GodEffectApplier {
@@ -24,20 +25,15 @@ public interface GodEffectApplier {
     }
 
     default void removeGodSubEffects(LivingEntity entity) {
-        MinecraftServer server = null;
-        if (!entity.level().isClientSide()) {
-            server = entity.level().getServer();
-        }
-        if (server == null) {
-            return;
-        }
-
-        TickDelayExecutor.runLater(server, 5, () -> {
-            for (MobEffect effect : getGodEffects().keySet()) {
-                if (entity.hasEffect(effect)) {
-                    entity.removeEffect(effect);
-                }
+        if (entity.level().isClientSide()) return;
+        List<MobEffect> toRemove = new ArrayList<>();
+        for (MobEffect effect : getGodEffects().keySet()) {
+            if (entity.hasEffect(effect)) {
+                toRemove.add(effect);
             }
-        });
+        }
+        for (MobEffect effect : toRemove) {
+            entity.removeEffect(effect);
+        }
     }
 }

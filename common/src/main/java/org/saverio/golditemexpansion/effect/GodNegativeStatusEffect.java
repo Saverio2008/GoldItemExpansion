@@ -42,17 +42,15 @@ public class GodNegativeStatusEffect extends MobEffect implements GodEffectAppli
     }
 
     public void onEffectApplied(LivingEntity entity) {
-        if (entity.level().isClientSide) return;
-        if (!(entity.level() instanceof ServerLevel serverLevel)) return;
-
+        if (entity.level().isClientSide()) return;
+        if (!(entity.level() instanceof ServerLevel)) return;
         MobEffectInstance instance = entity.getEffect(this);
         if (instance == null) return;
-
-        TickDelayExecutor.runLater(serverLevel.getServer(), 5, () -> applyGodSubEffects(entity));
+        applyGodSubEffects(entity);
     }
 
     public void onEffectRemoved(LivingEntity entity) {
-        if (entity.level().isClientSide) return;
+        if (entity.level().isClientSide()) return;
         removeGodSubEffects(entity);
     }
 }
