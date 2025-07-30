@@ -8,7 +8,8 @@
     "client.InGuiMixin"
   ],
   "mixins": [
-    "LivingEntityMixin"
+    "LivingEntityMixin",
+    "PotionBrewingAccessor"
   ],
   "injectors": {
     "defaultRequire": 1
