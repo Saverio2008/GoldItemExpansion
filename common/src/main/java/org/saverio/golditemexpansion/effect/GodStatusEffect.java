@@ -39,6 +39,9 @@ public final class GodStatusEffect extends MobEffect {
         if (entity.hasEffect(otherEffect)) {
             entity.removeEffect(otherEffect);
         }
+        if (entity.hasEffect(childEffect)) {
+            entity.removeEffect(childEffect);
+        }
         entity.addEffect(new MobEffectInstance(childEffect, duration, 0, false, false, true));
     }
 }
