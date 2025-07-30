@@ -13,7 +13,7 @@ import static org.saverio.golditemexpansion.effect.ModEffectInstances.GOD_POSITI
 
 public class GodStatusEffect extends MobEffect {
     public GodStatusEffect() {
-        super(MobEffectCategory.NEUTRAL, 0xFFFF69B4); // 粉色
+        super(MobEffectCategory.NEUTRAL, 0xFFFF69B4);
     }
 
     @Override
