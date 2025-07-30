@@ -14,7 +14,7 @@ public final class GolditemexpansionForge {
     public GolditemexpansionForge() {
         var modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         EventBuses.registerModEventBus(Golditemexpansion.MOD_ID, FMLJavaModLoadingContext.get().getModEventBus());
-        ModEffects.registerEffects();
+        ModEffects.registerEffects(modEventBus);
         ModBlocks.registerBlocks(modEventBus);
         ModPotions.registerPotions();
         ModItems.registerItems(modEventBus);

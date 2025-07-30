@@ -5,7 +5,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import org.saverio.golditemexpansion.Golditemexpansion;
 
-import static org.saverio.golditemexpansion.effect.ModEffects.*;
+import static org.saverio.golditemexpansion.effect.ModEffectInstances.*;
 
 public final class ModEffects {
     public static void registerEffects() {

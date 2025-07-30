@@ -8,8 +8,8 @@ import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.player.Player;
 
-import static org.saverio.golditemexpansion.effect.ModEffects.GOD_NEGATIVE_EFFECT;
-import static org.saverio.golditemexpansion.effect.ModEffects.GOD_POSITIVE_EFFECT;
+import static org.saverio.golditemexpansion.effect.ModEffectInstances.GOD_NEGATIVE_EFFECT;
+import static org.saverio.golditemexpansion.effect.ModEffectInstances.GOD_POSITIVE_EFFECT;
 
 public class GodStatusEffect extends MobEffect {
     public GodStatusEffect() {
