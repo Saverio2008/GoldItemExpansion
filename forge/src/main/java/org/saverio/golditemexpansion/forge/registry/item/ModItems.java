@@ -23,7 +23,7 @@ public final class ModItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MOD_ID);
 
     public static final RegistryObject<Item> COMPRESSED_GOLD_BLOCK_ITEM = ITEMS.register("compressed_gold_block", () ->
-            new Item(new Item.Properties())
+            new BlockItem(ModBlocks.COMPRESSED_GOLD_BLOCK.get(), new Item.Properties())
     );
 
     public static final RegistryObject<Item> GOLDEN_HEAD_BLOCK_ITEM = ITEMS.register("golden_head", () ->
