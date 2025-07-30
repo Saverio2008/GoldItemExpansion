@@ -15,5 +15,8 @@ public final class GolditemexpansionFabric implements ModInitializer {
         ModPotions.registerPotions();
         ModItems.registerItems();
         Golditemexpansion.init();
+        ServerEntityEvents.ENTITY_EFFECT_ADDED.register((entity, effectInstance, source) -> {
+            // 做你想做的
+        });
     }
 }
