@@ -11,7 +11,7 @@ import org.saverio.golditemexpansion.util.GodEffectApplier;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class GodPositiveStatusEffect extends MobEffect implements GodEffectApplier {
+public final class GodPositiveStatusEffect extends MobEffect implements GodEffectApplier {
     public static final LinkedHashMap<MobEffect, Integer> GOD_POSITIVE_EFFECTS = new LinkedHashMap<>() {{
         put(MobEffects.MOVEMENT_SPEED, 4);
         put(MobEffects.DIG_SPEED, 4);

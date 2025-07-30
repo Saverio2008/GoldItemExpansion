@@ -7,8 +7,7 @@ import org.jetbrains.annotations.Nullable;
 import org.saverio.golditemexpansion.effect.GodPositiveStatusEffect;
 import org.saverio.golditemexpansion.effect.GodNegativeStatusEffect;
 
-public class EffectChangeListenerManager {
-
+public final class EffectChangeListenerManager {
     public static void onEffectAdded(LivingEntity entity, MobEffectInstance effect, @Nullable Entity ignoredSource) {
         var mobEffect = effect.getEffect();
         if (mobEffect instanceof GodPositiveStatusEffect godPositive) {
