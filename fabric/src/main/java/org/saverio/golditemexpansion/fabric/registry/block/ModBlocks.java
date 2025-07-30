@@ -5,8 +5,8 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 
 import static org.saverio.golditemexpansion.Golditemexpansion.MOD_ID;
-import static org.saverio.golditemexpansion.block.CompressedGoldBlock.COMPRESSED_GOLD_BLOCK;
-import static org.saverio.golditemexpansion.block.GoldenHeadBlock.GOLDEN_HEAD_BLOCK;
+import static org.saverio.golditemexpansion.block.ModBlockInstances.COMPRESSED_GOLD_BLOCK;
+import static org.saverio.golditemexpansion.block.ModBlockInstances.GOLDEN_HEAD_BLOCK;
 
 public final class ModBlocks {
 

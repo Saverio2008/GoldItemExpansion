@@ -10,8 +10,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 
 import static org.saverio.golditemexpansion.Golditemexpansion.MOD_ID;
-import static org.saverio.golditemexpansion.block.CompressedGoldBlock.COMPRESSED_GOLD_BLOCK;
-import static org.saverio.golditemexpansion.block.GoldenHeadBlock.GOLDEN_HEAD_BLOCK;
+import static org.saverio.golditemexpansion.block.ModBlockInstances.COMPRESSED_GOLD_BLOCK;
+import static org.saverio.golditemexpansion.block.ModBlockInstances.GOLDEN_HEAD_BLOCK;
 
 public final class ModItems {
     public static final Item COMPRESSED_GOLD_BLOCK_ITEM =
