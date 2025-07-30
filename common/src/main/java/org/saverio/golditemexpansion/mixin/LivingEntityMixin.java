@@ -14,8 +14,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin {
-    @Inject(method = "addEffect(Lnet/minecraft/world/effect/MobEffectInstance;Lnet/minecraft/world/entity/Entity;)Z",
-            at = @At("HEAD"))
+    @Inject(
+            method = "addEffect(Lnet/minecraft/world/effect/MobEffectInstance;Lnet/minecraft/world/entity/Entity;)Z",
+            at = @At("HEAD")
+    )
     private void beforeAddGodEffectWithSource(MobEffectInstance effect, Entity source, CallbackInfoReturnable<Boolean> cir) {
         if (effect.getEffect() == ModEffectInstances.GOD_STATUS_EFFECT) {
             LivingEntity self = (LivingEntity)(Object)this;
