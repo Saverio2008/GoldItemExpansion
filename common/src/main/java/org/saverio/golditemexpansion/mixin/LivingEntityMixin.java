@@ -20,7 +20,7 @@ public abstract class LivingEntityMixin {
         EffectRemovalStatusTracker.setRemoving((LivingEntity)(Object)this, true);
     }
 
-    @Inject(method = "removeAllEffects", at = @At("TAIL"))
+    @Inject(method = "removeAllEffects", at = @At("RETURN"))
     private void afterRemoveAllEffects(CallbackInfoReturnable<Boolean> cir) {
         EffectRemovalStatusTracker.setRemoving((LivingEntity)(Object)this, false);
     }
