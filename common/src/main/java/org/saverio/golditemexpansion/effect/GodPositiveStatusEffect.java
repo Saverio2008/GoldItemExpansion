@@ -6,7 +6,6 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.server.level.ServerLevel;
-import org.saverio.golditemexpansion.util.EffectRemovalStatusTracker;
 import org.saverio.golditemexpansion.util.GodEffectApplier;
 
 import java.util.LinkedHashMap;
@@ -51,7 +50,6 @@ public final class GodPositiveStatusEffect extends MobEffect implements GodEffec
         if (!(entity.level() instanceof ServerLevel)) return;
         MobEffectInstance instance = entity.getEffect(this);
         if (instance == null) return;
-        if (EffectRemovalStatusTracker.isRemoving(entity)) return;
         applyGodSubEffects(entity);
     }
 

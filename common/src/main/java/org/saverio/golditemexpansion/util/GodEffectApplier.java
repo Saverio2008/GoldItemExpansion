@@ -26,6 +26,7 @@ public interface GodEffectApplier {
 
     default void removeGodSubEffects(LivingEntity entity) {
         if (entity.level().isClientSide()) return;
+        if (EffectRemovalStatusTracker.isRemoving(entity)) return;
         List<MobEffect> effectsToRemove = new ArrayList<>(getGodEffects().keySet());
         for (MobEffect effect : effectsToRemove) {
             entity.removeEffect(effect);
