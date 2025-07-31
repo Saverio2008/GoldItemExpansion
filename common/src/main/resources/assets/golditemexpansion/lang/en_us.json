@@ -3,6 +3,7 @@
   "block.golditemexpansion.golden_head": "Golden Head",
 
   "item.golditemexpansion.compressed_gold_block": "Compressed Gold Block",
+
   "item.minecraft.potion.effect.god_potion": "Potion of God",
   "item.minecraft.splash_potion.effect.god_potion": "Splash Potion of God",
   "item.minecraft.lingering_potion.effect.god_potion": "Lingering Potion of God",
@@ -12,9 +13,9 @@
   "item.minecraft.potion.effect.arthropod_god_potion": "Potion of Arthropod God",
   "item.minecraft.splash_potion.effect.arthropod_god_potion": "Splash Potion of Arthropod God",
   "item.minecraft.lingering_potion.effect.arthropod_god_potion": "Lingering Potion of Arthropod God",
-  "item.minecraft.potion.effect.strong_healing_v": "Strong Healing V",
-  "item.minecraft.splash_potion.effect.strong_healing_v": "Splash Strong Healing V",
-  "item.minecraft.lingering_potion.effect.strong_healing_v": "Lingering Strong Healing V",
+  "item.minecraft.potion.effect.healing_v": "Strong Healing V",
+  "item.minecraft.splash_potion.effect.healing_v": "Splash Strong Healing V",
+  "item.minecraft.lingering_potion.effect.healing_v": "Lingering Strong Healing V",
   "item.minecraft.potion.effect.godly_healing": "Godly Healing",
   "item.minecraft.splash_potion.effect.godly_healing": "Splash Godly Healing",
   "item.minecraft.lingering_potion.effect.godly_healing": "Lingering Godly Healing",

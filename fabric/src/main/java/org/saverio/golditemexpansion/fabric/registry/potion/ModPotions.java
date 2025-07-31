@@ -12,9 +12,9 @@ import static org.saverio.golditemexpansion.potion.ModPotionInstances.*;
 
 public final class ModPotions {
     public static void registerPotions() {
-        registerPotion("god", GOD_POTION);
-        registerPotion("undead_god", UNDEAD_GOD_POTION);
-        registerPotion("arthropod_god", ARTHROPOD_GOD_POTION);
+        registerPotion("god_potion", GOD_POTION);
+        registerPotion("undead_god_potion", UNDEAD_GOD_POTION);
+        registerPotion("arthropod_god_potion", ARTHROPOD_GOD_POTION);
         registerPotion("healing_v", HEALING_V);
         registerPotion("godly_healing", GODLY_HEALING);
 
