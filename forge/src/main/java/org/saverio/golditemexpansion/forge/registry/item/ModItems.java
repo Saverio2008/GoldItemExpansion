@@ -40,7 +40,7 @@ public final class ModItems {
         insertAfter(event, Items.DRAGON_HEAD, new ItemStack(GOLDEN_HEAD_BLOCK_ITEM.get()));
     }
 
-    private static void insertAfter(
+    static void insertAfter(
             BuildCreativeModeTabContentsEvent event,
             Item targetItem,
             ItemStack toInsert
