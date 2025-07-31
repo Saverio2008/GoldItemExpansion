@@ -6,7 +6,6 @@ import net.minecraft.world.entity.LivingEntity;
 import org.jetbrains.annotations.Nullable;
 import org.saverio.golditemexpansion.effect.ModEffectInstances;
 import org.saverio.golditemexpansion.event.EffectChangeListenerManager;
-import org.saverio.golditemexpansion.util.EffectRemovalStatusTracker;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -15,16 +14,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin {
-    @Inject(method = "removeAllEffects", at = @At("HEAD"))
-    private void beforeRemoveAllEffects(CallbackInfoReturnable<Boolean> cir) {
-        EffectRemovalStatusTracker.setRemoving((LivingEntity)(Object)this, true);
-    }
-
-    @Inject(method = "removeAllEffects", at = @At("RETURN"))
-    private void afterRemoveAllEffects(CallbackInfoReturnable<Boolean> cir) {
-        EffectRemovalStatusTracker.setRemoving((LivingEntity)(Object)this, false);
-    }
-
     @Inject(
             method = "addEffect(Lnet/minecraft/world/effect/MobEffectInstance;Lnet/minecraft/world/entity/Entity;)Z",
             at = @At("HEAD")
