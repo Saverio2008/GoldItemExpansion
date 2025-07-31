@@ -49,11 +49,6 @@ public final class GodPositiveStatusEffect extends MobEffect implements GodEffec
         if (!(entity.level() instanceof ServerLevel)) return;
         MobEffectInstance instance = entity.getEffect(this);
         if (instance == null) return;
-        applyGodSubEffects(entity);
-    }
-
-    public void onEffectRemoved(LivingEntity entity) {
-        if (entity.level().isClientSide) return;
-        removeGodSubEffects(entity);
+        applyGodSubEffects(entity, instance);
     }
 }

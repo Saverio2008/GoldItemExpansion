@@ -46,10 +46,4 @@ public abstract class LivingEntityMixin {
         LivingEntity self = (LivingEntity)(Object)this;
         EffectChangeListenerManager.onEffectAdded(self, effectInstance, entity);
     }
-
-    @Inject(method = "onEffectRemoved", at = @At("TAIL"))
-    private void onEffectRemovedInject(MobEffectInstance effectInstance, CallbackInfo ci) {
-        LivingEntity self = (LivingEntity)(Object)this;
-        EffectChangeListenerManager.onEffectRemoved(self, effectInstance);
-    }
 }
