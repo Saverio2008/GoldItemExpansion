@@ -30,8 +30,8 @@ public final class ModItems {
             new BlockItem(ModBlocks.GOLDEN_HEAD_BLOCK.get(), new Item.Properties())
     );
 
-    public static void registerItems(IEventBus eventBus) {
-        ITEMS.register(eventBus);
+    public static void registerItems(IEventBus bus) {
+        ITEMS.register(bus);
     }
 
     @SubscribeEvent
@@ -40,7 +40,7 @@ public final class ModItems {
         insertAfter(event, Items.DRAGON_HEAD, new ItemStack(GOLDEN_HEAD_BLOCK_ITEM.get()));
     }
 
-    static void insertAfter(
+    private static void insertAfter(
             BuildCreativeModeTabContentsEvent event,
             Item targetItem,
             ItemStack toInsert
