@@ -15,11 +15,11 @@ public final class ModPotions {
             DeferredRegister.create(ForgeRegistries.POTIONS, Golditemexpansion.MOD_ID);
 
     @SuppressWarnings("unused")
-    public static final RegistryObject<Potion> GOD_POTION = registerPotion("god", () -> ModPotionInstances.GOD_POTION);
+    public static final RegistryObject<Potion> GOD_POTION = registerPotion("god_potion", () -> ModPotionInstances.GOD_POTION);
     @SuppressWarnings("unused")
-    public static final RegistryObject<Potion> UNDEAD_GOD_POTION = registerPotion("undead_god", () -> ModPotionInstances.UNDEAD_GOD_POTION);
+    public static final RegistryObject<Potion> UNDEAD_GOD_POTION = registerPotion("undead_god_potion", () -> ModPotionInstances.UNDEAD_GOD_POTION);
     @SuppressWarnings("unused")
-    public static final RegistryObject<Potion> ARTHROPOD_GOD_POTION = registerPotion("arthropod_god", () -> ModPotionInstances.ARTHROPOD_GOD_POTION);
+    public static final RegistryObject<Potion> ARTHROPOD_GOD_POTION = registerPotion("arthropod_god_potion", () -> ModPotionInstances.ARTHROPOD_GOD_POTION);
     @SuppressWarnings("unused")
     public static final RegistryObject<Potion> HEALING_V = registerPotion("healing_v", () -> ModPotionInstances.HEALING_V);
     @SuppressWarnings("unused")
