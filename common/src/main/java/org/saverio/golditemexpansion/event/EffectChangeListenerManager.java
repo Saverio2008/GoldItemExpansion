@@ -16,13 +16,4 @@ public final class EffectChangeListenerManager {
             godNegative.onEffectApplied(entity);
         }
     }
-
-    public static void onEffectRemoved(LivingEntity entity, MobEffectInstance effect) {
-        var mobEffect = effect.getEffect();
-        if (mobEffect instanceof GodPositiveStatusEffect godPositive) {
-            godPositive.onEffectRemoved(entity);
-        } else if (mobEffect instanceof GodNegativeStatusEffect godNegative) {
-            godNegative.onEffectRemoved(entity);
-        }
-    }
 }
