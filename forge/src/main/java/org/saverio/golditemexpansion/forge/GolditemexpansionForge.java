@@ -18,6 +18,7 @@ public final class GolditemexpansionForge {
         ModBlocks.registerBlocks(modEventBus);
         ModPotions.registerPotions(modEventBus);
         ModItems.registerItems(modEventBus);
+        modEventBus.addListener(ModPotions::onCommonSetup);
         Golditemexpansion.init();
     }
 }

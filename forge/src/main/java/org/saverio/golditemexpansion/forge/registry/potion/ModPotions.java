@@ -2,10 +2,13 @@ package org.saverio.golditemexpansion.forge.registry.potion;
 
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.saverio.golditemexpansion.Golditemexpansion;
+import org.saverio.golditemexpansion.forge.registry.item.ModItems;
+import org.saverio.golditemexpansion.potion.ModBrewingRecipes;
 import org.saverio.golditemexpansion.potion.ModPotionInstances;
 
 import java.util.function.Supplier;
@@ -15,15 +18,20 @@ public final class ModPotions {
             DeferredRegister.create(ForgeRegistries.POTIONS, Golditemexpansion.MOD_ID);
 
     @SuppressWarnings("unused")
-    public static final RegistryObject<Potion> GOD_POTION = registerPotion("god_potion", () -> ModPotionInstances.GOD_POTION);
+    public static final RegistryObject<Potion> GOD_POTION =
+            registerPotion("god_potion", () -> ModPotionInstances.GOD_POTION);
     @SuppressWarnings("unused")
-    public static final RegistryObject<Potion> UNDEAD_GOD_POTION = registerPotion("undead_god_potion", () -> ModPotionInstances.UNDEAD_GOD_POTION);
+    public static final RegistryObject<Potion> UNDEAD_GOD_POTION =
+            registerPotion("undead_god_potion", () -> ModPotionInstances.UNDEAD_GOD_POTION);
     @SuppressWarnings("unused")
-    public static final RegistryObject<Potion> ARTHROPOD_GOD_POTION = registerPotion("arthropod_god_potion", () -> ModPotionInstances.ARTHROPOD_GOD_POTION);
+    public static final RegistryObject<Potion> ARTHROPOD_GOD_POTION =
+            registerPotion("arthropod_god_potion", () -> ModPotionInstances.ARTHROPOD_GOD_POTION);
     @SuppressWarnings("unused")
-    public static final RegistryObject<Potion> HEALING_V = registerPotion("healing_v", () -> ModPotionInstances.HEALING_V);
+    public static final RegistryObject<Potion> HEALING_V =
+            registerPotion("healing_v", () -> ModPotionInstances.HEALING_V);
     @SuppressWarnings("unused")
-    public static final RegistryObject<Potion> GODLY_HEALING = registerPotion("godly_healing", () -> ModPotionInstances.GODLY_HEALING);
+    public static final RegistryObject<Potion> GODLY_HEALING =
+            registerPotion("godly_healing", () -> ModPotionInstances.GODLY_HEALING);
 
     public static void registerPotions(IEventBus bus) {
         POTIONS.register(bus);
@@ -31,5 +39,10 @@ public final class ModPotions {
 
     private static RegistryObject<Potion> registerPotion(String name, Supplier<Potion> supplier) {
         return POTIONS.register(name, supplier);
+    }
+
+    public static void onCommonSetup(final FMLCommonSetupEvent event) {
+        event.enqueueWork(() ->
+                ModBrewingRecipes.registerCommonBrewingRecipes(ModItems.GOLDEN_HEAD_BLOCK_ITEM.get()));
     }
 }
