@@ -46,6 +46,7 @@ public final class GodNegativeStatusEffect extends MobEffect implements GodEffec
         if (!(entity.level() instanceof ServerLevel)) return;
         MobEffectInstance instance = entity.getEffect(this);
         if (instance == null) return;
+        entity.removeEffect(ModEffectInstances.GOD_POSITIVE_EFFECT);
         applyGodSubEffects(entity, instance);
     }
 }

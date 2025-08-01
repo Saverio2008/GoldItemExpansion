@@ -22,14 +22,6 @@ public abstract class LivingEntityMixin {
         if (effect.getEffect() == ModEffectInstances.GOD_STATUS_EFFECT) {
             LivingEntity self = (LivingEntity)(Object)this;
             self.removeEffect(ModEffectInstances.GOD_STATUS_EFFECT);
-        } else if (effect.getEffect() == ModEffectInstances.GOD_POSITIVE_EFFECT) {
-            LivingEntity self = (LivingEntity)(Object)this;
-            self.removeEffect(ModEffectInstances.GOD_STATUS_EFFECT);
-            self.removeEffect(ModEffectInstances.GOD_NEGATIVE_EFFECT);
-        } else if (effect.getEffect() == ModEffectInstances.GOD_NEGATIVE_EFFECT) {
-            LivingEntity self = (LivingEntity)(Object)this;
-            self.removeEffect(ModEffectInstances.GOD_STATUS_EFFECT);
-            self.removeEffect(ModEffectInstances.GOD_POSITIVE_EFFECT);
         }
     }
 
