@@ -29,7 +29,7 @@ public final class GodNegativeStatusEffect extends MobEffect implements GodEffec
     }};
 
     public GodNegativeStatusEffect() {
-        super(MobEffectCategory.HARMFUL, 0xAA0000);
+        super(MobEffectCategory.HARMFUL, 0xAA4B4B4B);
     }
 
     @Override
