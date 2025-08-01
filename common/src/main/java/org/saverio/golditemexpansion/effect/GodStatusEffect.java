@@ -26,7 +26,7 @@ public final class GodStatusEffect extends MobEffect {
         if (entity.level().isClientSide) return;
         MobEffectInstance current = entity.getEffect(this);
         if (current == null) return;
-        int duration = current.getDuration();
+        int baseDuration = current.getDuration();
         boolean isPositive;
         switch (amplifier) {
             case 0 -> isPositive = entity instanceof Player;
@@ -35,7 +35,18 @@ public final class GodStatusEffect extends MobEffect {
             default -> isPositive = true;
         }
         MobEffect childEffect = isPositive ? GOD_POSITIVE_EFFECT : GOD_NEGATIVE_EFFECT;
-        entity.removeEffect(childEffect);
-        entity.addEffect(new MobEffectInstance(childEffect, duration, 0, false, true, true));
+        MobEffectInstance existing = entity.getEffect(childEffect);
+        int totalDuration = baseDuration;
+        if (existing != null) {
+            totalDuration += existing.getDuration();
+        }
+        entity.addEffect(new MobEffectInstance(
+                childEffect,
+                totalDuration,
+                0,
+                false, // ambient
+                true,  // visible
+                true   // showIcon
+        ));
     }
 }
