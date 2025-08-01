@@ -43,7 +43,6 @@ jobs:
           echo "Found jars:"
           cat jars.txt
 
-          # Format output as a multiline string (each line = one file)
           jars_output=$(paste -sd'\n' jars.txt)
           echo "jar_files<<EOF" >> $GITHUB_OUTPUT
           echo "$jars_output" >> $GITHUB_OUTPUT
