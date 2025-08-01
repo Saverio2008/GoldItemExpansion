@@ -1,5 +1,6 @@
 package org.saverio.golditemexpansion.event;
 
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
@@ -18,12 +19,11 @@ public final class EffectChangeListenerManager {
         }
     }
 
-    public static void onEffectRemoved(LivingEntity entity, MobEffectInstance effect) {
-        var mobEffect = effect.getEffect();
-        if (mobEffect instanceof GodPositiveStatusEffect godPositive) {
+    public static void onEffectRemoved(LivingEntity entity, MobEffect effect) {
+        if (effect instanceof GodPositiveStatusEffect godPositive) {
             if (GodEffectRemoveSkipManager.shouldSkip(entity)) return;
             godPositive.onEffectRemoved(entity);
-        } else if (mobEffect instanceof GodNegativeStatusEffect godNegative) {
+        } else if (effect instanceof GodNegativeStatusEffect godNegative) {
             if (GodEffectRemoveSkipManager.shouldSkip(entity)) return;
             godNegative.onEffectRemoved(entity);
         }

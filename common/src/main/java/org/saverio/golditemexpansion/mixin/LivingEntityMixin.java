@@ -43,9 +43,11 @@ public abstract class LivingEntityMixin {
         EffectChangeListenerManager.onEffectAdded((LivingEntity)(Object)this, effectInstance, entity);
     }
 
-    @Inject(method = "onEffectRemoved", at = @At("TAIL"))
-    private void onEffectRemovedInject(MobEffectInstance effectInstance, CallbackInfo ci) {
-        EffectChangeListenerManager.onEffectRemoved((LivingEntity)(Object)this, effectInstance);
+    @Inject(method = "removeEffect", at = @At("RETURN"))
+    private void onRemoveEffect(MobEffect effect, CallbackInfoReturnable<Boolean> cir) {
+        if (cir.getReturnValue()) {
+            EffectChangeListenerManager.onEffectRemoved((LivingEntity)(Object)this, effect);
+        }
     }
 
     @Inject(method = "removeAllEffects", at = @At("HEAD"))
@@ -72,7 +74,7 @@ public abstract class LivingEntityMixin {
         long currentTick = self.level().getGameTime();
 
         Long lastTick = golditemexpansion$lastRemoveEffectTick.get(self);
-        if (lastTick != null && (currentTick - lastTick) <= 10) {
+        if (lastTick != null && (currentTick - lastTick) <= 50) {
             golditemexpansion$removeEffectLock.put(self, true);
         }
         golditemexpansion$lastRemoveEffectTick.put(self, currentTick);
