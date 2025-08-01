@@ -20,10 +20,11 @@ public final class EffectChangeListenerManager {
 
     public static void onEffectRemoved(LivingEntity entity, MobEffectInstance effect) {
         var mobEffect = effect.getEffect();
-        if (GodEffectRemoveSkipManager.shouldSkip(entity)) return;
         if (mobEffect instanceof GodPositiveStatusEffect godPositive) {
+            if (GodEffectRemoveSkipManager.shouldSkip(entity)) return;
             godPositive.onEffectRemoved(entity);
         } else if (mobEffect instanceof GodNegativeStatusEffect godNegative) {
+            if (GodEffectRemoveSkipManager.shouldSkip(entity)) return;
             godNegative.onEffectRemoved(entity);
         }
     }
