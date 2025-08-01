@@ -21,7 +21,10 @@ public abstract class LivingEntityMixin {
     private void beforeAddGodEffectWithSource(MobEffectInstance effect, Entity source, CallbackInfoReturnable<Boolean> cir) {
         if (effect.getEffect() == ModEffectInstances.GOD_STATUS_EFFECT) {
             LivingEntity self = (LivingEntity)(Object)this;
-            self.removeEffect(ModEffectInstances.GOD_STATUS_EFFECT);
+            MobEffectInstance current = self.getEffect(ModEffectInstances.GOD_STATUS_EFFECT);
+            if (current != null && current.getAmplifier() != effect.getAmplifier()) {
+                self.removeEffect(ModEffectInstances.GOD_STATUS_EFFECT);
+            }
         }
     }
 
