@@ -18,4 +18,11 @@ public interface GodEffectApplier {
             entity.addEffect(new MobEffectInstance(effect, duration, amplifier, false, false, false));
         }
     }
+
+    default void clearOppositeEffects(LivingEntity entity, Map<MobEffect, Integer> oppositeEffects, MobEffect mainOpposite) {
+        entity.removeEffect(mainOpposite);
+        for (MobEffect subEffect : oppositeEffects.keySet()) {
+            entity.removeEffect(subEffect);
+        }
+    }
 }

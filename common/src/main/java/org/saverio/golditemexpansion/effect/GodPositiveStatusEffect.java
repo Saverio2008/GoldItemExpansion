@@ -52,9 +52,7 @@ public final class GodPositiveStatusEffect extends MobEffect implements GodEffec
         MobEffectInstance instance = entity.getEffect(this);
         if (instance == null) return;
         entity.removeEffect(ModEffectInstances.GOD_NEGATIVE_EFFECT);
-        for (MobEffect subEffect : GOD_NEGATIVE_EFFECTS.keySet()) {
-            entity.removeEffect(subEffect);
-        }
+        clearOppositeEffects(entity, GOD_NEGATIVE_EFFECTS, ModEffectInstances.GOD_NEGATIVE_EFFECT);
         applyGodSubEffects(entity, instance);
     }
 }
