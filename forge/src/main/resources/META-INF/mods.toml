@@ -7,7 +7,7 @@ license = "GNU AGPL 3.0"
 modId = "golditemexpansion"
 version = "${version}"
 displayName = "Gold Item Expansion"
-authors = ""
+authors = "Saverio, Zhao Zhenxiang"
 description = '''
 
 '''
