@@ -1,0 +1,50 @@
+name: Build and Release Mod
+
+on:
+  push:
+    tags:
+      - 'v*-mc*'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: 17
+
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v3
+
+      - name: Make Gradle Executable
+        run: chmod +x ./gradlew
+
+      - name: Build Mod
+        run: ./gradlew build remapJar
+
+      - name: Find JAR to Upload
+        id: find_jar
+        run: |
+          jars=$(find . -type f -path "*/build/libs/*" -name "*.jar" \
+            -not -name "*sources*" \
+            -not -name "*dev*" \
+            -not -name "*javadoc*" \
+            \( -name "*-fabric.jar" -o -name "*-forge.jar" \))
+          echo "jar_files=$jars" >> $GITHUB_OUTPUT
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ${{ steps.find_jar.outputs.jar_file }}
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
