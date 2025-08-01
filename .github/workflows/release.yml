@@ -31,15 +31,23 @@ jobs:
       - name: Build Mod
         run: ./gradlew build
 
-      - name: Find JAR to Upload
+      - name: Find JARs to Upload
         id: find_jar
         run: |
-          jars=$(find . -type f -path "*/build/libs/*" -name "*.jar" \
+          find . -type f -path "*/build/libs/*" -name "*.jar" \
             -not -name "*sources*" \
             -not -name "*dev*" \
             -not -name "*javadoc*" \
-            \( -name "*-fabric.jar" -o -name "*-forge.jar" \) -print0 | xargs -0 echo)
-          echo "jar_files=$jars" >> $GITHUB_OUTPUT
+            \( -name "*-fabric.jar" -o -name "*-forge.jar" \) > jars.txt
+
+          echo "Found jars:"
+          cat jars.txt
+
+          # Format output as a multiline string (each line = one file)
+          jars_output=$(paste -sd'\n' jars.txt)
+          echo "jar_files<<EOF" >> $GITHUB_OUTPUT
+          echo "$jars_output" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
