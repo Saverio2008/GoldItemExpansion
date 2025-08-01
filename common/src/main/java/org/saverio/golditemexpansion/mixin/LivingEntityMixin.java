@@ -48,4 +48,11 @@ public abstract class LivingEntityMixin {
     private void onRemoveAllEffectsEnd(CallbackInfoReturnable<Boolean> cir) {
         GodEffectRemoveSkipManager.setSkip((LivingEntity)(Object)this, false);
     }
+
+    @Inject(method = "remove", at = @At("HEAD"))
+    private void onEntityRemoved(CallbackInfo ci) {
+        LivingEntity self = (LivingEntity)(Object)this;
+        GodEffectRemoveSkipManager.setSkip(self, false);
+        GodEffectRemoveSkipManager.setForgeSkip(self, false);
+    }
 }
