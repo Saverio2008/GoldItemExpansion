@@ -1,5 +1,6 @@
 package org.saverio.golditemexpansion.forge.event;
 
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
@@ -15,9 +16,12 @@ public final class GodEffectForgeEvents {
     public static void onUseMilk(LivingEntityUseItemEvent.Finish event) {
         if (event.getItem().is(Items.MILK_BUCKET)) {
             LivingEntity entity = event.getEntity();
+            if (entity.level() instanceof ServerLevel serverLevel) {
             GodEffectRemoveSkipManager.setForgeSkip(entity, true);
-            DelayedTaskManager.scheduleDelayedTask(20, () ->
-                    GodEffectRemoveSkipManager.setForgeSkip(entity, false));
+                DelayedTaskManager.scheduleDelayedTask(serverLevel, 100, () ->
+                        GodEffectRemoveSkipManager.setForgeSkip(entity, false)
+                );
+            }
         }
     }
 }
