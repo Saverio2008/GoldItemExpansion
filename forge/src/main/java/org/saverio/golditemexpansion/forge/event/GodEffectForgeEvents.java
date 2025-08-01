@@ -16,7 +16,7 @@ public final class GodEffectForgeEvents {
         if (event.getItem().is(Items.MILK_BUCKET)) {
             LivingEntity entity = event.getEntity();
             GodEffectRemoveSkipManager.setForgeSkip(entity, true);
-            DelayedTaskManager.scheduleDelayedTask(1, () ->
+            DelayedTaskManager.scheduleDelayedTask(20, () ->
                     GodEffectRemoveSkipManager.setForgeSkip(entity, false));
         }
     }
