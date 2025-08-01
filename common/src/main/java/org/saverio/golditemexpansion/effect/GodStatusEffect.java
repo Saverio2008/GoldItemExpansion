@@ -40,6 +40,7 @@ public final class GodStatusEffect extends MobEffect {
         if (existing != null) {
             totalDuration += existing.getDuration();
         }
+        entity.removeEffect(childEffect);
         entity.addEffect(new MobEffectInstance(
                 childEffect,
                 totalDuration,
