@@ -38,13 +38,13 @@ jobs:
             -not -name "*sources*" \
             -not -name "*dev*" \
             -not -name "*javadoc*" \
-            \( -name "*-fabric.jar" -o -name "*-forge.jar" \))
+            \( -name "*-fabric.jar" -o -name "*-forge.jar" \) -print0 | xargs -0 echo)
           echo "jar_files=$jars" >> $GITHUB_OUTPUT
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
-          files: ${{ steps.find_jar.outputs.jar_file }}
+          files: ${{ steps.find_jar.outputs.jar_files }}
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
