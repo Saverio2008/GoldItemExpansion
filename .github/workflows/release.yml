@@ -20,7 +20,7 @@ jobs:
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
+          distribution: temurin
           java-version: 17
 
       - name: Setup Gradle
@@ -49,22 +49,44 @@ jobs:
           echo "$jars_output" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
-      - name: Detect if Pre-release
-        id: detect
+      - name: Detect Release Type
+        id: detect_release_type
         run: |
           TAG_NAME="${GITHUB_REF##*/}"
           echo "Tag name: $TAG_NAME"
-          if [[ "$TAG_NAME" == *alpha* || "$TAG_NAME" == *beta* ]]; then
-            echo "is_prerelease=true" >> $GITHUB_OUTPUT
+
+          if [[ "$TAG_NAME" == *alpha* ]]; then
+            echo "github_prerelease=true" >> $GITHUB_OUTPUT
+            echo "cf_release_type=alpha" >> $GITHUB_OUTPUT
+            echo "mr_release_type=alpha" >> $GITHUB_OUTPUT
+          elif [[ "$TAG_NAME" == *beta* ]]; then
+            echo "github_prerelease=true" >> $GITHUB_OUTPUT
+            echo "cf_release_type=beta" >> $GITHUB_OUTPUT
+            echo "mr_release_type=beta" >> $GITHUB_OUTPUT
+          elif [[ "$TAG_NAME" == *release* ]]; then
+            echo "github_prerelease=false" >> $GITHUB_OUTPUT
+            echo "cf_release_type=release" >> $GITHUB_OUTPUT
+            echo "mr_release_type=release" >> $GITHUB_OUTPUT
           else
-            echo "is_prerelease=false" >> $GITHUB_OUTPUT
+            # 默认release
+            echo "github_prerelease=false" >> $GITHUB_OUTPUT
+            echo "cf_release_type=release" >> $GITHUB_OUTPUT
+            echo "mr_release_type=release" >> $GITHUB_OUTPUT
           fi
 
-      - name: Create Release
+      - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           files: ${{ steps.find_jar.outputs.jar_files }}
           generate_release_notes: true
-          prerelease: ${{ steps.detect.outputs.is_prerelease }}
+          prerelease: ${{ steps.detect_release_type.outputs.github_prerelease }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish to CurseForge and Modrinth
+        run: ./gradlew publishAll \
+          -PcfReleaseType=${{ steps.detect_release_type.outputs.cf_release_type }} \
+          -PmrReleaseType=${{ steps.detect_release_type.outputs.mr_release_type }}
+        env:
+          CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
+          MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
