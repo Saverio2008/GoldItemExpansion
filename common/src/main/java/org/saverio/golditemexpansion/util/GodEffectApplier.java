@@ -14,7 +14,7 @@ public interface GodEffectApplier {
         for (Map.Entry<MobEffect, Integer> entry : getGodEffects().entrySet()) {
             MobEffect effect = entry.getKey();
             int duration = instance.getDuration();
-            int amplifier = instance.getAmplifier();
+            int amplifier = entry.getValue();
             entity.addEffect(new MobEffectInstance(effect, duration, amplifier, false, false, false));
         }
     }
