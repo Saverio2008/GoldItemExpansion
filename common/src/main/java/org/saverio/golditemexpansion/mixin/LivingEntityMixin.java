@@ -31,23 +31,21 @@ public abstract class LivingEntityMixin {
 
     @Inject(method = "onEffectAdded", at = @At("TAIL"))
     private void onEffectAddedInject(MobEffectInstance effectInstance, @Nullable Entity entity, CallbackInfo ci) {
-        LivingEntity self = (LivingEntity)(Object)this;
-        EffectChangeListenerManager.onEffectAdded(self, effectInstance, entity);
+        EffectChangeListenerManager.onEffectAdded((LivingEntity)(Object)this, effectInstance, entity);
     }
 
     @Inject(method = "onEffectRemoved", at = @At("TAIL"))
     private void onEffectRemovedInject(MobEffectInstance effectInstance, CallbackInfo ci) {
-        LivingEntity self = (LivingEntity)(Object)this;
-        EffectChangeListenerManager.onEffectRemoved(self, effectInstance);
+        EffectChangeListenerManager.onEffectRemoved((LivingEntity)(Object)this, effectInstance);
     }
 
     @Inject(method = "removeAllEffects", at = @At("HEAD"))
     private void onRemoveAllEffectsStart(CallbackInfoReturnable<Boolean> cir) {
-        GodEffectRemoveSkipManager.setSkip(true);
+        GodEffectRemoveSkipManager.setSkip((LivingEntity)(Object)this, true);
     }
 
     @Inject(method = "removeAllEffects", at = @At("RETURN"))
     private void onRemoveAllEffectsEnd(CallbackInfoReturnable<Boolean> cir) {
-        GodEffectRemoveSkipManager.clear();
+        GodEffectRemoveSkipManager.setSkip((LivingEntity)(Object)this, false);
     }
 }

@@ -1,17 +1,32 @@
 package org.saverio.golditemexpansion.util;
 
-public class GodEffectRemoveSkipManager {
-    private static final ThreadLocal<Boolean> skipFlag = ThreadLocal.withInitial(() -> Boolean.FALSE);
+import net.minecraft.world.entity.LivingEntity;
 
-    public static void setSkip(boolean skip) {
-        skipFlag.set(skip);
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+public final class GodEffectRemoveSkipManager {
+
+    private static final Map<LivingEntity, Boolean> skipFlags = new ConcurrentHashMap<>();
+    private static final Map<LivingEntity, Boolean> forgeEnabledFlags = new ConcurrentHashMap<>();
+
+    public static void setSkip(LivingEntity entity, boolean skip) {
+        if (skip) {
+            skipFlags.put(entity, true);
+        } else {
+            skipFlags.remove(entity);
+        }
     }
 
-    public static boolean shouldSkip() {
-        return skipFlag.get();
+    public static void setForgeSkip(LivingEntity entity, boolean skip) {
+        if (skip) {
+            forgeEnabledFlags.put(entity, true);
+        } else {
+            forgeEnabledFlags.remove(entity);
+        }
     }
 
-    public static void clear() {
-        skipFlag.remove();
+    public static boolean shouldSkip(LivingEntity entity) {
+        return forgeEnabledFlags.containsKey(entity) || skipFlags.containsKey(entity);
     }
 }
