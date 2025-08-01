@@ -15,6 +15,7 @@ public interface GodEffectApplier {
             MobEffect effect = entry.getKey();
             int duration = instance.getDuration();
             int amplifier = entry.getValue();
+            entity.removeEffect(effect);
             entity.addEffect(new MobEffectInstance(effect, duration, amplifier, false, false, false));
         }
     }
