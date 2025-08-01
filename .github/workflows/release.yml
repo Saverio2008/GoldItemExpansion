@@ -4,6 +4,7 @@ on:
   push:
     tags:
       - 'v*-mc*'
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -48,10 +49,22 @@ jobs:
           echo "$jars_output" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
+      - name: Detect if Pre-release
+        id: detect
+        run: |
+          TAG_NAME="${GITHUB_REF##*/}"
+          echo "Tag name: $TAG_NAME"
+          if [[ "$TAG_NAME" == *alpha* || "$TAG_NAME" == *beta* ]]; then
+            echo "is_prerelease=true" >> $GITHUB_OUTPUT
+          else
+            echo "is_prerelease=false" >> $GITHUB_OUTPUT
+          fi
+
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
           files: ${{ steps.find_jar.outputs.jar_files }}
           generate_release_notes: true
+          prerelease: ${{ steps.detect.outputs.is_prerelease }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
