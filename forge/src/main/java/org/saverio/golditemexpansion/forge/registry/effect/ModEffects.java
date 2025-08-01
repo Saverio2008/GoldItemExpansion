@@ -12,7 +12,7 @@ public final class ModEffects {
     public static final DeferredRegister<MobEffect> MOB_EFFECTS = DeferredRegister.create(ForgeRegistries.MOB_EFFECTS, Golditemexpansion.MOD_ID);
 
     @SuppressWarnings("unused")
-    public static final RegistryObject<MobEffect> GOD_STATUS_EFFECT = MOB_EFFECTS.register("god_status_effect", () -> ModEffectInstances.GOD_STATUS_EFFECT);
+    public static final RegistryObject<MobEffect> GOD_STATUS_EFFECT = MOB_EFFECTS.register("god_effect", () -> ModEffectInstances.GOD_STATUS_EFFECT);
     @SuppressWarnings("unused")
     public static final RegistryObject<MobEffect> GOD_POSITIVE_EFFECT = MOB_EFFECTS.register("god_positive_effect", () -> ModEffectInstances.GOD_POSITIVE_EFFECT);
     @SuppressWarnings("unused")

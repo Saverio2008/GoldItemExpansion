@@ -10,7 +10,7 @@ import static org.saverio.golditemexpansion.effect.ModEffectInstances.*;
 public final class ModEffects {
     public static void registerEffects() {
         Registry.register(BuiltInRegistries.MOB_EFFECT,
-                new ResourceLocation(Golditemexpansion.MOD_ID, "god_status_effect"), GOD_STATUS_EFFECT);
+                new ResourceLocation(Golditemexpansion.MOD_ID, "god_effect"), GOD_STATUS_EFFECT);
         Registry.register(BuiltInRegistries.MOB_EFFECT,
                 new ResourceLocation(Golditemexpansion.MOD_ID, "god_positive_effect"), GOD_POSITIVE_EFFECT);
         Registry.register(BuiltInRegistries.MOB_EFFECT,
