@@ -6,6 +6,7 @@ import net.minecraft.world.entity.LivingEntity;
 import org.jetbrains.annotations.Nullable;
 import org.saverio.golditemexpansion.effect.ModEffectInstances;
 import org.saverio.golditemexpansion.event.EffectChangeListenerManager;
+import org.saverio.golditemexpansion.util.GodEffectRemoveSkipManager;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -32,5 +33,21 @@ public abstract class LivingEntityMixin {
     private void onEffectAddedInject(MobEffectInstance effectInstance, @Nullable Entity entity, CallbackInfo ci) {
         LivingEntity self = (LivingEntity)(Object)this;
         EffectChangeListenerManager.onEffectAdded(self, effectInstance, entity);
+    }
+
+    @Inject(method = "onEffectRemoved", at = @At("TAIL"))
+    private void onEffectRemovedInject(MobEffectInstance effectInstance, CallbackInfo ci) {
+        LivingEntity self = (LivingEntity)(Object)this;
+        EffectChangeListenerManager.onEffectRemoved(self, effectInstance);
+    }
+
+    @Inject(method = "removeAllEffects", at = @At("HEAD"))
+    private void onRemoveAllEffectsStart(CallbackInfoReturnable<Boolean> cir) {
+        GodEffectRemoveSkipManager.setSkip(true);
+    }
+
+    @Inject(method = "removeAllEffects", at = @At("RETURN"))
+    private void onRemoveAllEffectsEnd(CallbackInfoReturnable<Boolean> cir) {
+        GodEffectRemoveSkipManager.clear();
     }
 }

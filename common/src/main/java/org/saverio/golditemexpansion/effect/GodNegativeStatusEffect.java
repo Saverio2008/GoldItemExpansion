@@ -11,7 +11,6 @@ import org.saverio.golditemexpansion.util.GodEffectApplier;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import static org.saverio.golditemexpansion.effect.GodPositiveStatusEffect.GOD_POSITIVE_EFFECTS;
 import static org.saverio.golditemexpansion.effect.ModEffectInstances.GOD_POSITIVE_EFFECT;
 
 public final class GodNegativeStatusEffect extends MobEffect implements GodEffectApplier {
@@ -48,7 +47,14 @@ public final class GodNegativeStatusEffect extends MobEffect implements GodEffec
         MobEffectInstance instance = entity.getEffect(this);
         if (instance == null) return;
         entity.removeEffect(GOD_POSITIVE_EFFECT);
-        clearOppositeEffects(entity, GOD_POSITIVE_EFFECTS, ModEffectInstances.GOD_POSITIVE_EFFECT);
         applyGodSubEffects(entity, instance);
+    }
+
+    public void onEffectRemoved(LivingEntity entity) {
+        if (entity.level().isClientSide) return;
+        if (!(entity.level() instanceof ServerLevel)) return;
+        for (MobEffect subEffect : getGodEffects().keySet()) {
+            entity.removeEffect(subEffect);
+        }
     }
 }
