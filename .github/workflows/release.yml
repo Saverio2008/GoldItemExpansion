@@ -110,6 +110,9 @@ jobs:
           game-versions: |
             ${{ steps.extract_mc_version.outputs.minecraft_version }}
 
+          dependencies: |
+            architectury-api(required){modrinth:Q9yZKqg7}{curseforge:3115957}
+
           github-token: ${{ secrets.GITHUB_TOKEN }}
           github-prerelease: ${{ steps.detect_release_type.outputs.github_prerelease }}
 
