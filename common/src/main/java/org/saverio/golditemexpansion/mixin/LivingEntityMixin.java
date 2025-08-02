@@ -30,7 +30,10 @@ public abstract class LivingEntityMixin {
         }
     }
 
-    @Inject(method = "addEffect*", at = @At("RETURN"))
+    @Inject(
+            method = "addEffect(Lnet/minecraft/world/effect/MobEffectInstance;Lnet/minecraft/world/entity/Entity;)Z",
+            at = @At("RETURN")
+    )
     private void onAddEffectInject(MobEffectInstance instance, @Nullable Entity source, CallbackInfoReturnable<Boolean> cir) {
         if (cir.getReturnValue()) {
             EffectChangeListenerManager.onEffectAdded((LivingEntity)(Object) this, instance, source);
