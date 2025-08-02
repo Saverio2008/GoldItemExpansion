@@ -1,5 +1,5 @@
 {
-  "texture_size": [256, 256],
+  "texture_size": [16, 16],
   "sprites": [
     "golditemexpansion:god_positive_effect",
     "golditemexpansion:god_negative_effect"
