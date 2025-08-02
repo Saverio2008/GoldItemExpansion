@@ -82,6 +82,7 @@ jobs:
 
           dependencies: |
             fabric-api(required){modrinth:P7dR8mSH}{curseforge:306612}
+            architectury-api(required){modrinth:Q9yZKqg7}{curseforge:3115957}
 
           github-token: ${{ secrets.GITHUB_TOKEN }}
           github-prerelease: ${{ steps.detect_release_type.outputs.github_prerelease }}
