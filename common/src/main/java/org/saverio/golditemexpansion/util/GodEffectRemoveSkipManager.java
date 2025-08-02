@@ -8,7 +8,6 @@ import java.util.concurrent.ConcurrentHashMap;
 public final class GodEffectRemoveSkipManager {
 
     private static final Map<LivingEntity, Boolean> skipFlags = new ConcurrentHashMap<>();
-    private static final Map<LivingEntity, Boolean> forgeEnabledFlags = new ConcurrentHashMap<>();
 
     public static void setSkip(LivingEntity entity, boolean skip) {
         if (skip) {
@@ -18,15 +17,7 @@ public final class GodEffectRemoveSkipManager {
         }
     }
 
-    public static void setForgeSkip(LivingEntity entity, boolean skip) {
-        if (skip) {
-            forgeEnabledFlags.put(entity, true);
-        } else {
-            forgeEnabledFlags.remove(entity);
-        }
-    }
-
     public static boolean shouldSkip(LivingEntity entity) {
-        return forgeEnabledFlags.containsKey(entity) || skipFlags.containsKey(entity);
+        return skipFlags.containsKey(entity);
     }
 }
