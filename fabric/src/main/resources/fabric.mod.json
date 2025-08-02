@@ -3,9 +3,10 @@
   "id": "golditemexpansion",
   "version": "${version}",
   "name": "Gold Item Expansion",
-  "description": "",
+  "description": "Adds enhanced gold-related items and effects to Minecraft.",
   "authors": [
-    ""
+    "Saverio",
+    "Zhao Zhenxiang"
   ],
   "contact": {
     "homepage": "https://github.com/Saverio2008/GoldItemExpansion/"

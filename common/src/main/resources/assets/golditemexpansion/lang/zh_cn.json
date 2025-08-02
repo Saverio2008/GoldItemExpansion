@@ -1,27 +1,36 @@
 {
+  "potion.potency.14": "XV",
+
   "block.golditemexpansion.compressed_gold_block": "压缩金块",
   "block.golditemexpansion.golden_head": "金头",
+
+  "item.golditemexpansion.compressed_gold_block": "压缩金块",
 
   "item.minecraft.potion.effect.god_potion": "超神药水",
   "item.minecraft.splash_potion.effect.god_potion": "喷溅型超神药水",
   "item.minecraft.lingering_potion.effect.god_potion": "滞留型超神药水",
+  "item.minecraft.tipped_arrow.effect.god_potion": "超神之箭",
   "item.minecraft.potion.effect.undead_god_potion": "亡灵版超神药水",
   "item.minecraft.splash_potion.effect.undead_god_potion": "喷溅型亡灵版超神药水",
   "item.minecraft.lingering_potion.effect.undead_god_potion": "滞留型亡灵版超神药水",
+  "item.minecraft.tipped_arrow.effect.undead_god_potion": "亡灵超神之箭",
   "item.minecraft.potion.effect.arthropod_god_potion": "节肢版超神药水",
   "item.minecraft.splash_potion.effect.arthropod_god_potion": "喷溅型节肢版超神药水",
   "item.minecraft.lingering_potion.effect.arthropod_god_potion": "滞留型节肢版超神药水",
-  "item.minecraft.potion.effect.strong_healing_v": "治疗药水",
-  "item.minecraft.splash_potion.effect.strong_healing_v": "喷溅型治疗药水",
-  "item.minecraft.lingering_potion.effect.strong_healing_v": "滞留型治疗药水",
+  "item.minecraft.tipped_arrow.effect.arthropod_god_potion": "节肢超神之箭",
+  "item.minecraft.potion.effect.healing_v": "治疗药水",
+  "item.minecraft.splash_potion.effect.healing_v": "喷溅型治疗药水",
+  "item.minecraft.lingering_potion.effect.healing_v": "滞留型治疗药水",
+  "item.minecraft.tipped_arrow.effect.healing_v": "治疗 V 之箭",
   "item.minecraft.potion.effect.godly_healing": "神级治疗药水",
   "item.minecraft.splash_potion.effect.godly_healing": "喷溅型神级治疗药水",
   "item.minecraft.lingering_potion.effect.godly_healing": "滞留型神级治疗药水",
+  "item.minecraft.tipped_arrow.effect.godly_healing": "神级治疗之箭",
 
   "advancement.golditemexpansion.compressed_gold_block.title": "再硬，再硬一点！",
   "advancement.golditemexpansion.compressed_gold_block.description": "合成压缩金块后解锁该成就",
 
-  "effect.golditemexpansion.god_status_effect": "超神",
-  "effect.golditemexpansion.god_positive_status_effect": "超神",
-  "effect.golditemexpansion.god_negative_status_effect": "负超神"
+  "effect.golditemexpansion.god_effect": "超神",
+  "effect.golditemexpansion.god_positive_effect": "超神",
+  "effect.golditemexpansion.god_negative_effect": "负超神"
 }

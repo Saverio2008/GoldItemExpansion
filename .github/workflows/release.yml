@@ -1,0 +1,122 @@
+name: Build and Release Mod
+
+on:
+  push:
+    tags:
+      - 'v*-mc*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+
+      - name: Make Gradle Executable
+        run: chmod +x ./gradlew
+
+      - name: Build Mod
+        run: ./gradlew build
+
+      - name: Detect Release Type
+        id: detect_release_type
+        run: |
+          TAG_NAME="${GITHUB_REF##*/}"
+          echo "Tag name: $TAG_NAME"
+
+          if [[ "$TAG_NAME" == *alpha* ]]; then
+            echo "github_prerelease=true" >> $GITHUB_OUTPUT
+            echo "release_type=alpha" >> $GITHUB_OUTPUT
+          elif [[ "$TAG_NAME" == *beta* ]]; then
+            echo "github_prerelease=true" >> $GITHUB_OUTPUT
+            echo "release_type=beta" >> $GITHUB_OUTPUT
+          elif [[ "$TAG_NAME" == *release* ]]; then
+            echo "github_prerelease=false" >> $GITHUB_OUTPUT
+            echo "release_type=release" >> $GITHUB_OUTPUT
+          else
+            echo "github_prerelease=false" >> $GITHUB_OUTPUT
+            echo "release_type=release" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Extract Minecraft Version
+        id: extract_mc_version
+        run: |
+          TAG_NAME="${GITHUB_REF##*/}"
+
+          if [[ "$TAG_NAME" =~ mc([0-9]+\.[0-9]+(\.[0-9]+)?) ]]; then
+            MC_VERSION="${BASH_REMATCH[1]}"
+            echo "minecraft_version=$MC_VERSION" >> $GITHUB_OUTPUT
+          else
+            echo "❌ Could not extract Minecraft version from tag: $TAG_NAME"
+            exit 1
+          fi
+
+      - name: Publish Fabric to GitHub, CurseForge and Modrinth
+        uses: Kir-Antipov/mc-publish@v3.3.0
+        if: ${{ always() }}
+        with:
+          changelog-file: CHANGELOG.md
+
+          files: |
+            fabric/build/libs/*-fabric.jar
+            fabric/build/libs/*-fabric-@(sources|javadoc|dev).jar
+
+          loaders: fabric
+
+          game-versions: |
+            ${{ steps.extract_mc_version.outputs.minecraft_version }}
+
+          dependencies: |
+            fabric-api(required){modrinth:P7dR8mSH}{curseforge:306612}
+            architectury-api(required){modrinth:Q9yZKqg7}{curseforge:3115957}
+
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-prerelease: ${{ steps.detect_release_type.outputs.github_prerelease }}
+
+          curseforge-id: '1307459'
+          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+          curseforge-version-type: ${{ steps.detect_release_type.outputs.release_type }}
+
+          modrinth-id: 'FntvSnUz'
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+          modrinth-version-type: ${{ steps.detect_release_type.outputs.release_type }}
+
+      - name: Publish Forge to GitHub, CurseForge and Modrinth
+        uses: Kir-Antipov/mc-publish@v3.3
+        if: ${{ always() }}
+        with:
+          changelog-file: CHANGELOG.md
+
+          files: |
+            forge/build/libs/*-forge.jar
+            forge/build/libs/*-forge-@(sources|javadoc|dev).jar
+
+          loaders: forge
+
+          game-versions: |
+            ${{ steps.extract_mc_version.outputs.minecraft_version }}
+
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-prerelease: ${{ steps.detect_release_type.outputs.github_prerelease }}
+
+          curseforge-id: '1307459'
+          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+          curseforge-version-type: ${{ steps.detect_release_type.outputs.release_type }}
+
+          modrinth-id: 'FntvSnUz'
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+          modrinth-version-type: ${{ steps.detect_release_type.outputs.release_type }}
