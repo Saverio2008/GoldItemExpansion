@@ -3,7 +3,6 @@
   "package": "org.saverio.golditemexpansion.mixin",
   "compatibilityLevel": "JAVA_17",
   "minVersion": "0.8",
-  "refmap": "org.saverio.golditemexpansion.mixin",
   "client": [
     "client.EffectRenderingInventoryScreenMixin",
     "client.InGuiMixin"
