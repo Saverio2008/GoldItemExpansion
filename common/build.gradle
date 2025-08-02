@@ -10,3 +10,14 @@ dependencies {
 
     modImplementation "dev.architectury:architectury:$rootProject.architectury_api_version"
 }
+
+loom {
+    mixin {
+        defaultRefmapName = "golditemexpansion.refmap.json"
+        add sourceSets.main, "golditemexpansion.mixins.json"
+    }
+}
+
+tasks.jar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}

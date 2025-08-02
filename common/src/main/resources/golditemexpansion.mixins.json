@@ -3,14 +3,14 @@
   "package": "org.saverio.golditemexpansion.mixin",
   "compatibilityLevel": "JAVA_17",
   "minVersion": "0.8",
+  "refmap": "golditemexpansion.refmap.json",
   "client": [
     "client.EffectRenderingInventoryScreenMixin",
     "client.InGuiMixin",
     "client.SpriteLoaderMixin"
   ],
   "mixins": [
-    "LivingEntityMixin",
-    "PotionBrewingAccessor"
+    "LivingEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1
