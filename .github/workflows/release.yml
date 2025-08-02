@@ -69,6 +69,8 @@ jobs:
         uses: Kir-Antipov/mc-publish@v3.3.0
         if: ${{ always() }}
         with:
+          changelog-file: CHANGELOG.md
+
           files: |
             fabric/build/libs/*-fabric.jar
             fabric/build/libs/*-fabric-@(sources|javadoc|dev).jar
@@ -96,6 +98,8 @@ jobs:
         uses: Kir-Antipov/mc-publish@v3.3
         if: ${{ always() }}
         with:
+          changelog-file: CHANGELOG.md
+
           files: |
             forge/build/libs/*-forge.jar
             forge/build/libs/*-forge-@(sources|javadoc|dev).jar
