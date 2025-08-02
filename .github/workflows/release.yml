@@ -72,8 +72,7 @@ jobs:
 
           loaders: fabric
 
-          game-versions: |
-            ${{ steps.extract_mc_version.outputs.minecraft_version }}
+          game-versions: ${{ steps.read_versions.outputs.minecraft_version }}
 
           dependencies: |
             fabric-api(required){modrinth:P7dR8mSH}{curseforge:306612}
@@ -102,8 +101,7 @@ jobs:
 
           loaders: forge
 
-          game-versions: |
-            ${{ steps.extract_mc_version.outputs.minecraft_version }}
+          game-versions: ${{ steps.read_versions.outputs.minecraft_version }}
 
           dependencies: |
             architectury-api(required){modrinth:Q9yZKqg7}{curseforge:3115957}
