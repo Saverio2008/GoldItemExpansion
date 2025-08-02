@@ -24,30 +24,13 @@ jobs:
           java-version: 17
 
       - name: Setup Gradle
-        uses: gradle/gradle-build-action@v3
+        uses: gradle/actions/setup-gradle@v3
 
       - name: Make Gradle Executable
         run: chmod +x ./gradlew
 
       - name: Build Mod
         run: ./gradlew build
-
-      - name: Find JARs to Upload
-        id: find_jar
-        run: |
-          find . -type f -path "*/build/libs/*" -name "*.jar" \
-            -not -name "*sources*" \
-            -not -name "*dev*" \
-            -not -name "*javadoc*" \
-            \( -name "*-fabric.jar" -o -name "*-forge.jar" \) > jars.txt
-
-          echo "Found jars:"
-          cat jars.txt
-
-          jars_output=$(paste -sd'\n' jars.txt)
-          echo "jar_files<<EOF" >> $GITHUB_OUTPUT
-          echo "$jars_output" >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
 
       - name: Detect Release Type
         id: detect_release_type
@@ -69,10 +52,59 @@ jobs:
             echo "release_type=release" >> $GITHUB_OUTPUT
           fi
 
-      - name: Publish to GitHub, CurseForge and Modrinth with mc-publish
+      - name: Extract Minecraft Version
+        id: extract_mc_version
+        run: |
+          TAG_NAME="${GITHUB_REF##*/}"
+
+          if [[ "$TAG_NAME" =~ mc([0-9]+\.[0-9]+(\.[0-9]+)?) ]]; then
+            MC_VERSION="${BASH_REMATCH[1]}"
+            echo "minecraft_version=$MC_VERSION" >> $GITHUB_OUTPUT
+          else
+            echo "❌ Could not extract Minecraft version from tag: $TAG_NAME"
+            exit 1
+          fi
+
+      - name: Publish Fabric to GitHub, CurseForge and Modrinth
         uses: Kir-Antipov/mc-publish@v3.3.0
+        if: ${{ always() }}
         with:
-          files: ${{ steps.find_jar.outputs.jar_files }}
+          files: |
+            fabric/build/libs/*-fabric.jar
+            fabric/build/libs/*-fabric-@(sources|javadoc|dev).jar
+
+          loaders: fabric
+
+          game-versions: |
+            ${{ steps.extract_mc_version.outputs.minecraft_version }}
+
+          dependencies: |
+            fabric-api(required){modrinth:P7dR8mSH}{curseforge:306612}
+
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-prerelease: ${{ steps.detect_release_type.outputs.github_prerelease }}
+
+          curseforge-id: '1307459'
+          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+          curseforge-version-type: ${{ steps.detect_release_type.outputs.release_type }}
+
+          modrinth-id: 'FntvSnUz'
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+          modrinth-version-type: ${{ steps.detect_release_type.outputs.release_type }}
+
+      - name: Publish Forge to GitHub, CurseForge and Modrinth
+        uses: Kir-Antipov/mc-publish@v3.3
+        if: ${{ always() }}
+        with:
+          files: |
+            forge/build/libs/*-forge.jar
+            forge/build/libs/*-forge-@(sources|javadoc|dev).jar
+
+          loaders: forge
+
+          game-versions: |
+            ${{ steps.extract_mc_version.outputs.minecraft_version }}
+
           github-token: ${{ secrets.GITHUB_TOKEN }}
           github-prerelease: ${{ steps.detect_release_type.outputs.github_prerelease }}
 
