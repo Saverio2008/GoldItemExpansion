@@ -50,6 +50,7 @@ shadowJar {
 
 remapJar {
     dependsOn shadowJar
+    input.set(shadowJar.archiveFile)
     archiveBaseName.set(project.property("archives_name") as String)
     archiveVersion.set("mc${project.property("minecraft_version")}-${project.property("mod_version")}-fabric")
         archiveClassifier.set("")
