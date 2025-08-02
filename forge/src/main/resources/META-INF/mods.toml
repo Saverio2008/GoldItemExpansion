@@ -13,6 +13,9 @@ Adds enhanced gold-related items and effects to Minecraft.
 '''
 #logoFile = ""
 
+[[mixins]]
+config="golditemexpansion.forge.mixins.json"
+
 [[dependencies.golditemexpansion]]
 modId = "forge"
 mandatory = true
