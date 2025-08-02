@@ -120,11 +120,20 @@ jobs:
           echo "📦 Calculating SHA-256 for Fabric release jar:"
           FABRIC_JAR=$(find fabric/build/libs -type f -name "*-fabric.jar" ! -name "*-sources.jar" ! -name "*-javadoc.jar" ! -name "*-dev.jar" | head -n 1)
           echo "$FABRIC_JAR"
-          shasum -a 256 "$FABRIC_JAR" | tee fabric/build/libs/SHA256.txt
+          shasum -a 256 "$FABRIC_JAR" | tee fabric/build/libs/SHA256-fabric.txt
 
       - name: Print and Save SHA-256 Hash for Forge Release Jar
         run: |
           echo "📦 Calculating SHA-256 for Forge release jar:"
           FORGE_JAR=$(find forge/build/libs -type f -name "*-forge.jar" ! -name "*-sources.jar" ! -name "*-javadoc.jar" ! -name "*-dev.jar" | head -n 1)
           echo "$FORGE_JAR"
-          shasum -a 256 "$FORGE_JAR" | tee forge/build/libs/SHA256.txt
+          shasum -a 256 "$FORGE_JAR" | tee forge/build/libs/SHA256-forge.txt
+
+      - name: Upload SHA256 Files to GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            fabric/build/libs/SHA256-fabric.txt
+            forge/build/libs/SHA256-forge.txt
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
