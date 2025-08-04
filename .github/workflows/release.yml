@@ -8,6 +8,7 @@ on:
 
 permissions:
   contents: write
+  attestations: write
 
 jobs:
   build:
@@ -115,25 +116,26 @@ jobs:
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
           modrinth-version-type: ${{ steps.detect_release_type.outputs.release_type }}
 
-      - name: Print and Save SHA-256 Hash for Fabric Release Jar
+      - name: Print SHA-256 Hash for Fabric Release Jar
         run: |
-          echo "📦 Calculating SHA-256 for Fabric release jar:"
+          echo "📦 SHA-256 for Fabric release jar:"
           FABRIC_JAR=$(find fabric/build/libs -type f -name "*-fabric.jar" ! -name "*-sources.jar" ! -name "*-javadoc.jar" ! -name "*-dev.jar" | head -n 1)
           echo "$FABRIC_JAR"
-          shasum -a 256 "$FABRIC_JAR" | tee fabric/build/libs/SHA256-fabric.txt
+          shasum -a 256 "$FABRIC_JAR"
 
-      - name: Print and Save SHA-256 Hash for Forge Release Jar
+      - name: Print SHA-256 Hash for Forge Release Jar
         run: |
-          echo "📦 Calculating SHA-256 for Forge release jar:"
+          echo "📦 SHA-256 for Forge release jar:"
           FORGE_JAR=$(find forge/build/libs -type f -name "*-forge.jar" ! -name "*-sources.jar" ! -name "*-javadoc.jar" ! -name "*-dev.jar" | head -n 1)
           echo "$FORGE_JAR"
-          shasum -a 256 "$FORGE_JAR" | tee forge/build/libs/SHA256-forge.txt
+          shasum -a 256 "$FORGE_JAR"
 
-      - name: Upload SHA256 Files to GitHub Release
-        uses: softprops/action-gh-release@v2
+      - name: Attest Fabric jar
+        uses: actions/attest-build-provenance@v2
         with:
-          files: |
-            fabric/build/libs/SHA256-fabric.txt
-            forge/build/libs/SHA256-forge.txt
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          subject-path: fabric/build/libs/*-fabric.jar
+
+      - name: Attest Forge jar
+        uses: actions/attest-build-provenance@v2
+        with:
+          subject-path: forge/build/libs/*-forge.jar
