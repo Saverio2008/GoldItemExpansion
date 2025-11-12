@@ -22,7 +22,7 @@ import java.util.concurrent.Executor;
 import static org.saverio.golditemexpansion.Golditemexpansion.MOD_ID;
 
 @Mixin(SpriteLoader.class)
-public class SpriteLoaderMixin {
+public final class SpriteLoaderMixin {
 
     @Final
     @Unique

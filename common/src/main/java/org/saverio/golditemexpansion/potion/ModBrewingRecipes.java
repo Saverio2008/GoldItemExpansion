@@ -4,8 +4,8 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.Potions;
+import org.saverio.golditemexpansion.util.BrewingRecipeUtil;
 
-import static org.saverio.golditemexpansion.mixin.PotionBrewingAccessor.golditemexpansion$addMix;
 import static org.saverio.golditemexpansion.potion.ModPotionInstances.*;
 
 public final class ModBrewingRecipes {
@@ -18,6 +18,6 @@ public final class ModBrewingRecipes {
     }
 
     private static void addPotionRecipe(Potion input, Item ingredient, Potion output) {
-        golditemexpansion$addMix(input, ingredient, output);
+        BrewingRecipeUtil.addMix(input, ingredient, output);
     }
 }

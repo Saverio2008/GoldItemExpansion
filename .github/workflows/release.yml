@@ -69,6 +69,8 @@ jobs:
         uses: Kir-Antipov/mc-publish@v3.3.0
         if: ${{ always() }}
         with:
+          changelog-file: CHANGELOG.md
+
           files: |
             fabric/build/libs/*-fabric.jar
             fabric/build/libs/*-fabric-@(sources|javadoc|dev).jar
@@ -80,6 +82,7 @@ jobs:
 
           dependencies: |
             fabric-api(required){modrinth:P7dR8mSH}{curseforge:306612}
+            architectury-api(required){modrinth:Q9yZKqg7}{curseforge:3115957}
 
           github-token: ${{ secrets.GITHUB_TOKEN }}
           github-prerelease: ${{ steps.detect_release_type.outputs.github_prerelease }}
@@ -96,6 +99,8 @@ jobs:
         uses: Kir-Antipov/mc-publish@v3.3
         if: ${{ always() }}
         with:
+          changelog-file: CHANGELOG.md
+
           files: |
             forge/build/libs/*-forge.jar
             forge/build/libs/*-forge-@(sources|javadoc|dev).jar
@@ -104,6 +109,9 @@ jobs:
 
           game-versions: |
             ${{ steps.extract_mc_version.outputs.minecraft_version }}
+
+          dependencies: |
+            architectury-api(required){modrinth:Q9yZKqg7}{curseforge:3115957}
 
           github-token: ${{ secrets.GITHUB_TOKEN }}
           github-prerelease: ${{ steps.detect_release_type.outputs.github_prerelease }}
