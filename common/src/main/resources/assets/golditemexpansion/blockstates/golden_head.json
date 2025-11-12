@@ -1,0 +1,18 @@
+{
+  "variants": {
+    "mount=floor,facing=north":  { "model": "golditemexpansion:block/golden_head", "y": 0 },
+    "mount=floor,facing=east":   { "model": "golditemexpansion:block/golden_head", "y": 90 },
+    "mount=floor,facing=south":  { "model": "golditemexpansion:block/golden_head", "y": 180 },
+    "mount=floor,facing=west":   { "model": "golditemexpansion:block/golden_head", "y": 270 },
+
+    "mount=wall,facing=north":   { "model": "golditemexpansion:block/golden_head_wall", "y": 0 },
+    "mount=wall,facing=east":    { "model": "golditemexpansion:block/golden_head_wall", "y": 90 },
+    "mount=wall,facing=south":   { "model": "golditemexpansion:block/golden_head_wall", "y": 180 },
+    "mount=wall,facing=west":    { "model": "golditemexpansion:block/golden_head_wall", "y": 270 },
+
+    "mount=ceiling,facing=north":  { "model": "golditemexpansion:block/golden_head_ceiling", "y": 0 },
+    "mount=ceiling,facing=east":   { "model": "golditemexpansion:block/golden_head_ceiling", "y": 90 },
+    "mount=ceiling,facing=south":  { "model": "golditemexpansion:block/golden_head_ceiling", "y": 180 },
+    "mount=ceiling,facing=west":   { "model": "golditemexpansion:block/golden_head_ceiling", "y": 270 }
+  }
+}

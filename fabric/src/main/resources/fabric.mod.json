@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "id": "golditemexpansion",
+  "version": "${version}",
+  "name": "Gold Item Expansion",
+  "description": "",
+  "authors": [
+    ""
+  ],
+  "contact": {
+    "homepage": "https://github.com/Saverio2008/GoldItemExpansion/"
+  },
+  "license": "AGPL-3.0",
+  "icon": "assets/golditemexpansion/icon/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "org.saverio.golditemexpansion.fabric.GolditemexpansionFabric"
+    ],
+    "client": [
+      "org.saverio.golditemexpansion.fabric.client.GolditemexpansionFabricClient"
+    ]
+  },
+  "mixins": [
+    "golditemexpansion.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.16.14",
+    "minecraft": "~1.20",
+    "java": ">=17",
+    "architectury": ">=9.2.14",
+    "fabric-api": "*"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}
