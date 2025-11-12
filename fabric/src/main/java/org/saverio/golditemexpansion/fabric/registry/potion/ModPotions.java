@@ -15,7 +15,7 @@ public final class ModPotions {
         registerPotion("god_potion", GOD_POTION);
         registerPotion("undead_god_potion", UNDEAD_GOD_POTION);
         registerPotion("arthropod_god_potion", ARTHROPOD_GOD_POTION);
-        registerPotion("healing_v", HEALING_V);
+        registerPotion("healing_iii", HEALING_III);
         registerPotion("godly_healing", GODLY_HEALING);
 
         ModBrewingRecipes.registerCommonBrewingRecipes(GOLDEN_HEAD_BLOCK_ITEM);

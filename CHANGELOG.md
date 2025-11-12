@@ -1,6 +1,7 @@
-### Fixed
-- Corrected project configuration errors that caused the build output to be unusable.
-- Fixed the `enabled_platforms` setting to prevent generation of invalid build artifacts.
+### Balance Changes
+- Reduced Instant Health V potion to Instant Health III
+- Reduced the effect level of Godly Healing potion to V 
+> **Note:** Potion changes in this version are not compatible with previous versions*
 
-### Breaking Changes
-- Previous versions were completely unusable due to configuration issues.
+### Optimization
+- Updated and optimized the textures for Golden Head

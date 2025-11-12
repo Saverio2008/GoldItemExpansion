@@ -45,9 +45,9 @@ public final class GodStatusEffect extends MobEffect {
                 childEffect,
                 totalDuration,
                 0,
-                false, // ambient
-                true,  // visible
-                true   // showIcon
+                false,
+                true,
+                true
         ));
     }
 }

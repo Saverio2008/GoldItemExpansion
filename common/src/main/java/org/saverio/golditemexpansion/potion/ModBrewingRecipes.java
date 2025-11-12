@@ -13,7 +13,7 @@ public final class ModBrewingRecipes {
         addPotionRecipe(Potions.AWKWARD, goldenHeadItem, GOD_POTION);
         addPotionRecipe(GOD_POTION, Items.ROTTEN_FLESH, UNDEAD_GOD_POTION);
         addPotionRecipe(GOD_POTION, Items.SPIDER_EYE, ARTHROPOD_GOD_POTION);
-        addPotionRecipe(Potions.AWKWARD, Items.GOLDEN_APPLE, HEALING_V);
+        addPotionRecipe(Potions.AWKWARD, Items.GOLDEN_APPLE, HEALING_III);
         addPotionRecipe(Potions.AWKWARD, Items.ENCHANTED_GOLDEN_APPLE, GODLY_HEALING);
     }
 

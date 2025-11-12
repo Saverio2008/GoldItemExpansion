@@ -27,8 +27,8 @@ public final class ModPotions {
     public static final RegistryObject<Potion> ARTHROPOD_GOD_POTION =
             registerPotion("arthropod_god_potion", () -> ModPotionInstances.ARTHROPOD_GOD_POTION);
     @SuppressWarnings("unused")
-    public static final RegistryObject<Potion> HEALING_V =
-            registerPotion("healing_v", () -> ModPotionInstances.HEALING_V);
+    public static final RegistryObject<Potion> HEALING_III =
+            registerPotion("healing_iii", () -> ModPotionInstances.HEALING_III);
     @SuppressWarnings("unused")
     public static final RegistryObject<Potion> GODLY_HEALING =
             registerPotion("godly_healing", () -> ModPotionInstances.GODLY_HEALING);

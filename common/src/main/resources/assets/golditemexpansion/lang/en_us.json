@@ -1,6 +1,4 @@
 {
-  "potion.potency.14": "XV",
-
   "block.golditemexpansion.compressed_gold_block": "Compressed Gold Block",
   "block.golditemexpansion.golden_head": "Golden Head",
 
@@ -18,10 +16,10 @@
   "item.minecraft.splash_potion.effect.arthropod_god_potion": "Splash Potion of Arthropod God",
   "item.minecraft.lingering_potion.effect.arthropod_god_potion": "Lingering Potion of Arthropod God",
   "item.minecraft.tipped_arrow.effect.arthropod_god_potion": "Arrow of Arthropod God",
-  "item.minecraft.potion.effect.healing_v": "Strong Healing V",
-  "item.minecraft.splash_potion.effect.healing_v": "Splash Strong Healing V",
-  "item.minecraft.lingering_potion.effect.healing_v": "Lingering Strong Healing V",
-  "item.minecraft.tipped_arrow.effect.healing_v": "Arrow of Strong Healing V",
+  "item.minecraft.potion.effect.healing_iii": "Strong Healing III",
+  "item.minecraft.splash_potion.effect.healing_iii": "Splash Strong Healing III",
+  "item.minecraft.lingering_potion.effect.healing_iii": "Lingering Strong Healing III",
+  "item.minecraft.tipped_arrow.effect.healing_iii": "Arrow of Strong Healing III",
   "item.minecraft.potion.effect.godly_healing": "Godly Healing",
   "item.minecraft.splash_potion.effect.godly_healing": "Splash Godly Healing",
   "item.minecraft.lingering_potion.effect.godly_healing": "Lingering Godly Healing",
