@@ -3,7 +3,9 @@ package org.saverio.golditemexpansion.mixin.client;
 import net.minecraft.client.renderer.texture.SpriteContents;
 import net.minecraft.client.renderer.texture.SpriteLoader;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.renderer.texture.atlas.SpriteResourceLoader;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.metadata.MetadataSectionSerializer;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
 import org.spongepowered.asm.mixin.Final;
@@ -15,6 +17,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.slf4j.Logger;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
@@ -32,12 +35,30 @@ public final class SpriteLoaderMixin {
     @Unique
     private static final Logger golditemexpansion$LOGGER = org.slf4j.LoggerFactory.getLogger("SpriteLoaderMixin");
 
-    @Inject(method = "loadAndStitch", at = @At("RETURN"), cancellable = true)
-    private void injectCustomSprites(ResourceManager resourceManager,
-                                     ResourceLocation atlasId,
-                                     int mipLevel,
-                                     Executor executor,
-                                     CallbackInfoReturnable<CompletableFuture<SpriteLoader.Preparations>> cir) {
+    @Inject(
+            method = "loadAndStitch(Lnet/minecraft/server/packs/resources/ResourceManager;Lnet/minecraft/resources/ResourceLocation;ILjava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;",
+            at = @At("RETURN"),
+            cancellable = true
+    )
+    private void injectCustomSprites4(ResourceManager resourceManager, ResourceLocation resourceLocation, int i, Executor executor, CallbackInfoReturnable<CompletableFuture<SpriteLoader.Preparations>> cir) {
+        golditemexpansion$injectCustomSpritesImpl(resourceManager, resourceLocation, i, executor, cir);
+    }
+
+    @Inject(
+            method = "loadAndStitch(Lnet/minecraft/server/packs/resources/ResourceManager;Lnet/minecraft/resources/ResourceLocation;ILjava/util/concurrent/Executor;Ljava/util/Collection;)Ljava/util/concurrent/CompletableFuture;",
+            at = @At("RETURN"),
+            cancellable = true
+    )
+    private void injectCustomSprites5(ResourceManager resourceManager, ResourceLocation resourceLocation, int i, Executor executor, Collection<MetadataSectionSerializer<?>> collection, CallbackInfoReturnable<CompletableFuture<SpriteLoader.Preparations>> cir) {
+        golditemexpansion$injectCustomSpritesImpl(resourceManager, resourceLocation, i, executor, cir);
+    }
+
+    @Unique
+    private void golditemexpansion$injectCustomSpritesImpl(ResourceManager resourceManager,
+                                                           ResourceLocation atlasId,
+                                                           int mipLevel,
+                                                           Executor executor,
+                                                           CallbackInfoReturnable<CompletableFuture<SpriteLoader.Preparations>> cir) {
         if (!MOB_EFFECTS_ATLAS.equals(atlasId)) return;
 
         CompletableFuture<SpriteLoader.Preparations> originalFuture = cir.getReturnValue();
@@ -60,9 +81,7 @@ public final class SpriteLoaderMixin {
             return CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).thenApply(v -> {
                 for (CompletableFuture<SpriteContents> future : futures) {
                     SpriteContents contents = future.join();
-                    if (contents != null) {
-                        allSprites.add(contents);
-                    }
+                    if (contents != null) allSprites.add(contents);
                 }
 
                 SpriteLoader self = (SpriteLoader) (Object) this;
@@ -83,9 +102,9 @@ public final class SpriteLoaderMixin {
                 golditemexpansion$LOGGER.warn("Custom sprite not found: {}", texturePath);
                 return null;
             }
-
             Resource resource = optional.get();
-            return SpriteLoader.loadSprite(id, resource);
+            var loader = SpriteResourceLoader.create(SpriteLoader.DEFAULT_METADATA_SECTIONS);
+            return loader.loadSprite(id, resource);
 
         } catch (Exception e) {
             golditemexpansion$LOGGER.error("Failed to load sprite: {}", texturePath, e);

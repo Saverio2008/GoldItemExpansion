@@ -1,5 +1,5 @@
 modLoader = "javafml"
-loaderVersion = "[46,)"
+loaderVersion = "[48,)"
 #issueTrackerURL = ""
 license = "GNU AGPL 3.0"
 
@@ -19,20 +19,20 @@ config="golditemexpansion.forge.mixins.json"
 [[dependencies.golditemexpansion]]
 modId = "forge"
 mandatory = true
-versionRange = "[46,)"
+versionRange = "[48,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.golditemexpansion]]
 modId = "minecraft"
 mandatory = true
-versionRange = "[1.20,)"
+versionRange = "[1.20.2,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.golditemexpansion]]
 modId = "architectury"
 mandatory = true
-versionRange = "[9.2.14,)"
+versionRange = "[10.1.20,)"
 ordering = "AFTER"
 side = "BOTH"

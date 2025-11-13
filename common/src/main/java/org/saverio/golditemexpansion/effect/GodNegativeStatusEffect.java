@@ -37,7 +37,7 @@ public final class GodNegativeStatusEffect extends MobEffect implements GodEffec
     }
 
     @Override
-    public boolean isDurationEffectTick(int duration, int amplifier) {
+    public boolean shouldApplyEffectTickThisTick(int duration, int amplifier) {
         return false;
     }
 
