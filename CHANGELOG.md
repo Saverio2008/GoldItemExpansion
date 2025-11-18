@@ -1,2 +1,2 @@
 ### Changed
-- Updated mod to Minecraft **1.20.1**.
+- Fixed an issue where certain features failed to load correctly due to compatibility problems with the newer version.
