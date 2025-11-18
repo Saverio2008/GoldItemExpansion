@@ -3,7 +3,6 @@ package org.saverio.golditemexpansion.forge.registry.item;
 import net.minecraft.world.item.*;
 import net.minecraftforge.common.util.MutableHashedLinkedMap;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -20,19 +19,15 @@ import static org.saverio.golditemexpansion.Golditemexpansion.MOD_ID;
 
 @Mod.EventBusSubscriber(modid = MOD_ID, value = Dist.CLIENT, bus = Bus.MOD)
 public final class ModItems {
-    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MOD_ID);
-
-    public static final RegistryObject<Item> COMPRESSED_GOLD_BLOCK_ITEM = ITEMS.register("compressed_gold_block", () ->
-            new BlockItem(ModBlocks.COMPRESSED_GOLD_BLOCK.get(), new Item.Properties())
-    );
-
+    public static final DeferredRegister<Item>
+            ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MOD_ID);
+    public static final RegistryObject<Item> COMPRESSED_GOLD_BLOCK_ITEM =
+            ITEMS.register("compressed_gold_block", () ->
+                    new BlockItem(ModBlocks.COMPRESSED_GOLD_BLOCK.get(), new Item.Properties())
+            );
     public static final RegistryObject<Item> GOLDEN_HEAD_BLOCK_ITEM = ITEMS.register("golden_head", () ->
             new BlockItem(ModBlocks.GOLDEN_HEAD_BLOCK.get(), new Item.Properties())
     );
-
-    public static void registerItems(IEventBus bus) {
-        ITEMS.register(bus);
-    }
 
     @SubscribeEvent
     public static void addItemsToTab(BuildCreativeModeTabContentsEvent event) {
