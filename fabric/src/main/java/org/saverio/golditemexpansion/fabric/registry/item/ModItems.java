@@ -17,7 +17,6 @@ public final class ModItems {
     public static final Item GOLDEN_HEAD_BLOCK_ITEM =
             new BlockItem(GOLDEN_HEAD_BLOCK, new Item.Properties());
 
-    @SuppressWarnings("UnstableApiUsage")
     public static void registerItems() {
         Registry.register(
                 BuiltInRegistries.ITEM,

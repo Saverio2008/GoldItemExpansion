@@ -1,6 +1,5 @@
 package org.saverio.golditemexpansion.forge;
 
-import dev.architectury.platform.forge.EventBuses;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.saverio.golditemexpansion.Golditemexpansion;
@@ -11,14 +10,13 @@ import org.saverio.golditemexpansion.forge.registry.potion.ModPotions;
 
 @Mod(Golditemexpansion.MOD_ID)
 public final class GolditemexpansionForge {
-    public GolditemexpansionForge(FMLJavaModLoadingContext context) {
-        var modEventBus = context.getModEventBus();
-        EventBuses.registerModEventBus(Golditemexpansion.MOD_ID, modEventBus);
-        ModEffects.registerEffects(modEventBus);
-        ModBlocks.registerBlocks(modEventBus);
-        ModPotions.registerPotions(modEventBus);
-        ModItems.registerItems(modEventBus);
-        modEventBus.addListener(ModPotions::onCommonSetup);
+    public GolditemexpansionForge() {
+        @SuppressWarnings("removal") var modBus = FMLJavaModLoadingContext.get().getModEventBus();
+        ModBlocks.BLOCKS.register(modBus);
+        ModItems.ITEMS.register(modBus);
+        ModEffects.EFFECTS.register(modBus);
+        ModPotions.POTIONS.register(modBus);
+        modBus.addListener(ModPotions::registerBrewingRecipes);
         Golditemexpansion.init();
     }
 }
