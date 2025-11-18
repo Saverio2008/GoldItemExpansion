@@ -15,7 +15,9 @@ import org.saverio.golditemexpansion.Golditemexpansion;
 import org.saverio.golditemexpansion.forge.registry.item.ModItems;
 import org.saverio.golditemexpansion.potion.ModPotionInstances;
 
+import java.util.Objects;
 import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 public final class ModPotions {
     public static final DeferredRegister<Potion> POTIONS =
@@ -43,28 +45,46 @@ public final class ModPotions {
 
     public static void registerBrewingRecipes(final FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
+            Ingredient strictAwkward = new Ingredient(Stream.of(new Ingredient.ItemValue(
+                    PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.AWKWARD)
+            ))) {
+                @Override
+                public boolean test(ItemStack stack) {
+                    return Objects.requireNonNull(stack).getItem() ==
+                            Items.POTION && PotionUtils.getPotion(stack) == Potions.AWKWARD;
+                }
+            };
+            Ingredient strictGodPotion = new Ingredient(Stream.of(new Ingredient.ItemValue(
+                    PotionUtils.setPotion(new ItemStack(Items.POTION), GOD_POTION.get())
+            ))) {
+                @Override
+                public boolean test(ItemStack stack) {
+                    return Objects.requireNonNull(stack).getItem() ==
+                            Items.POTION && PotionUtils.getPotion(stack) == GOD_POTION.get();
+                }
+            };
             BrewingRecipeRegistry.addRecipe(
-                    Ingredient.of(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.AWKWARD)),
+                    strictAwkward,
                     Ingredient.of(Items.GOLDEN_APPLE),
                     PotionUtils.setPotion(new ItemStack(Items.POTION), HEALING_III.get())
             );
             BrewingRecipeRegistry.addRecipe(
-                    Ingredient.of(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.AWKWARD)),
+                    strictAwkward,
                     Ingredient.of(Items.ENCHANTED_GOLDEN_APPLE),
                     PotionUtils.setPotion(new ItemStack(Items.POTION), GODLY_HEALING.get())
             );
             BrewingRecipeRegistry.addRecipe(
-                    Ingredient.of(PotionUtils.setPotion(new ItemStack(Items.POTION), GOD_POTION.get())),
+                    strictGodPotion,
                     Ingredient.of(Items.ROTTEN_FLESH),
                     PotionUtils.setPotion(new ItemStack(Items.POTION), UNDEAD_GOD_POTION.get())
             );
             BrewingRecipeRegistry.addRecipe(
-                    Ingredient.of(PotionUtils.setPotion(new ItemStack(Items.POTION), GOD_POTION.get())),
+                    strictGodPotion,
                     Ingredient.of(Items.SPIDER_EYE),
                     PotionUtils.setPotion(new ItemStack(Items.POTION), ARTHROPOD_GOD_POTION.get())
             );
             BrewingRecipeRegistry.addRecipe(
-                    Ingredient.of(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.AWKWARD)),
+                    strictAwkward,
                     Ingredient.of(ModItems.GOLDEN_HEAD_BLOCK_ITEM.get()),
                     PotionUtils.setPotion(new ItemStack(Items.POTION), GOD_POTION.get())
             );
