@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "golditemexpansion:compressed_gold_block"
+      "id": "golditemexpansion:compressed_gold_block"
     },
     "title": {
       "translate": "advancement.golditemexpansion.compressed_gold_block.title"

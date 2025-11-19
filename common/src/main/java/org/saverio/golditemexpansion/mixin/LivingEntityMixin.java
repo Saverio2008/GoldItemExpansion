@@ -1,13 +1,13 @@
 package org.saverio.golditemexpansion.mixin;
 
+import net.minecraft.core.Holder;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import org.jetbrains.annotations.Nullable;
-import org.saverio.golditemexpansion.effect.ModEffectInstances;
-import org.saverio.golditemexpansion.event.EffectChangeListenerManager;
-import org.saverio.golditemexpansion.util.GodEffectRemoveSkipManager;
+import org.saverio.golditemexpansion.effect.GodNegativeStatusEffect;
+import org.saverio.golditemexpansion.effect.GodPositiveStatusEffect;
+import org.saverio.golditemexpansion.effect.ModEffects;
+import org.saverio.golditemexpansion.util.GodEffectSkipManager;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -15,51 +15,28 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(LivingEntity.class)
-public abstract class LivingEntityMixin {
-    @Inject(
-            method = "addEffect(Lnet/minecraft/world/effect/MobEffectInstance;Lnet/minecraft/world/entity/Entity;)Z",
-            at = @At("HEAD")
-    )
-    private void beforeAddGodEffectWithSource(MobEffectInstance effect, Entity source, CallbackInfoReturnable<Boolean> cir) {
-        if (effect.getEffect() == ModEffectInstances.GOD_STATUS_EFFECT) {
-            LivingEntity self = (LivingEntity)(Object)this;
-            MobEffectInstance current = self.getEffect(ModEffectInstances.GOD_STATUS_EFFECT);
-            if (current != null && current.getAmplifier() != effect.getAmplifier()) {
-                self.removeEffect(ModEffectInstances.GOD_STATUS_EFFECT);
-            }
-        }
-    }
-
-    @Inject(
-            method = "addEffect(Lnet/minecraft/world/effect/MobEffectInstance;Lnet/minecraft/world/entity/Entity;)Z",
-            at = @At("RETURN")
-    )
-    private void onAddEffectInject(MobEffectInstance instance, @Nullable Entity source, CallbackInfoReturnable<Boolean> cir) {
-        if (cir.getReturnValue()) {
-            EffectChangeListenerManager.onEffectAdded((LivingEntity)(Object) this, instance, source);
-        }
-    }
-
-    @Inject(method = "removeEffect", at = @At("RETURN"))
-    private void onRemoveEffect(MobEffect effect, CallbackInfoReturnable<Boolean> cir) {
-        if (cir.getReturnValue()) {
-            EffectChangeListenerManager.onEffectRemoved((LivingEntity)(Object)this, effect);
-        }
-    }
-
+public final class LivingEntityMixin {
     @Inject(method = "removeAllEffects", at = @At("HEAD"))
     private void onRemoveAllEffectsStart(CallbackInfoReturnable<Boolean> cir) {
-        GodEffectRemoveSkipManager.setSkip((LivingEntity)(Object)this, true);
+        GodEffectSkipManager.setSkip((LivingEntity)(Object)this, true);
     }
-
     @Inject(method = "removeAllEffects", at = @At("RETURN"))
     private void onRemoveAllEffectsEnd(CallbackInfoReturnable<Boolean> cir) {
-        GodEffectRemoveSkipManager.setSkip((LivingEntity)(Object)this, false);
+        GodEffectSkipManager.setSkip((LivingEntity)(Object)this, false);
     }
-
-    @Inject(method = "remove", at = @At("HEAD"))
-    private void onEntityRemoved(CallbackInfo ci) {
-        LivingEntity self = (LivingEntity)(Object)this;
-        GodEffectRemoveSkipManager.setSkip(self, false);
+    @Inject(method = "onEffectRemoved", at = @At("HEAD"))
+    private void onEffectRemoved(MobEffectInstance mobEffectInstance, CallbackInfo ci) {
+        LivingEntity entity = (LivingEntity)(Object)this;
+        if (GodEffectSkipManager.shouldSkip(entity)) return;
+        Holder<MobEffect> removed = mobEffectInstance.getEffect();
+        if (removed.equals(ModEffects.godPositiveHolder())) {
+            for (Holder<MobEffect> sub : GodPositiveStatusEffect.GOD_POSITIVE_EFFECTS.keySet()) {
+                entity.removeEffect(sub);
+            }
+        } else if (removed.equals(ModEffects.godNegativeHolder())) {
+            for (Holder<MobEffect> sub : GodNegativeStatusEffect.GOD_NEGATIVE_EFFECTS.keySet()) {
+                entity.removeEffect(sub);
+            }
+        }
     }
 }

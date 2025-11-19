@@ -8,8 +8,8 @@ Gold Item Expansion adds a variety of golden-themed items and powerful potions, 
 - **Golden Head**
 
 ### Brewing Recipes
-- **Healing Potion (Instant Health V)**
-- **Godly Healing Potion (Instant Health XV (15))**
+- **Healing Potion (Instant Health III)**
+- **Godly Healing Potion (Instant Health V)**
 - **God Potion Series**
 
 ## God Potion Description

@@ -11,7 +11,7 @@
     }
   },
   "result": {
-    "item": "golditemexpansion:compressed_gold_block",
+    "id": "golditemexpansion:compressed_gold_block",
     "count": 1
   }
 }

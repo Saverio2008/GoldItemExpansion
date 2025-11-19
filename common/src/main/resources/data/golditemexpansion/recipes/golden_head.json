@@ -10,7 +10,7 @@
     "S": { "tag": "golditemexpansion:skulls" }
   },
   "result": {
-    "item": "golditemexpansion:golden_head",
+    "id": "golditemexpansion:golden_head",
     "count": 1
   }
 }

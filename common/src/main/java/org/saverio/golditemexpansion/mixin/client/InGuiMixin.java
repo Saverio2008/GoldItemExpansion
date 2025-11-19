@@ -2,7 +2,7 @@ package org.saverio.golditemexpansion.mixin.client;
 
 import net.minecraft.client.gui.Gui;
 import net.minecraft.world.effect.MobEffectInstance;
-import org.saverio.golditemexpansion.effect.ModEffectInstances;
+import org.saverio.golditemexpansion.effect.ModEffects;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -17,7 +17,7 @@ public final class InGuiMixin {
             )
     )
     private boolean redirectShowIcon(MobEffectInstance instance) {
-        if (instance.getEffect() == ModEffectInstances.GOD_STATUS_EFFECT) {
+        if (ModEffects.isGodMainEffect(instance.getEffect())) {
             return false;
         }
         return instance.showIcon();

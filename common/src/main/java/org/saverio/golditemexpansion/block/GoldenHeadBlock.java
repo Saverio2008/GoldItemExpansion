@@ -52,7 +52,6 @@ public final class GoldenHeadBlock extends Block {
         Direction clicked = ctx.getClickedFace();
         AttachFace face;
         Direction facing;
-
         if (clicked == Direction.UP) {
             face = AttachFace.FLOOR;
             facing = ctx.getHorizontalDirection().getOpposite();
@@ -63,16 +62,13 @@ public final class GoldenHeadBlock extends Block {
             face = AttachFace.WALL;
             facing = clicked;
         }
-
         return defaultBlockState().setValue(FACE, face).setValue(FACING, facing);
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public @NotNull VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, net.minecraft.world.phys.shapes.CollisionContext context) {
         AttachFace face = state.getValue(FACE);
         Direction facing = state.getValue(FACING);
-
         return switch (face) {
             case FLOOR -> SHAPE_FLOOR;
             case CEILING -> SHAPE_CEILING;
@@ -94,7 +90,6 @@ public final class GoldenHeadBlock extends Block {
         }
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);

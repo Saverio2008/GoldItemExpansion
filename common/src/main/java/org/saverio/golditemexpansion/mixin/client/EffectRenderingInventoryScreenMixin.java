@@ -2,10 +2,11 @@ package org.saverio.golditemexpansion.mixin.client;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.EffectRenderingInventoryScreen;
+import net.minecraft.core.Holder;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.player.Player;
-import org.saverio.golditemexpansion.effect.ModEffectInstances;
+import org.saverio.golditemexpansion.effect.ModEffects;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
@@ -27,20 +28,15 @@ public final class EffectRenderingInventoryScreenMixin {
         if (player == null) {
             return originalCollection;
         }
-
-        boolean hidePositive = player.hasEffect(ModEffectInstances.GOD_POSITIVE_EFFECT);
-        boolean hideNegative = player.hasEffect(ModEffectInstances.GOD_NEGATIVE_EFFECT);
-
+        boolean hidePositive = player.hasEffect(ModEffects.godPositiveHolder());
+        boolean hideNegative = player.hasEffect(ModEffects.godNegativeHolder());
         return originalCollection.stream().filter(effectInstance -> {
-            MobEffect effect = effectInstance.getEffect();
-            if (effect.equals(ModEffectInstances.GOD_STATUS_EFFECT)) {
+            Holder<MobEffect> holder = effectInstance.getEffect();
+            if (ModEffects.isGodMainEffect(holder)) {
                 return false;
-            } else if (hidePositive && GOD_POSITIVE_EFFECTS.containsKey(effect)) {
+            } else if (hidePositive && GOD_POSITIVE_EFFECTS.containsKey(holder)) {
                 return false;
-            } else if (hideNegative && GOD_NEGATIVE_EFFECTS.containsKey(effect)) {
-                return false;
-            }
-            return true;
+            } else return !hideNegative || !GOD_NEGATIVE_EFFECTS.containsKey(holder);
         }).collect(Collectors.toList());
     }
 }
