@@ -6,7 +6,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 
 public final class ModBlockInstances {
     public static final Block COMPRESSED_GOLD_BLOCK = new Block(
-            BlockBehaviour.Properties.copy(Blocks.GOLD_BLOCK)
+            BlockBehaviour.Properties.ofFullCopy(Blocks.GOLD_BLOCK)
                     .strength(8.0f, 1200.0f)
     );
 

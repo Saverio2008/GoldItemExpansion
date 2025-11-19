@@ -11,7 +11,7 @@ import org.saverio.golditemexpansion.forge.registry.potion.ModPotions;
 @Mod(Golditemexpansion.MOD_ID)
 public final class GolditemexpansionForge {
     public GolditemexpansionForge() {
-        var modBus = FMLJavaModLoadingContext.get().getModEventBus();
+        @SuppressWarnings("removal") var modBus = FMLJavaModLoadingContext.get().getModEventBus();
         ModBlocks.BLOCKS.register(modBus);
         ModItems.ITEMS.register(modBus);
         ModEffects.EFFECTS.register(modBus);
