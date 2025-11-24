@@ -64,7 +64,6 @@ jobs:
 
       - name: Publish Fabric to GitHub, CurseForge and Modrinth
         uses: Kir-Antipov/mc-publish@v3.3.0
-        if: ${{ always() }}
         with:
           changelog-file: CHANGELOG.md
 
@@ -90,16 +89,16 @@ jobs:
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
           modrinth-version-type: ${{ steps.detect_release_type.outputs.release_type }}
 
-      - name: Publish Forge to GitHub, CurseForge and Modrinth
+      - name: Publish NeoForge to GitHub, CurseForge and Modrinth
         uses: Kir-Antipov/mc-publish@v3.3
         if: ${{ always() }}
         with:
           changelog-file: CHANGELOG.md
 
           files: |
-            forge/build/libs/*-forge.jar
+            neoforge/build/libs/*-neoforge.jar
 
-          loaders: forge
+          loaders: neoforge
 
           game-versions: ${{ steps.read_versions.outputs.minecraft_version }}
 
@@ -116,27 +115,12 @@ jobs:
           modrinth-id: 'FntvSnUz'
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
           modrinth-version-type: ${{ steps.detect_release_type.outputs.release_type }}
-
-      - name: Print SHA-256 Hash for Fabric Release Jar
-        run: |
-          echo "📦 SHA-256 for Fabric release jar:"
-          FABRIC_JAR=$(find fabric/build/libs -type f -name "*-fabric.jar" ! -name "*-sources.jar" ! -name "*-javadoc.jar" ! -name "*-dev.jar" | head -n 1)
-          echo "$FABRIC_JAR"
-          shasum -a 256 "$FABRIC_JAR"
-
-      - name: Print SHA-256 Hash for Forge Release Jar
-        run: |
-          echo "📦 SHA-256 for Forge release jar:"
-          FORGE_JAR=$(find forge/build/libs -type f -name "*-forge.jar" ! -name "*-sources.jar" ! -name "*-javadoc.jar" ! -name "*-dev.jar" | head -n 1)
-          echo "$FORGE_JAR"
-          shasum -a 256 "$FORGE_JAR"
-
       - name: Attest Fabric jar
         uses: actions/attest-build-provenance@v2
         with:
           subject-path: fabric/build/libs/*-fabric.jar
 
-      - name: Attest Forge jar
+      - name: Attest NeoForge jar
         uses: actions/attest-build-provenance@v2
         with:
-          subject-path: forge/build/libs/*-forge.jar
+          subject-path: neoforge/build/libs/*-neoforge.jar
