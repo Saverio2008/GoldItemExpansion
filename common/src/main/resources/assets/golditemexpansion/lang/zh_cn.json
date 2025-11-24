@@ -28,7 +28,9 @@
   "advancement.golditemexpansion.compressed_gold_block.title": "再硬，再硬一点！",
   "advancement.golditemexpansion.compressed_gold_block.description": "合成压缩金块后解锁该成就",
 
-  "effect.golditemexpansion.god_effect": "超神",
+  "effect.golditemexpansion.god_player_effect": "超神",
+  "effect.golditemexpansion.god_undead_effect": "超神（亡灵版）",
+  "effect.golditemexpansion.god_arthropod_effect": "超神（节肢版）",
   "effect.golditemexpansion.god_positive_effect": "超神",
   "effect.golditemexpansion.god_negative_effect": "负超神"
 }
