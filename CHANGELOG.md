@@ -1,2 +1,2 @@
 ### Changed
-- Updated mod to Minecraft **1.20.4**.
+- Updated mod to Minecraft **1.20.5**.

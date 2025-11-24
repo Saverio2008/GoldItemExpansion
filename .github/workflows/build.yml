@@ -91,7 +91,6 @@ jobs:
 
       - name: Publish NeoForge to GitHub, CurseForge and Modrinth
         uses: Kir-Antipov/mc-publish@v3.3
-        if: ${{ always() }}
         with:
           changelog-file: CHANGELOG.md
 
