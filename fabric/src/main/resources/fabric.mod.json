@@ -26,10 +26,10 @@
     "golditemexpansion.fabric.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.18.0",
-    "minecraft": "~1.20.5",
+    "fabricloader": ">=0.18.1",
+    "minecraft": "~1.20.6",
     "java": ">=21",
-    "architectury": ">=12.0.29",
+    "architectury": ">=12.1.4",
     "fabric-api": "*"
   },
   "suggests": {

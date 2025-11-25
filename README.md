@@ -1,10 +1,13 @@
-![Build Status](https://img.shields.io/github/actions/workflow/status/Saverio2008/GoldItemExpansion/build.yml)
-[![CurseForge Downloads](https://cf.way2muchnoise.eu/full_1307459_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/gold-item-expansion)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/Saverio2008/GoldItemExpansion/build.yml)](
+https://github.com/Saverio2008/GoldItemExpansion/attestations)
+[![CurseForge Downloads](https://cf.way2muchnoise.eu/full_1307459_downloads.svg)](
+https://www.curseforge.com/minecraft/mc-mods/gold-item-expansion)
 
 
 # Gold Item Expansion
 
-Gold Item Expansion adds a variety of golden-themed items and powerful potions, enhancing gameplay with more strategic and exciting options.
+Gold Item Expansion adds a variety of golden-themed items and powerful potions, 
+enhancing gameplay with more strategic and exciting options.
 
 ### Crafting Recipes
 - **Compressed Gold Block**
