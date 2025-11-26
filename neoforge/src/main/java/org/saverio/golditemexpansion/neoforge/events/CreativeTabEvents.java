@@ -12,24 +12,10 @@ public final class CreativeTabEvents {
     @SubscribeEvent
     public static void addItemsToTab(BuildCreativeModeTabContentsEvent event) {
         if (event.getTabKey().equals(CreativeModeTabs.BUILDING_BLOCKS)) {
-            insertAfter(event, Items.GOLD_BLOCK, new ItemStack(ModItems.COMPRESSED_GOLD_BLOCK_ITEM.get()));
+            event.insertAfter(new ItemStack(Items.GOLD_BLOCK), new ItemStack(ModItems.COMPRESSED_GOLD_BLOCK_ITEM.get()), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
         }
         if (event.getTabKey().equals(CreativeModeTabs.FUNCTIONAL_BLOCKS)) {
-            insertAfter(event, Items.DRAGON_HEAD, new ItemStack(ModItems.GOLDEN_HEAD_BLOCK_ITEM.get()));
+            event.insertAfter(new ItemStack(Items.DRAGON_HEAD), new ItemStack(ModItems.GOLDEN_HEAD_BLOCK_ITEM.get()), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
         }
-    }
-    private static void insertAfter(BuildCreativeModeTabContentsEvent event,
-                                    Item targetItem, ItemStack toInsert) {
-        var entries = event.getEntries();
-        ItemStack targetStack = null;
-        for (var entry : entries) {
-            if (entry.getKey().is(targetItem)) {
-                if (entry.getKey().is(toInsert.getItem())) return;
-                targetStack = entry.getKey();
-                break;
-            }
-        }
-        if (targetStack == null) return;
-        entries.putAfter(targetStack, toInsert, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
     }
 }

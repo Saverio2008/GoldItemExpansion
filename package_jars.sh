@@ -9,7 +9,6 @@ for PLATFORM in fabric neoforge; do
     find "$BUILD_DIR" -type f -name "*-mc*-$PLATFORM.jar" | while IFS= read -r jarfile; do
       filename=$(basename "$jarfile")
       destination="$TARGET_DIR/$filename"
-
       [ -e "$destination" ] && rm "$destination"
       mv "$jarfile" "$destination"
     done

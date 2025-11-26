@@ -16,21 +16,21 @@ Adds enhanced gold-related items and effects to Minecraft.
 [[dependencies.golditemexpansion]]
 modId = "neoforge"
 type = "required"
-versionRange = "[20,)"
+versionRange = "[21,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.golditemexpansion]]
 modId = "minecraft"
 type = "required"
-versionRange = "[1.20.6,)"
+versionRange = "[1.21,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.golditemexpansion]]
 modId = "architectury"
 type = "required"
-versionRange = "[12.1.4,)"
+versionRange = "[13.0.8,)"
 ordering = "AFTER"
 side = "BOTH"
 

@@ -1,0 +1,18 @@
+{
+  "criteria": {
+    "has_compressed_gold_block": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          { "items": ["golditemexpansion:compressed_gold_block"] }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "recipes": [
+      "golditemexpansion:golden_head",
+      "golditemexpansion:enchanted_golden_apple"
+    ]
+  }
+}

@@ -32,5 +32,7 @@
   "effect.golditemexpansion.god_undead_effect": "Omnipotent (Undead)",
   "effect.golditemexpansion.god_arthropod_effect": "Omnipotent (Arthropod)",
   "effect.golditemexpansion.god_positive_effect": "Omnipotent",
-  "effect.golditemexpansion.god_negative_effect": "Omnipotent"
+  "effect.golditemexpansion.god_negative_effect": "Omnipotent",
+
+  "tag.item.golditemexpansion.skulls": "Skulls"
 }

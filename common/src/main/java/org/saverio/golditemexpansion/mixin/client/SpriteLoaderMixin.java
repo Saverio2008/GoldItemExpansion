@@ -29,7 +29,7 @@ public final class SpriteLoaderMixin {
 
     @Final
     @Unique
-    private static final ResourceLocation MOB_EFFECTS_ATLAS = new ResourceLocation("minecraft", "mob_effects");
+    private static final ResourceLocation MOB_EFFECTS_ATLAS = ResourceLocation.fromNamespaceAndPath("minecraft", "mob_effects");
 
     @Final
     @Unique
@@ -69,8 +69,8 @@ public final class SpriteLoaderMixin {
                     .toList());
 
             List<ResourceLocation> customIds = List.of(
-                    new ResourceLocation(MOD_ID, "god_positive_effect"),
-                    new ResourceLocation(MOD_ID, "god_negative_effect")
+                    ResourceLocation.fromNamespaceAndPath(MOD_ID, "god_positive_effect"),
+                    ResourceLocation.fromNamespaceAndPath(MOD_ID, "god_negative_effect")
             );
 
             List<CompletableFuture<SpriteContents>> futures = new ArrayList<>();
@@ -94,7 +94,10 @@ public final class SpriteLoaderMixin {
 
     @Unique
     private SpriteContents golditemexpansion$loadCustomSprite(ResourceManager resourceManager, ResourceLocation id) {
-        ResourceLocation texturePath = new ResourceLocation(id.getNamespace(), "textures/mob_effects/" + id.getPath() + ".png");
+        ResourceLocation texturePath = ResourceLocation.fromNamespaceAndPath(
+                id.getNamespace(),
+                "textures/mob_effects/" + id.getPath() + ".png"
+        );
 
         try {
             var optional = resourceManager.getResource(texturePath);

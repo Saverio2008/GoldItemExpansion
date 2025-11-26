@@ -27,15 +27,20 @@ public final class ModEffects {
     public static final RegistrySupplier<MobEffect> GOD_ARTHROPOD_EFFECT =
             EFFECTS.register("god_arthropod_effect", GodStatusEffects.Arthropod::new);
     public static final ResourceKey<MobEffect> GOD_POSITIVE_KEY =
-            ResourceKey.create(Registries.MOB_EFFECT, new ResourceLocation(MOD_ID, "god_positive_effect"));
+            ResourceKey.create(Registries.MOB_EFFECT,
+                    ResourceLocation.fromNamespaceAndPath(MOD_ID, "god_positive_effect"));
     public static final ResourceKey<MobEffect> GOD_NEGATIVE_KEY =
-            ResourceKey.create(Registries.MOB_EFFECT, new ResourceLocation(MOD_ID, "god_negative_effect"));
+            ResourceKey.create(Registries.MOB_EFFECT,
+                    ResourceLocation.fromNamespaceAndPath(MOD_ID, "god_negative_effect"));
     public static final ResourceKey<MobEffect> GOD_PLAYER_KEY =
-            ResourceKey.create(Registries.MOB_EFFECT, new ResourceLocation(MOD_ID, "god_player_effect"));
+            ResourceKey.create(Registries.MOB_EFFECT,
+                    ResourceLocation.fromNamespaceAndPath(MOD_ID, "god_player_effect"));
     public static final ResourceKey<MobEffect> GOD_UNDEAD_KEY =
-            ResourceKey.create(Registries.MOB_EFFECT, new ResourceLocation(MOD_ID, "god_undead_effect"));
+            ResourceKey.create(Registries.MOB_EFFECT,
+                    ResourceLocation.fromNamespaceAndPath(MOD_ID, "god_undead_effect"));
     public static final ResourceKey<MobEffect> GOD_ARTHROPOD_KEY =
-            ResourceKey.create(Registries.MOB_EFFECT, new ResourceLocation(MOD_ID, "god_arthropod_effect"));
+            ResourceKey.create(Registries.MOB_EFFECT,
+                    ResourceLocation.fromNamespaceAndPath(MOD_ID, "god_arthropod_effect"));
     public static Holder<MobEffect> godPositiveHolder() {
         return BuiltInRegistries.MOB_EFFECT.getHolderOrThrow(GOD_POSITIVE_KEY);
     }

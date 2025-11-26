@@ -32,5 +32,7 @@
   "effect.golditemexpansion.god_undead_effect": "超神（亡灵版）",
   "effect.golditemexpansion.god_arthropod_effect": "超神（节肢版）",
   "effect.golditemexpansion.god_positive_effect": "超神",
-  "effect.golditemexpansion.god_negative_effect": "负超神"
+  "effect.golditemexpansion.god_negative_effect": "负超神",
+
+  "tag.item.golditemexpansion.skulls": "头颅"
 }
