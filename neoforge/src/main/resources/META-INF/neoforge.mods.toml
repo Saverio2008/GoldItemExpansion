@@ -1,6 +1,6 @@
 modLoader = "javafml"
 loaderVersion = "[2,)"
-#issueTrackerURL = ""
+issueTrackerURL = "https://github.com/Saverio2008/GoldItemExpansion/issues"
 license = "GNU AGPL 3.0"
 
 [[mods]]
@@ -11,7 +11,7 @@ authors = "Saverio, Zhao Zhenxiang"
 description = '''
 Adds enhanced gold-related items and effects to Minecraft.
 '''
-#logoFile = ""
+logoFile = "assets/golditemexpansion/icon/icon.png"
 
 [[dependencies.golditemexpansion]]
 modId = "neoforge"
@@ -23,7 +23,7 @@ side = "BOTH"
 [[dependencies.golditemexpansion]]
 modId = "minecraft"
 type = "required"
-versionRange = "[1.21,)"
+versionRange = "[1.21.1,)"
 ordering = "NONE"
 side = "BOTH"
 
@@ -36,3 +36,8 @@ side = "BOTH"
 
 [[mixins]]
 config = "golditemexpansion.neoforge.mixins.json"
+
+[mc-publish]
+dependencies = [
+    "architectury-api(required){modrinth:lhGA9TYQ}{curseforge:419699}"
+]

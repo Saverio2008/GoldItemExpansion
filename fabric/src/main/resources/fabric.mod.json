@@ -27,10 +27,18 @@
   ],
   "depends": {
     "fabricloader": ">=0.18.1",
-    "minecraft": "~1.21",
+    "minecraft": "~1.21.1",
     "java": ">=21",
     "architectury": ">=13.0.8",
     "fabric-api": "*"
+  },
+  "custom": {
+    "mc-publish": {
+      "dependencies": [
+        "fabric-api(required){modrinth:P7dR8mSH}{curseforge:306612}",
+        "architectury-api(required){modrinth:lhGA9TYQ}{curseforge:419699}"
+      ]
+    }
   },
   "suggests": {
     "another-mod": "*"

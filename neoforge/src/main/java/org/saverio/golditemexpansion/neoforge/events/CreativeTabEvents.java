@@ -7,7 +7,7 @@ import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import org.saverio.golditemexpansion.Golditemexpansion;
 import org.saverio.golditemexpansion.item.ModItems;
 
-@EventBusSubscriber(modid = Golditemexpansion.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = Golditemexpansion.MOD_ID)
 public final class CreativeTabEvents {
     @SubscribeEvent
     public static void addItemsToTab(BuildCreativeModeTabContentsEvent event) {
