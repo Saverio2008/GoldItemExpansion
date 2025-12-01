@@ -18,7 +18,6 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.AttachFace;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 
@@ -26,7 +25,7 @@ public final class GoldenHeadBlock extends Block {
     private static final int TICKS_BEFORE_REMOVE = 10;
 
     public static final EnumProperty<AttachFace> FACE = BlockStateProperties.ATTACH_FACE;
-    public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
+    public static final EnumProperty<Direction> FACING = BlockStateProperties.HORIZONTAL_FACING;
 
     private static final VoxelShape SHAPE_FLOOR = Block.box(4, 0, 4, 12, 8, 12);
     private static final VoxelShape SHAPE_CEILING = Block.box(4, 8, 4, 12, 16, 12);
@@ -37,7 +36,7 @@ public final class GoldenHeadBlock extends Block {
 
     public GoldenHeadBlock(Properties properties) {
         super(properties);
-        registerDefaultState(this.stateDefinition.any()
+        registerDefaultState(defaultBlockState()
                 .setValue(FACE, AttachFace.FLOOR)
                 .setValue(FACING, Direction.NORTH));
     }

@@ -2,6 +2,9 @@ package org.saverio.golditemexpansion.item;
 
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import org.saverio.golditemexpansion.block.ModBlocks;
@@ -14,8 +17,18 @@ public final class ModItems {
             DeferredRegister.create(MOD_ID, net.minecraft.core.registries.Registries.ITEM);
     public static final RegistrySupplier<Item> COMPRESSED_GOLD_BLOCK_ITEM =
             ITEMS.register("compressed_gold_block", () ->
-                    new BlockItem(ModBlocks.COMPRESSED_GOLD_BLOCK.get(), new Item.Properties()));
+                    new BlockItem(ModBlocks.COMPRESSED_GOLD_BLOCK.get(), new Item.Properties()
+                            .setId(ResourceKey.create(
+                                    Registries.ITEM, ResourceLocation.fromNamespaceAndPath(
+                                            "golditemexpansion", "compressed_gold_block")))
+                    )
+            );
     public static final RegistrySupplier<Item> GOLDEN_HEAD_BLOCK_ITEM =
             ITEMS.register("golden_head", () ->
-                    new BlockItem(ModBlocks.GOLDEN_HEAD_BLOCK.get(), new Item.Properties()));
+                    new BlockItem(ModBlocks.GOLDEN_HEAD_BLOCK.get(), new Item.Properties()
+                            .setId(ResourceKey.create(
+                                    Registries.ITEM, ResourceLocation.fromNamespaceAndPath(
+                                            "golditemexpansion", "golden_head")))
+                    )
+            );
 }

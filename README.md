@@ -1,8 +1,5 @@
 [![Build Status](https://img.shields.io/github/actions/workflow/status/Saverio2008/GoldItemExpansion/build.yml)](
 https://github.com/Saverio2008/GoldItemExpansion/attestations)
-[![Latest Release](https://img.shields.io/github/v/release/Saverio2008/GoldItemExpansion)](
-https://github.com/Saverio2008/GoldItemExpansion/releases)
-[![License](https://img.shields.io/github/license/Saverio2008/GoldItemExpansion)](LICENSE)  
 [![CurseForge Downloads](https://cf.way2muchnoise.eu/full_1307459_downloads.svg)](
 https://www.curseforge.com/minecraft/mc-mods/gold-item-expansion)
 [![Modrinth Downloads](https://img.shields.io/modrinth/dt/gold-item-expansion)](
@@ -36,3 +33,37 @@ enhancing gameplay with more strategic and exciting options.
 **Arthropod God Potion**
 - When used on arthropod entities: grants level 5 of all positive buffs.
 - When used on non-arthropod entities: grants level 5 of all negative debuffs. (PvP)
+
+# Latest Versions:
+
+## 1.21.1
+* [![Latest Release](
+https://img.shields.io/github/v/release/Saverio2008/GoldItemExpansion?filter=v1.0.2-mc1.21.1&label=NeoForge%201.21.1)](
+https://github.com/Saverio2008/GoldItemExpansion/releases/tag/v1.0.2-mc1.21.1)
+* [![Latest Release](
+https://img.shields.io/github/v/release/Saverio2008/GoldItemExpansion?filter=v1.0.2-mc1.21.1&label=Fabric%201.21.1)](
+https://github.com/Saverio2008/GoldItemExpansion/releases/tag/v1.0.2-mc1.21.1)
+
+## 1.21
+* [![Latest Release](
+https://img.shields.io/github/v/release/Saverio2008/GoldItemExpansion?filter=v1.0.2-mc1.21&label=NeoForge%201.21)](
+https://github.com/Saverio2008/GoldItemExpansion/releases/tag/v1.0.2-mc1.21)
+* [![Latest Release](
+https://img.shields.io/github/v/release/Saverio2008/GoldItemExpansion?filter=v1.0.2-mc1.21&label=Fabric%201.21)](
+https://github.com/Saverio2008/GoldItemExpansion/releases/tag/v1.0.2-mc1.21)
+
+## 1.20.6
+* [![Latest Release](
+https://img.shields.io/github/v/release/Saverio2008/GoldItemExpansion?filter=v1.0.1-mc1.20.6&label=NeoForge%201.20.6)](
+https://github.com/Saverio2008/GoldItemExpansion/releases/tag/v1.0.1-mc1.20.6)
+* [![Latest Release](
+https://img.shields.io/github/v/release/Saverio2008/GoldItemExpansion?filter=v1.0.1-mc1.20.6&label=Fabric%201.20.6)](
+https://github.com/Saverio2008/GoldItemExpansion/releases/tag/v1.0.1-mc1.20.6)
+
+## 1.20.1
+* [![Latest Release](
+https://img.shields.io/github/v/release/Saverio2008/GoldItemExpansion?filter=v1.0.1-mc1.20.1&label=Forge%201.20.1)](
+https://github.com/Saverio2008/GoldItemExpansion/releases/tag/v1.0.1-mc1.20.1)
+* [![Latest Release](
+https://img.shields.io/github/v/release/Saverio2008/GoldItemExpansion?filter=v1.0.1-mc1.20.1&label=Fabric%201.20.1)](
+https://github.com/Saverio2008/GoldItemExpansion/releases/tag/v1.0.1-mc1.20.1)

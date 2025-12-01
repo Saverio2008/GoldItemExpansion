@@ -16,17 +16,22 @@ public final class ModPotions {
             DeferredRegister.create(MOD_ID, Registries.POTION);
     public static final RegistrySupplier<Potion> GOD_POTION =
             POTIONS.register("god_potion", () ->
-                    new Potion(new MobEffectInstance(ModEffects.godPlayerHolder(), 3600, 0)));
+                    new Potion("god_potion",
+                            new MobEffectInstance(ModEffects.godPlayerHolder(), 3600, 0)));
     public static final RegistrySupplier<Potion> UNDEAD_GOD_POTION =
             POTIONS.register("undead_god_potion", () ->
-                    new Potion(new MobEffectInstance(ModEffects.godUndeadHolder(), 3600, 1)));
+                    new Potion("undead_god_potion",
+                            new MobEffectInstance(ModEffects.godUndeadHolder(), 3600, 1)));
     public static final RegistrySupplier<Potion> ARTHROPOD_GOD_POTION =
             POTIONS.register("arthropod_god_potion", () ->
-                    new Potion(new MobEffectInstance(ModEffects.godArthropodHolder(), 3600, 2)));
+                    new Potion("arthropod_god_potion",
+                            new MobEffectInstance(ModEffects.godArthropodHolder(), 3600, 2)));
     public static final RegistrySupplier<Potion> HEALING_III =
             POTIONS.register("healing_iii", () ->
-                    new Potion(new MobEffectInstance(MobEffects.HEAL, 1, 2)));
+                    new Potion("healing_iii",
+                            new MobEffectInstance(MobEffects.HEAL, 1, 2)));
     public static final RegistrySupplier<Potion> GODLY_HEALING =
             POTIONS.register("godly_healing", () ->
-                    new Potion(new MobEffectInstance(MobEffects.HEAL, 1, 4)));
+                    new Potion("godly_healing",
+                            new MobEffectInstance(MobEffects.HEAL, 1, 4)));
 }

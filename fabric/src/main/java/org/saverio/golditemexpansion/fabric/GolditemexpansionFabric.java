@@ -35,27 +35,27 @@ public final class GolditemexpansionFabric implements ModInitializer {
             builder.registerPotionRecipe(
                     Potions.AWKWARD,
                     Ingredient.of(ModItems.GOLDEN_HEAD_BLOCK_ITEM.get()),
-                    BuiltInRegistries.POTION.getHolderOrThrow(ModPotions.GOD_POTION.getKey())
+                    BuiltInRegistries.POTION.getOrThrow(ModPotions.GOD_POTION.getKey())
             );
             builder.registerPotionRecipe(
-                    BuiltInRegistries.POTION.getHolderOrThrow(ModPotions.GOD_POTION.getKey()),
+                    BuiltInRegistries.POTION.getOrThrow(ModPotions.GOD_POTION.getKey()),
                     Ingredient.of(Items.ROTTEN_FLESH),
-                    BuiltInRegistries.POTION.getHolderOrThrow(ModPotions.UNDEAD_GOD_POTION.getKey())
+                    BuiltInRegistries.POTION.getOrThrow(ModPotions.UNDEAD_GOD_POTION.getKey())
             );
             builder.registerPotionRecipe(
-                    BuiltInRegistries.POTION.getHolderOrThrow(ModPotions.GOD_POTION.getKey()),
+                    BuiltInRegistries.POTION.getOrThrow(ModPotions.GOD_POTION.getKey()),
                     Ingredient.of(Items.SPIDER_EYE),
-                    BuiltInRegistries.POTION.getHolderOrThrow(ModPotions.ARTHROPOD_GOD_POTION.getKey())
+                    BuiltInRegistries.POTION.getOrThrow(ModPotions.ARTHROPOD_GOD_POTION.getKey())
             );
             builder.registerPotionRecipe(
                     Potions.AWKWARD,
                     Ingredient.of(Items.GOLDEN_APPLE),
-                    BuiltInRegistries.POTION.getHolderOrThrow(ModPotions.HEALING_III.getKey())
+                    BuiltInRegistries.POTION.getOrThrow(ModPotions.HEALING_III.getKey())
             );
             builder.registerPotionRecipe(
                     Potions.AWKWARD,
                     Ingredient.of(Items.ENCHANTED_GOLDEN_APPLE),
-                    BuiltInRegistries.POTION.getHolderOrThrow(ModPotions.GODLY_HEALING.getKey())
+                    BuiltInRegistries.POTION.getOrThrow(ModPotions.GODLY_HEALING.getKey())
             );
         });
     }

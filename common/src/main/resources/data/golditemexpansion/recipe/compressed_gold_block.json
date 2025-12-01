@@ -6,9 +6,7 @@
     "GGG"
   ],
   "key": {
-    "G": {
-      "item": "minecraft:gold_block"
-    }
+    "G": "minecraft:gold_block"
   },
   "result": {
     "id": "golditemexpansion:compressed_gold_block",

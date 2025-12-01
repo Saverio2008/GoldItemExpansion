@@ -42,19 +42,19 @@ public final class ModEffects {
             ResourceKey.create(Registries.MOB_EFFECT,
                     ResourceLocation.fromNamespaceAndPath(MOD_ID, "god_arthropod_effect"));
     public static Holder<MobEffect> godPositiveHolder() {
-        return BuiltInRegistries.MOB_EFFECT.getHolderOrThrow(GOD_POSITIVE_KEY);
+        return BuiltInRegistries.MOB_EFFECT.getOrThrow(GOD_POSITIVE_KEY);
     }
     public static Holder<MobEffect> godNegativeHolder() {
-        return BuiltInRegistries.MOB_EFFECT.getHolderOrThrow(GOD_NEGATIVE_KEY);
+        return BuiltInRegistries.MOB_EFFECT.getOrThrow(GOD_NEGATIVE_KEY);
     }
     public static Holder<MobEffect> godPlayerHolder() {
-        return BuiltInRegistries.MOB_EFFECT.getHolderOrThrow(GOD_PLAYER_KEY);
+        return BuiltInRegistries.MOB_EFFECT.getOrThrow(GOD_PLAYER_KEY);
     }
     public static Holder<MobEffect> godUndeadHolder() {
-        return BuiltInRegistries.MOB_EFFECT.getHolderOrThrow(GOD_UNDEAD_KEY);
+        return BuiltInRegistries.MOB_EFFECT.getOrThrow(GOD_UNDEAD_KEY);
     }
     public static Holder<MobEffect> godArthropodHolder() {
-        return BuiltInRegistries.MOB_EFFECT.getHolderOrThrow(GOD_ARTHROPOD_KEY);
+        return BuiltInRegistries.MOB_EFFECT.getOrThrow(GOD_ARTHROPOD_KEY);
     }
     public static boolean isGodMainEffect(Holder<MobEffect> effect) {
         ResourceKey<MobEffect> key = effect.unwrapKey().orElse(null);

@@ -10,6 +10,7 @@ import org.saverio.golditemexpansion.Golditemexpansion;
 import org.saverio.golditemexpansion.block.ModBlocks;
 import org.saverio.golditemexpansion.item.ModItems;
 import org.saverio.golditemexpansion.effect.ModEffects;
+import org.saverio.golditemexpansion.neoforge.events.CreativeTabEvents;
 import org.saverio.golditemexpansion.potion.ModPotions;
 
 @Mod(Golditemexpansion.MOD_ID)
@@ -21,33 +22,34 @@ public final class GolditemexpansionNeoForge {
         ModPotions.POTIONS.register();
         Golditemexpansion.init();
         registerBrewingRecipes();
+        CreativeTabEvents.register();
     }
     private void registerBrewingRecipes() {
         NeoForge.EVENT_BUS.addListener(RegisterBrewingRecipesEvent.class, event -> {
             event.getBuilder().addMix(
                     Potions.AWKWARD,
                     ModItems.GOLDEN_HEAD_BLOCK_ITEM.get(),
-                    BuiltInRegistries.POTION.getHolderOrThrow(ModPotions.GOD_POTION.getKey())
+                    BuiltInRegistries.POTION.getOrThrow(ModPotions.GOD_POTION.getKey())
             );
             event.getBuilder().addMix(
-                    BuiltInRegistries.POTION.getHolderOrThrow(ModPotions.GOD_POTION.getKey()),
+                    BuiltInRegistries.POTION.getOrThrow(ModPotions.GOD_POTION.getKey()),
                     Items.ROTTEN_FLESH,
-                    BuiltInRegistries.POTION.getHolderOrThrow(ModPotions.UNDEAD_GOD_POTION.getKey())
+                    BuiltInRegistries.POTION.getOrThrow(ModPotions.UNDEAD_GOD_POTION.getKey())
             );
             event.getBuilder().addMix(
-                    BuiltInRegistries.POTION.getHolderOrThrow(ModPotions.GOD_POTION.getKey()),
+                    BuiltInRegistries.POTION.getOrThrow(ModPotions.GOD_POTION.getKey()),
                     Items.SPIDER_EYE,
-                    BuiltInRegistries.POTION.getHolderOrThrow(ModPotions.ARTHROPOD_GOD_POTION.getKey())
+                    BuiltInRegistries.POTION.getOrThrow(ModPotions.ARTHROPOD_GOD_POTION.getKey())
             );
             event.getBuilder().addMix(
                     Potions.AWKWARD,
                     Items.GOLDEN_APPLE,
-                    BuiltInRegistries.POTION.getHolderOrThrow(ModPotions.HEALING_III.getKey())
+                    BuiltInRegistries.POTION.getOrThrow(ModPotions.HEALING_III.getKey())
             );
             event.getBuilder().addMix(
                     Potions.AWKWARD,
                     Items.ENCHANTED_GOLDEN_APPLE,
-                    BuiltInRegistries.POTION.getHolderOrThrow(ModPotions.GODLY_HEALING.getKey())
+                    BuiltInRegistries.POTION.getOrThrow(ModPotions.GODLY_HEALING.getKey())
             );
         });
     }

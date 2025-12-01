@@ -1,7 +1,7 @@
 package org.saverio.golditemexpansion.mixin.client;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screens.inventory.EffectRenderingInventoryScreen;
+import net.minecraft.client.gui.screens.inventory.EffectsInInventory;
 import net.minecraft.core.Holder;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -17,8 +17,8 @@ import java.util.stream.Collectors;
 import static org.saverio.golditemexpansion.effect.GodNegativeStatusEffect.GOD_NEGATIVE_EFFECTS;
 import static org.saverio.golditemexpansion.effect.GodPositiveStatusEffect.GOD_POSITIVE_EFFECTS;
 
-@Mixin(EffectRenderingInventoryScreen.class)
-public final class EffectRenderingInventoryScreenMixin {
+@Mixin(EffectsInInventory.class)
+public final class EffectsInInventoryMixin {
     @ModifyVariable(
             method = "renderEffects",
             at = @At(value = "STORE", ordinal = 0)

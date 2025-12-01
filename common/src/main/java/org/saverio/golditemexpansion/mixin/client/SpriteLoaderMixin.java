@@ -8,6 +8,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.metadata.MetadataSectionSerializer;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
+import org.slf4j.LoggerFactory;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -26,79 +27,79 @@ import static org.saverio.golditemexpansion.Golditemexpansion.MOD_ID;
 
 @Mixin(SpriteLoader.class)
 public final class SpriteLoaderMixin {
-
     @Final
     @Unique
-    private static final ResourceLocation MOB_EFFECTS_ATLAS = ResourceLocation.fromNamespaceAndPath("minecraft", "mob_effects");
-
+    private static final ResourceLocation MOB_EFFECTS_ATLAS =
+            ResourceLocation.fromNamespaceAndPath("minecraft", "mob_effects");
     @Final
     @Unique
-    private static final Logger golditemexpansion$LOGGER = org.slf4j.LoggerFactory.getLogger("SpriteLoaderMixin");
-
+    private static final Logger golditemexpansion$LOGGER = LoggerFactory.getLogger("SpriteLoaderMixin");
     @Inject(
-            method = "loadAndStitch(Lnet/minecraft/server/packs/resources/ResourceManager;Lnet/minecraft/resources/ResourceLocation;ILjava/util/concurrent/Executor;)Ljava/util/concurrent/CompletableFuture;",
+            method = "loadAndStitch(Lnet/minecraft/server/packs/resources/ResourceManager;" +
+                    "Lnet/minecraft/resources/ResourceLocation;ILjava/util/concurrent/Executor;)" +
+                    "Ljava/util/concurrent/CompletableFuture;",
             at = @At("RETURN"),
             cancellable = true
     )
-    private void injectCustomSprites4(ResourceManager resourceManager, ResourceLocation resourceLocation, int i, Executor executor, CallbackInfoReturnable<CompletableFuture<SpriteLoader.Preparations>> cir) {
+    private void injectCustomSprites4(ResourceManager resourceManager,
+                                      ResourceLocation resourceLocation, int i, Executor executor,
+                                      CallbackInfoReturnable<CompletableFuture<SpriteLoader.Preparations>> cir) {
         golditemexpansion$injectCustomSpritesImpl(resourceManager, resourceLocation, i, executor, cir);
     }
-
     @Inject(
-            method = "loadAndStitch(Lnet/minecraft/server/packs/resources/ResourceManager;Lnet/minecraft/resources/ResourceLocation;ILjava/util/concurrent/Executor;Ljava/util/Collection;)Ljava/util/concurrent/CompletableFuture;",
+            method = "loadAndStitch(Lnet/minecraft/server/packs/resources/ResourceManager;" +
+                    "Lnet/minecraft/resources/ResourceLocation;ILjava/util/concurrent/Executor;" +
+                    "Ljava/util/Collection;)Ljava/util/concurrent/CompletableFuture;",
             at = @At("RETURN"),
             cancellable = true
     )
-    private void injectCustomSprites5(ResourceManager resourceManager, ResourceLocation resourceLocation, int i, Executor executor, Collection<MetadataSectionSerializer<?>> collection, CallbackInfoReturnable<CompletableFuture<SpriteLoader.Preparations>> cir) {
+    private void injectCustomSprites5(ResourceManager resourceManager,
+                                      ResourceLocation resourceLocation, int i, Executor executor,
+                                      Collection<MetadataSectionSerializer<?>> collection,
+                                      CallbackInfoReturnable<CompletableFuture<SpriteLoader.Preparations>> cir) {
         golditemexpansion$injectCustomSpritesImpl(resourceManager, resourceLocation, i, executor, cir);
     }
-
     @Unique
     private void golditemexpansion$injectCustomSpritesImpl(ResourceManager resourceManager,
                                                            ResourceLocation atlasId,
                                                            int mipLevel,
                                                            Executor executor,
-                                                           CallbackInfoReturnable<CompletableFuture<SpriteLoader.Preparations>> cir) {
+                                                           CallbackInfoReturnable<CompletableFuture<SpriteLoader.
+                                                                   Preparations>> cir) {
         if (!MOB_EFFECTS_ATLAS.equals(atlasId)) return;
-
         CompletableFuture<SpriteLoader.Preparations> originalFuture = cir.getReturnValue();
-
-        CompletableFuture<SpriteLoader.Preparations> newFuture = originalFuture.thenCompose(preparations -> {
-            List<SpriteContents> allSprites = new ArrayList<>(preparations.regions().values().stream()
-                    .map(TextureAtlasSprite::contents)
-                    .toList());
-
-            List<ResourceLocation> customIds = List.of(
-                    ResourceLocation.fromNamespaceAndPath(MOD_ID, "god_positive_effect"),
-                    ResourceLocation.fromNamespaceAndPath(MOD_ID, "god_negative_effect")
-            );
-
+        CompletableFuture<SpriteLoader.Preparations> newFuture =
+                originalFuture.thenCompose(preparations -> {
+                    List<SpriteContents> allSprites = new ArrayList<>(
+                            preparations.regions()
+                                    .values().stream()
+                                    .map(TextureAtlasSprite::contents)
+                                    .toList());
+                    List<ResourceLocation> customIds = List.of(
+                            ResourceLocation.fromNamespaceAndPath(MOD_ID, "god_positive_effect"),
+                            ResourceLocation.fromNamespaceAndPath(MOD_ID, "god_negative_effect"));
             List<CompletableFuture<SpriteContents>> futures = new ArrayList<>();
             for (ResourceLocation id : customIds) {
-                futures.add(CompletableFuture.supplyAsync(() -> golditemexpansion$loadCustomSprite(resourceManager, id), executor));
+                futures.add(CompletableFuture.supplyAsync(() ->
+                        golditemexpansion$loadCustomSprite(resourceManager, id), executor));
             }
-
             return CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).thenApply(v -> {
                 for (CompletableFuture<SpriteContents> future : futures) {
                     SpriteContents contents = future.join();
                     if (contents != null) allSprites.add(contents);
                 }
-
                 SpriteLoader self = (SpriteLoader) (Object) this;
                 return self.stitch(allSprites, mipLevel, executor);
             });
         });
-
         cir.setReturnValue(newFuture);
     }
-
     @Unique
     private SpriteContents golditemexpansion$loadCustomSprite(ResourceManager resourceManager, ResourceLocation id) {
         ResourceLocation texturePath = ResourceLocation.fromNamespaceAndPath(
                 id.getNamespace(),
                 "textures/mob_effects/" + id.getPath() + ".png"
         );
-
         try {
             var optional = resourceManager.getResource(texturePath);
             if (optional.isEmpty()) {
