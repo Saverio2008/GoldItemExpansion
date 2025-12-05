@@ -13,12 +13,12 @@ import java.util.Map;
 
 public final class GodPositiveStatusEffect extends MobEffect implements GodEffectApplier {
     public static final LinkedHashMap<Holder<MobEffect>, Integer> GOD_POSITIVE_EFFECTS = new LinkedHashMap<>() {{
-        put(MobEffects.MOVEMENT_SPEED, 4);
-        put(MobEffects.DIG_SPEED, 4);
-        put(MobEffects.DAMAGE_BOOST, 4);
-        put(MobEffects.JUMP, 4);
+        put(MobEffects.SPEED, 4);
+        put(MobEffects.HASTE, 4);
+        put(MobEffects.STRENGTH, 4);
+        put(MobEffects.JUMP_BOOST, 4);
         put(MobEffects.REGENERATION, 4);
-        put(MobEffects.DAMAGE_RESISTANCE, 4);
+        put(MobEffects.RESISTANCE, 4);
         put(MobEffects.FIRE_RESISTANCE, 0);
         put(MobEffects.WATER_BREATHING, 0);
         put(MobEffects.NIGHT_VISION, 0);

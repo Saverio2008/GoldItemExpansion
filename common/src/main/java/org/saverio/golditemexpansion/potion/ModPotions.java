@@ -29,9 +29,9 @@ public final class ModPotions {
     public static final RegistrySupplier<Potion> HEALING_III =
             POTIONS.register("healing_iii", () ->
                     new Potion("healing_iii",
-                            new MobEffectInstance(MobEffects.HEAL, 1, 2)));
+                            new MobEffectInstance(MobEffects.INSTANT_HEALTH, 1, 2)));
     public static final RegistrySupplier<Potion> GODLY_HEALING =
             POTIONS.register("godly_healing", () ->
                     new Potion("godly_healing",
-                            new MobEffectInstance(MobEffects.HEAL, 1, 4)));
+                            new MobEffectInstance(MobEffects.INSTANT_HEALTH, 1, 4)));
 }

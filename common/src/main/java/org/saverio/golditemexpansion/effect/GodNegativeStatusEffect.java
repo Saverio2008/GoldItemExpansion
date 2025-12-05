@@ -15,10 +15,10 @@ public final class GodNegativeStatusEffect extends MobEffect implements GodEffec
 
     public static final LinkedHashMap<Holder<MobEffect>, Integer> GOD_NEGATIVE_EFFECTS = new LinkedHashMap<>() {{
         put(MobEffects.WEAKNESS, 4);
-        put(MobEffects.MOVEMENT_SLOWDOWN, 4);
-        put(MobEffects.DIG_SLOWDOWN, 4);
+        put(MobEffects.SLOWNESS, 4);
+        put(MobEffects.MINING_FATIGUE, 4);
         put(MobEffects.UNLUCK, 4);
-        put(MobEffects.CONFUSION, 4);
+        put(MobEffects.NAUSEA, 4);
         put(MobEffects.BLINDNESS, 4);
         put(MobEffects.HUNGER, 4);
         put(MobEffects.DARKNESS, 4);

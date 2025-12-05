@@ -96,7 +96,7 @@ public final class GoldenHeadBlock extends Block {
 
     private void applyEffectsToPlayer(Player player) {
         int duration = 6000;
-        applyOrExtendEffect(player, new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, duration, 6));
+        applyOrExtendEffect(player, new MobEffectInstance(MobEffects.RESISTANCE, duration, 6));
         applyOrExtendEffect(player, new MobEffectInstance(MobEffects.FIRE_RESISTANCE, duration, 0));
         applyOrExtendEffect(player, new MobEffectInstance(MobEffects.ABSORPTION, duration, 9));
         applyOrExtendEffect(player, new MobEffectInstance(MobEffects.HEALTH_BOOST, duration, 9));
