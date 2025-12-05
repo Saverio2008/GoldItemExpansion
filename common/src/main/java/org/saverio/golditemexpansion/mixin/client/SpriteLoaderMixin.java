@@ -5,7 +5,7 @@ import net.minecraft.client.renderer.texture.SpriteLoader;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.atlas.SpriteResourceLoader;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.packs.metadata.MetadataSectionSerializer;
+import net.minecraft.server.packs.metadata.MetadataSectionType;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
 import org.slf4j.LoggerFactory;
@@ -55,7 +55,7 @@ public final class SpriteLoaderMixin {
     )
     private void injectCustomSprites5(ResourceManager resourceManager,
                                       ResourceLocation resourceLocation, int i, Executor executor,
-                                      Collection<MetadataSectionSerializer<?>> collection,
+                                      Collection<MetadataSectionType<?>> collection,
                                       CallbackInfoReturnable<CompletableFuture<SpriteLoader.Preparations>> cir) {
         golditemexpansion$injectCustomSpritesImpl(resourceManager, resourceLocation, i, executor, cir);
     }

@@ -36,6 +36,14 @@ enhancing gameplay with more strategic and exciting options.
 
 # Latest Versions:
 
+## 1.21.4
+* [![Latest Release](
+https://img.shields.io/github/v/release/Saverio2008/GoldItemExpansion?filter=v1.0.2-mc1.21.4&label=NeoForge%201.21.4)](
+https://github.com/Saverio2008/GoldItemExpansion/releases/tag/v1.0.2-mc1.21.4)
+* [![Latest Release](
+https://img.shields.io/github/v/release/Saverio2008/GoldItemExpansion?filter=v1.0.2-mc1.21.4&label=Fabric%201.21.4)](
+https://github.com/Saverio2008/GoldItemExpansion/releases/tag/v1.0.2-mc1.21.4)
+
 ## 1.21.1
 * [![Latest Release](
 https://img.shields.io/github/v/release/Saverio2008/GoldItemExpansion?filter=v1.0.2-mc1.21.1&label=NeoForge%201.21.1)](
