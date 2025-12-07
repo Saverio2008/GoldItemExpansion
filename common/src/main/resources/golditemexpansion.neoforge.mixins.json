@@ -5,8 +5,7 @@
   "minVersion": "0.8",
   "client": [
     "client.EffectsInInventoryMixin",
-    "client.InGuiMixin",
-    "client.SpriteLoaderMixin"
+    "client.InGuiMixin"
   ],
   "mixins": [
     "LivingEntityMixin"
